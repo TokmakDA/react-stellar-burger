@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Iceland&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+//@import "reset";
+@import "normalize";
+
+body {
+  font-family: "JetBrains Mono", monospace, sans-serif, "Iceland";
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  max-width: 1440px;
+  flex-direction: column;
+  margin: 0 auto;
+  overflow: auto;
+}
+
+* {
+  outline: 1px solid pink;
+}
