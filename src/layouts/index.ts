@@ -1,1 +1,1 @@
-export { MainLayout } from "@/layouts/main-layout/MainLayout"
+export { MainLayout } from '@/layouts/main-layout/MainLayout'

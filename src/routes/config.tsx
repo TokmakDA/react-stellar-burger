@@ -1,10 +1,10 @@
-import type { RouteObject } from "react-router-dom"
-import { MainLayout } from "@/layouts"
-import * as Pages from "@/pages"
+import type { RouteObject } from 'react-router-dom'
+import { MainLayout } from '@/layouts'
+import * as Pages from '@/pages'
 
 export const routesConfig: RouteObject[] = [
   {
-    path: "/",
+    path: '/',
     element: <MainLayout />,
     children: [
       {
@@ -12,7 +12,7 @@ export const routesConfig: RouteObject[] = [
         element: <Pages.ConstructorPage />,
       },
       {
-        path: "*",
+        path: '*',
         element: <Pages.NotFoundPage />,
       },
     ],
