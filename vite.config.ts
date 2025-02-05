@@ -1,8 +1,10 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import * as path from 'path'
+import path from 'node:path'
+import { fileURLToPath } from 'url'
 
-// https://vitejs.dev/config/
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
 export default defineConfig({
   plugins: [react()],
   css: {
@@ -10,10 +12,10 @@ export default defineConfig({
       scss: {
         api: 'modern',
         additionalData: `
-                    @use '@/assets/styles/vars.scss' as *;
-                    @use '@/assets/styles/mixins.scss' as *;
-                    @use '@/assets/styles/typography.scss' as *;
-                `,
+          @use '@/assets/styles/vars.scss' as *;
+          @use '@/assets/styles/typography.scss' as *;
+          @use '@/assets/styles/mixins.scss' as *;
+        `,
       },
     },
   },
@@ -25,7 +27,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['src/setupTests'],
+    setupFiles: ['src/setupTests.ts'], // добавил расширение, если TypeScript
     mockReset: true,
+  },
+  server: {
+    port: 8080,
+    host: '0.0.0.0',
   },
 })
