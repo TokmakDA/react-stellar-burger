@@ -1,13 +1,33 @@
 .header {
-  display: flex;
-  max-width: 1480px;
-  margin: 0 auto;
+  background-color: $interface-modal-bg;
+  /* card/x-large */
+  box-shadow:
+    0px 24px 32px 0px rgba(0, 0, 0, 0.04),
+    0px 16px 24px 0px rgba(0, 0, 0, 0.04),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 0px 1px 0px rgba(0, 0, 0, 0.04);
+
+  &__wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    max-width: $max-width;
+  }
+
+  &__logo {
+    justify-self: center;
+  }
+  &__actions {
+    justify-self: end;
+  }
 }
 
 .nav {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-self: start;
 
   &__list {
     display: flex;

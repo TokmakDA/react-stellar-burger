@@ -1,15 +1,15 @@
 @use 'normalize';
 @use 'reset';
 @import url('https://fonts.googleapis.com/css2?family=Iceland&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import 'global';
 
 body {
   font-family: $font-family;
   box-sizing: border-box;
   position: relative;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   display: flex;
-  max-width: 1440px;
   flex-direction: column;
   margin: 0 auto;
   overflow: auto;
