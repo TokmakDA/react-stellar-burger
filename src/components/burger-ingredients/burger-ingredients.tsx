@@ -3,8 +3,7 @@ import styles from './burger-ingredients.module.scss'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { TBurgerIngredient } from '@/@types/types.ts'
 import Ingredient from '@/components/ingredient/ingredient.tsx'
-import ScrollableContainer
-  from '@/components/scrollable-container/scrollable-container.tsx'
+import ScrollableContainer from '@/components/scrollable-container/scrollable-container.tsx'
 
 type TBurgerIngredientsProps = {
   ingredients: TBurgerIngredient[]
