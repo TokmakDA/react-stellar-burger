@@ -2,7 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './routes'
-import './assets/styles/index.scss'
+import '@/assets/styles/index.scss'
 
 const container = document.getElementById('root')
 

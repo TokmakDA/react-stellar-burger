@@ -13,7 +13,6 @@ export default defineConfig({
         api: 'modern',
         additionalData: `
           @use '@/assets/styles/vars.scss' as *;
-          @use '@/assets/styles/typography.scss' as *;
           @use '@/assets/styles/mixins.scss' as *;
         `,
       },

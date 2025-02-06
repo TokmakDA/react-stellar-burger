@@ -1,3 +1,4 @@
+// Colors
 $neon: #b5ff3d;
 $interface-modal-bg: #1c1c21;
 $interface-accent: #4c4cff;
@@ -10,3 +11,28 @@ $interface-modal-edge: rgba(76, 76, 255, 0.2);
 $text-primary-light-standart-text: #f2f2f3;
 $text-dark-grey-secondary-text: #8585ad;
 $text-disabled: #3a3a55;
+
+// Breakpoints
+$breakpoint-mobile: 576px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 992px;
+$breakpoint-large-desktop: 1200px;
+
+// Font
+$font-family: 'JetBrains Mono', sans-serif;
+$second-family: 'Iceland', sans-serif;
+$font-size-base: 16px;
+$font-weight-base: 400;
+$font-weight-bold: 700;
+$line-height-base: 1.5;
+
+// Spacing
+$offset-base-size: 4px;
+$offset-base-variable: 2px;
+
+// Width
+$width-base: 100vw;
+$width-page: 1480px;
+$width-column: 600px
+
+

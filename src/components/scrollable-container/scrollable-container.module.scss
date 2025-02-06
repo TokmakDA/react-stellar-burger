@@ -1,0 +1,31 @@
+.scrollableContainer {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px;
+  border-radius: 12px;
+  scrollbar-width: thin; // Firefox
+  scrollbar-color: #888 transparent;
+
+  ///* Для WebKit (Chrome, Safari) */
+  //&::-webkit-scrollbar {
+  //  width: 8px;
+  //}
+  //
+  //&::-webkit-scrollbar-track {
+  //  background: transparent;
+  //}
+  //
+  //&::-webkit-scrollbar-thumb {
+  //  background-color: #8585AD;
+  //  border-radius: 4px;
+  //  transition: background-color 0.3s;
+  //  border: 3px solid var(--interface-input, #2F2F37);
+  //  background: var(--text-dark-grey-secondary-text, #8585AD);
+  //
+  //  &:hover {
+  //    background-color: #555;
+  //  }
+  //}
+
+
+}

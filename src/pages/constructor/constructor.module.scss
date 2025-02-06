@@ -1,0 +1,4 @@
+.page {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(auto, $width-column));
+}

@@ -1,0 +1,14 @@
+.section {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.list {
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  width: fit-content;
+}
