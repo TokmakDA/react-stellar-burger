@@ -1,14 +1,38 @@
 .section {
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
-  overflow: hidden;
+  max-width: $width-column;
+  overflow-y: hidden;
+}
+
+.scroll-wrapper {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.container {
+  display: flex;
+  flex-direction: column;
 }
 
 .list {
   justify-self: center;
+  align-self: center;
   display: grid;
   place-items: center;
   grid-template-columns: repeat(2, 1fr);
   width: fit-content;
+}
+
+.actions {
+  display: flex;
+  justify-content: end;
+  align-content: center;
+  align-items: center;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -8,12 +8,38 @@ body {
   box-sizing: border-box;
   position: relative;
   width: 100vw;
-  height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  overflow: auto;
 }
 
 * {
   //outline: 1px solid pink;
+}
+
+* {
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $text-dark-grey-secondary-text $interface-input;
+
+  /* Для WebKit (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $interface-input;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $text-dark-grey-secondary-text;
+    border-radius: 12px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
 }

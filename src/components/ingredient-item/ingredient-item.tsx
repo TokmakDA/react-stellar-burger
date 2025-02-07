@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { TBurgerIngredient } from '@/@types/types.ts'
-import styles from './ingredient.module.scss'
+import styles from './Ingredient-item.module.scss'
 import {
   Counter,
   CurrencyIcon,
@@ -10,7 +10,7 @@ type TIngredientProps = {
   ingredient: TBurgerIngredient
 }
 
-const Ingredient: FC<TIngredientProps> = ({ ingredient }) => {
+const IngredientItem: FC<TIngredientProps> = ({ ingredient }) => {
   return (
     <div className={styles.container}>
       <Counter count={0} size='default' />
@@ -32,4 +32,4 @@ const Ingredient: FC<TIngredientProps> = ({ ingredient }) => {
   )
 }
 
-export default Ingredient
+export default IngredientItem

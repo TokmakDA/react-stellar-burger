@@ -1,0 +1,35 @@
+.section {
+  display: flex;
+  flex-direction: column;
+
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__list-wrapper {
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+
+  &__price {
+    display: flex;
+    align-items: center;
+  }
+}
