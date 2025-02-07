@@ -8,7 +8,9 @@ export const ConstructorPage: FC = () => {
   return (
     <div className={`${styles.page} ga-10`}>
       <BurgerIngredients ingredients={burgerIngredients}></BurgerIngredients>
-      <BurgerConstructor burgerComponents={burgerIngredients}></BurgerConstructor>
+      <BurgerConstructor
+        burgerComponents={burgerIngredients}
+      ></BurgerConstructor>
     </div>
   )
 }
