@@ -1,8 +1,8 @@
 import { FC, useMemo, useState } from 'react'
 import styles from './burger-ingredients.module.scss'
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { TBurgerIngredient } from '@/@types/types.ts'
 import IngredientItem from '@/components/ingredient-item/ingredient-item.tsx'
+import { Tab } from '@/ui-kit'
 
 type TBurgerIngredientsProps = {
   ingredients: TBurgerIngredient[]
@@ -39,7 +39,7 @@ const BurgerIngredients: FC<TBurgerIngredientsProps> = (props) => {
   return (
     <section className={styles.section}>
       <h1 className={'text text_type_main-large pt-10 pb-5'}>Собери бургер</h1>
-      <div style={{ display: 'flex' }} className={''}>
+      <nav style={{ display: 'flex' }} className={''}>
         <Tab value='bun' active={current === 'bun'} onClick={setCurrent}>
           Булки
         </Tab>
@@ -49,19 +49,23 @@ const BurgerIngredients: FC<TBurgerIngredientsProps> = (props) => {
         <Tab value='main' active={current === 'main'} onClick={setCurrent}>
           Основные
         </Tab>
-      </div>
-      <div className={`${styles['scroll-wrapper']} mt-10`}>
+      </nav>
+      <div className={`${styles.section__scrollWrapper} mt-10`}>
         {Object.entries(ingredientsGroup).map(([key, val]) => (
-          <div key={key} id={key} className={`${styles.container}`}>
+          <section
+            key={key}
+            id={key}
+            className={`${styles.section__container}`}
+          >
             <h2 className={`text text_type_main-medium mb-5`}>{val.title}</h2>
-            <ul className={`${styles.list} gr-8 gc-6`}>
+            <ul className={`${styles.section__list} gr-8 gc-6`}>
               {ingredients[key].map((ingredient) => (
                 <li key={ingredient._id}>
                   <IngredientItem ingredient={ingredient}></IngredientItem>
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
         ))}
       </div>
     </section>

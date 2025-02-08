@@ -1,24 +1,29 @@
 .section {
   display: flex;
   flex-direction: column;
+  max-width: $width-column;
+  overflow: hidden;
 
   &__container {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    max-height: 100%;
+
   }
 
-  &__list-wrapper {
-    max-height: 300px;
-    overflow-y: auto;
+  &__scrollWrapper {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
     scrollbar-gutter: stable;
   }
 
   &__list {
-    display: flex;
-    flex-direction: column;
     margin: 0;
     padding: 0;
     list-style: none;
+    overflow-y: auto;
   }
 
   &__actions {

@@ -3,36 +3,29 @@
   flex-direction: column;
   max-width: $width-column;
   overflow-y: hidden;
-}
 
-.scroll-wrapper {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-}
-.container {
-  display: flex;
-  flex-direction: column;
-}
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
 
-.list {
-  justify-self: center;
-  align-self: center;
-  display: grid;
-  place-items: center;
-  grid-template-columns: repeat(2, 1fr);
-  width: fit-content;
-}
+  &__scrollWrapper {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
 
-.actions {
-  display: flex;
-  justify-content: end;
-  align-content: center;
-  align-items: center;
-}
-
-.price {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  &__list {
+    justify-self: center;
+    align-self: center;
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-y: auto;
+  }
 }

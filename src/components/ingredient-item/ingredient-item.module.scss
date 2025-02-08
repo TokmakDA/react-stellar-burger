@@ -1,4 +1,4 @@
-.container {
+.ingredientItem {
   display: flex;
   width: 272px;
   height: 208px;
@@ -8,7 +8,7 @@
   flex-shrink: 0;
   position: relative;
 
-  .image {
+  &__image {
     width: 240px;
     height: 120px;
     flex-shrink: 0;
@@ -18,22 +18,22 @@
     aspect-ratio: 2 / 1;
   }
 
-  .price {
+  &__price {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .title {
+  &__title {
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
     text-align: center;
   }
 
-  .counter {
+  &__counter {
     position: absolute;
     top: 0;
     right: 0;

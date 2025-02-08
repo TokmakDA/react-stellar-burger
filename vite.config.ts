@@ -21,12 +21,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
+      '@ui-kit': path.resolve(__dirname, 'src/ui-kit'),
     },
   },
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['src/setupTests.ts'], // добавил расширение, если TypeScript
+    setupFiles: ['src/setupTests.ts'],
     mockReset: true,
   },
   server: {

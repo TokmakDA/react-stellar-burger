@@ -1,12 +1,7 @@
 import { FC, useMemo } from 'react'
 import styles from './burger-constructor.module.scss'
-import {
-  Button,
-  ConstructorElement,
-  CurrencyIcon,
-  DragIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components'
 import { TBurgerIngredient } from '@/@types/types'
+import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@/ui-kit'
 
 type TBurgerConstructorProps = {
   burgerComponents: TBurgerIngredient[]
@@ -45,23 +40,23 @@ const BurgerConstructor: FC<TBurgerConstructorProps> = (props) => {
           }
         />
 
-        <div className={styles[`section__list-wrapper`]}>
-          <ul className={`${styles.section__list} ga-4`}>
-            {burgerData.items.map((item) => (
-              <li key={item._id}>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  <DragIcon type='primary' />
-                  <ConstructorElement
-                    isLocked={false}
-                    text={item.name}
-                    price={item.price}
-                    thumbnail={item.image}
-                  />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul
+          className={`${styles.section__scrollWrapper} ${styles.section__list} ga-4  `}
+        >
+          {burgerData.items.map((item) => (
+            <li key={item._id}>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <DragIcon type='primary' />
+                <ConstructorElement
+                  isLocked={false}
+                  text={item.name}
+                  price={item.price}
+                  thumbnail={item.image}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
 
         <ConstructorElement
           extraClass='ml-8'
@@ -77,7 +72,7 @@ const BurgerConstructor: FC<TBurgerConstructorProps> = (props) => {
       </div>
 
       {/* Блок цены и кнопки */}
-      <div className={`${styles.section__actions}  ga-10 pr-4`}>
+      <div className={`${styles.section__actions}  ga-10 pr-4 pb-10`}>
         <div className={`${styles.section__price} ga-2`}>
           <span className='text text_type_digits-medium'>610</span>
           <CurrencyIcon type='primary' />
