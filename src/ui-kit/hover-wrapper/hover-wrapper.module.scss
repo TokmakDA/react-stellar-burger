@@ -1,0 +1,24 @@
+$duration: 0.2s;
+
+.wrapper {
+  padding: 0;
+  margin: 0;
+
+  &_scalable {
+    // Модификатор для активации масштабирования
+    display: inline-block;
+    transition: all $duration;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &__item {
+    transition: all $duration;
+
+    & > * {
+      transition: inherit;
+    }
+  }
+}

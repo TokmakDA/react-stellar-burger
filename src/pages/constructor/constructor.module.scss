@@ -1,6 +1,7 @@
 .page {
   display: grid;
   grid-template-columns: repeat(2, minmax(auto, $width-column));
+  justify-content: center;
   //display: flex;
   //flex-direction: row;
   overflow-y: hidden;

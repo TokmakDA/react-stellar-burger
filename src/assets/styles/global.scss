@@ -116,3 +116,35 @@ $spacer: 4px;
 .mb-auto {
   margin-bottom: auto;
 }
+
+.list-no-style {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    // Обрабатываем ссылки на любом уровне вложенности
+    a {
+      text-decoration: none;
+    }
+    // Для любых обёрток между <li> и <a>
+    * {
+      a {
+        text-decoration: none;
+      }
+    }
+
+    // Рекурсивное применение стиля для вложенных списков
+    ul,
+    ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      @extend .list-no-style;
+    }
+  }
+}

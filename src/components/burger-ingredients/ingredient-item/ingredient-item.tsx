@@ -6,11 +6,12 @@ import { Counter, CurrencyIcon } from '@/ui-kit'
 
 type TIngredientProps = {
   ingredient: TBurgerIngredient
+  onClick: (ingredient: TBurgerIngredient | null) => void
 }
 
-const IngredientItem: FC<TIngredientProps> = ({ ingredient }) => {
+const IngredientItem: FC<TIngredientProps> = ({ ingredient, onClick }) => {
   return (
-    <div className={styles.ingredientItem}>
+    <div className={styles.ingredientItem} onClick={() => onClick(ingredient)}>
       <Counter
         count={0}
         size='default'
@@ -27,11 +28,11 @@ const IngredientItem: FC<TIngredientProps> = ({ ingredient }) => {
         </span>
         <CurrencyIcon type='primary' />
       </div>
-      <span
+      <h3
         className={`${styles.ingredientItem__title} text text_type_main-default`}
       >
         {ingredient.name}
-      </span>
+      </h3>
     </div>
   )
 }

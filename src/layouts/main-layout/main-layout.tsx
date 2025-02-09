@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { Header } from '@/components/header/header'
 import { Outlet } from 'react-router'
-import styles from './styles.module.scss'
+import styles from './main-layout.module.scss'
 
 export const MainLayout: FC = () => {
   return (

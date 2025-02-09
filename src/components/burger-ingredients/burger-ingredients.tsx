@@ -1,25 +1,23 @@
-import { FC, useMemo, useState } from 'react'
+import IngredientDetails from '@/components/burger-ingredients/ingredient-details/ingredient-details.tsx'
+import IngredientsGroup from '@/components/burger-ingredients/ingredients-group/ingredients-group.tsx'
+import { FC, useCallback, useMemo, useState } from 'react'
 import styles from './burger-ingredients.module.scss'
 import { TBurgerIngredient } from '@/@types/types.ts'
-import IngredientItem from '@/components/ingredient-item/ingredient-item.tsx'
-import { Tab } from '@/ui-kit'
+import { Modal, Tab } from '@/ui-kit'
 
 type TBurgerIngredientsProps = {
   ingredients: TBurgerIngredient[]
 }
 
 const BurgerIngredients: FC<TBurgerIngredientsProps> = (props) => {
-  const [current, setCurrent] = useState('one')
+  const [currentTab, setCurrentTab] = useState<string | null>(null)
+  const [selectedIngredient, setSelectedIngredient] =
+    useState<TBurgerIngredient | null>(null)
+
   const ingredientsGroup = {
-    bun: {
-      title: 'Булки',
-    },
-    sauce: {
-      title: 'Соусы',
-    },
-    main: {
-      title: 'Главные ингредиенты',
-    },
+    bun: 'Булки',
+    sauce: 'Соусы',
+    main: 'Главные ингредиенты',
   }
 
   const ingredients = useMemo(() => {
@@ -36,38 +34,52 @@ const BurgerIngredients: FC<TBurgerIngredientsProps> = (props) => {
     return items
   }, [props.ingredients])
 
+  const handleIngredientClick = useCallback(
+    (ingredient: TBurgerIngredient | null) => {
+      setSelectedIngredient(ingredient)
+    },
+    []
+  )
+
   return (
     <section className={styles.section}>
       <h1 className={'text text_type_main-large pt-10 pb-5'}>Собери бургер</h1>
-      <nav style={{ display: 'flex' }} className={''}>
-        <Tab value='bun' active={current === 'bun'} onClick={setCurrent}>
-          Булки
-        </Tab>
-        <Tab value='sauce' active={current === 'sauce'} onClick={setCurrent}>
-          Соусы
-        </Tab>
-        <Tab value='main' active={current === 'main'} onClick={setCurrent}>
-          Основные
-        </Tab>
+      <nav>
+        <ul style={{ display: 'flex' }} className={'list-no-style'}>
+          {Object.entries(ingredientsGroup).map(([key, val]) => {
+            return (
+              <li key={key}>
+                <Tab
+                  value={key}
+                  active={currentTab === key}
+                  onClick={() => setCurrentTab(key)}
+                >
+                  {val}
+                </Tab>
+              </li>
+            )
+          })}
+        </ul>
       </nav>
       <div className={`${styles.section__scrollWrapper} mt-10`}>
         {Object.entries(ingredientsGroup).map(([key, val]) => (
-          <section
+          <IngredientsGroup
             key={key}
-            id={key}
-            className={`${styles.section__container}`}
-          >
-            <h2 className={`text text_type_main-medium mb-5`}>{val.title}</h2>
-            <ul className={`${styles.section__list} gr-8 gc-6`}>
-              {ingredients[key].map((ingredient) => (
-                <li key={ingredient._id}>
-                  <IngredientItem ingredient={ingredient}></IngredientItem>
-                </li>
-              ))}
-            </ul>
-          </section>
+            title={val}
+            ingredients={ingredients[key]}
+            onClick={handleIngredientClick}
+          />
         ))}
       </div>
+
+      {selectedIngredient && (
+        <Modal
+          onClose={() => handleIngredientClick(null)}
+          title='Детали ингредиента'
+        >
+          <IngredientDetails ingredient={selectedIngredient} />
+        </Modal>
+      )}
     </section>
   )
 }

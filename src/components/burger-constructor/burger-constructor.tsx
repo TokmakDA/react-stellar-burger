@@ -1,7 +1,14 @@
-import { FC, useMemo } from 'react'
+import OrderDetails from '@/components/order-details/order-details.tsx'
+import { FC, useCallback, useMemo, useState } from 'react'
 import styles from './burger-constructor.module.scss'
 import { TBurgerIngredient } from '@/@types/types'
-import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@/ui-kit'
+import {
+  Button,
+  ConstructorElement,
+  CurrencyIcon,
+  DragIcon,
+  Modal,
+} from '@/ui-kit'
 
 type TBurgerConstructorProps = {
   burgerComponents: TBurgerIngredient[]
@@ -25,6 +32,20 @@ const BurgerConstructor: FC<TBurgerConstructorProps> = (props) => {
     return { items, bun }
   }, [props.burgerComponents])
 
+  const [newOrder, setNewOrder] = useState<string | number | null>(null)
+
+  const generateOrder = () => {
+    return Math.random().toString(16).slice(8)
+  }
+
+  const handlePlaceOrder = () => {
+    setNewOrder(generateOrder())
+  }
+
+  const handleClose = useCallback(() => {
+    setNewOrder(null)
+  }, [])
+
   return (
     <section className={styles.section}>
       <div className={`${styles.section__container} pl-4 pt-25 pb-10 ga-4`}>
@@ -45,7 +66,7 @@ const BurgerConstructor: FC<TBurgerConstructorProps> = (props) => {
         >
           {burgerData.items.map((item) => (
             <li key={item._id}>
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div className={styles.section__item}>
                 <DragIcon type='primary' />
                 <ConstructorElement
                   isLocked={false}
@@ -77,10 +98,15 @@ const BurgerConstructor: FC<TBurgerConstructorProps> = (props) => {
           <span className='text text_type_digits-medium'>610</span>
           <CurrencyIcon type='primary' />
         </div>
-        <Button size='large' htmlType='button'>
+        <Button size='large' htmlType='button' onClick={handlePlaceOrder}>
           Оформить заказ
         </Button>
       </div>
+      {newOrder && (
+        <Modal onClose={handleClose}>
+          <OrderDetails order={newOrder} />
+        </Modal>
+      )}
     </section>
   )
 }

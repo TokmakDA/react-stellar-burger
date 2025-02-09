@@ -31,6 +31,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import LinkItem from './link-item/link-item.tsx'
+import Modal from './modal/modal.tsx'
+import Overlay from './overlay/overlay.tsx'
+import HoverWrapper from '@ui-kit/hover-wrapper/hover-wrapper.tsx'
 
 export {
   RefreshButton,
@@ -62,5 +65,10 @@ export {
   MoveButton,
   Button,
   AddButton,
+
+  //  Custom
+  Modal,
+  Overlay,
   LinkItem,
+  HoverWrapper,
 }
