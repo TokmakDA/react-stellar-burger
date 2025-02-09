@@ -17,7 +17,7 @@ const BurgerIngredients: FC<TBurgerIngredientsProps> = (props) => {
   const ingredientsGroup = {
     bun: 'Булки',
     sauce: 'Соусы',
-    main: 'Главные ингредиенты',
+    main: 'Начинки',
   }
 
   const ingredients = useMemo(() => {
@@ -61,7 +61,7 @@ const BurgerIngredients: FC<TBurgerIngredientsProps> = (props) => {
           })}
         </ul>
       </nav>
-      <div className={`${styles.section__scrollWrapper} mt-10`}>
+      <div className={`${styles.section__scrollWrapper} mt-10 ga-10`}>
         {Object.entries(ingredientsGroup).map(([key, val]) => (
           <IngredientsGroup
             key={key}

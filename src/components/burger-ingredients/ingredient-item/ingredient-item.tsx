@@ -22,7 +22,7 @@ const IngredientItem: FC<TIngredientProps> = ({ ingredient, onClick }) => {
         alt={ingredient.name}
         className={styles.ingredientItem__image}
       />
-      <div className={styles.ingredientItem__price}>
+      <div className={`${styles.ingredientItem__price} ga-2`}>
         <span className='text text_type_digits-default'>
           {ingredient.price}
         </span>
