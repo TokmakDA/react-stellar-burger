@@ -1,0 +1,24 @@
+$max-width: 1480px;
+
+// Миксин для контейнера
+@mixin container {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+// Миксин для универсального `box`
+@mixin box(
+  $display: flex,
+  $gap-multiplier: 1,
+  $padding: 0,
+  $align: stretch,
+  $justify: flex-start,
+  $direction: row
+) {
+  display: $display;
+  gap: calc(var(--offset-base-size) * $gap-multiplier);
+  padding: $padding;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+}

@@ -1,0 +1,150 @@
+$spacing: 30;
+$spacer: 4px;
+
+// Генерация классов для margin, padding и gap
+@for $i from 0 through $spacing {
+  // Классы для margin
+  .m-#{$i} {
+    margin: $i * $spacer;
+  }
+  .mt-#{$i} {
+    margin-top: $i * $spacer;
+  }
+  .mb-#{$i} {
+    margin-bottom: $i * $spacer;
+  }
+  .ml-#{$i} {
+    margin-left: $i * $spacer;
+  }
+  .mr-#{$i} {
+    margin-right: $i * $spacer;
+  }
+  .mx-#{$i} {
+    margin-left: $i * $spacer;
+    margin-right: $i * $spacer;
+  }
+  .my-#{$i} {
+    margin-top: $i * $spacer;
+    margin-bottom: $i * $spacer;
+  }
+
+  // Классы для padding
+  .p-#{$i} {
+    padding: $i * $spacer;
+  }
+  .pt-#{$i} {
+    padding-top: $i * $spacer;
+  }
+  .pb-#{$i} {
+    padding-bottom: $i * $spacer;
+  }
+  .pl-#{$i} {
+    padding-left: $i * $spacer;
+  }
+  .pr-#{$i} {
+    padding-right: $i * $spacer;
+  }
+  .px-#{$i} {
+    padding-left: $i * $spacer;
+    padding-right: $i * $spacer;
+  }
+  .py-#{$i} {
+    padding-top: $i * $spacer;
+    padding-bottom: $i * $spacer;
+  }
+
+  // Классы для gap
+  .ga-#{$i} {
+    gap: $i * $spacer;
+  }
+  .gc-#{$i} {
+    column-gap: $i * $spacer;
+  }
+  .gr-#{$i} {
+    row-gap: $i * $spacer;
+  }
+}
+
+// Отрицательные margin
+@for $i from 1 through $spacing {
+  .m-n#{$i} {
+    margin: -$i * $spacer;
+  }
+  .mt-n#{$i} {
+    margin-top: -$i * $spacer;
+  }
+  .mb-n#{$i} {
+    margin-bottom: -$i * $spacer;
+  }
+  .ml-n#{$i} {
+    margin-left: -$i * $spacer;
+  }
+  .mr-n#{$i} {
+    margin-right: -$i * $spacer;
+  }
+  .mx-n#{$i} {
+    margin-left: -$i * $spacer;
+    margin-right: -$i * $spacer;
+  }
+  .my-n#{$i} {
+    margin-top: -$i * $spacer;
+    margin-bottom: -$i * $spacer;
+  }
+}
+
+// Классы для auto
+.ma-auto {
+  margin: auto;
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.mr-auto {
+  margin-right: auto;
+}
+.mt-auto {
+  margin-top: auto;
+}
+.mb-auto {
+  margin-bottom: auto;
+}
+
+.list-no-style {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    // Обрабатываем ссылки на любом уровне вложенности
+    a {
+      text-decoration: none;
+    }
+    // Для любых обёрток между <li> и <a>
+    * {
+      a {
+        text-decoration: none;
+      }
+    }
+
+    // Рекурсивное применение стиля для вложенных списков
+    ul,
+    ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      @extend .list-no-style;
+    }
+  }
+}

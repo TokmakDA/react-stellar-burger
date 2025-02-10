@@ -1,0 +1,14 @@
+.link {
+  @include box($gap-multiplier: 1, $align: center);
+  border-radius: var(--common-border-radius-s);
+  color: $text-dark-grey-secondary-text;
+  text-decoration: none;
+
+  &:hover {
+    color: $text-primary-light-standart-text;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+  }
+}

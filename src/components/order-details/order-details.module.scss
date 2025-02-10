@@ -1,0 +1,46 @@
+.order {
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  &__number {
+    text-shadow: $text-shadow;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  &__title {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  &__icon {
+    width: 100%;
+    max-height: 120px;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__status,
+  &__note {
+    white-space: normal;
+    text-align: center;
+  }
+}

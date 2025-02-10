@@ -1,0 +1,19 @@
+.group {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+  }
+
+  &__list {
+    justify-self: center;
+    align-self: center;
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}

@@ -1,0 +1,75 @@
+//TODO Позже переписать
+.loader {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-items: center;
+  gap: 10px;
+  justify-content: center;
+  transform: scale(2);
+  pointer-events: none;
+
+  &__text {
+    color: $text-dark-grey-secondary-text;
+  }
+
+  &__wrapper {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__circle {
+    background-color: $text-dark-grey-secondary-text;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+
+    -webkit-animation: stretchdelay 0.9s infinite ease-out;
+    animation: stretchdelay 0.9s infinite ease-out;
+
+    &:nth-child(2) {
+      -webkit-animation-delay: -0.6s;
+      animation-delay: -0.6s;
+    }
+    &:nth-child(3) {
+      -webkit-animation-delay: -0.45s;
+      animation-delay: -0.45s;
+    }
+    &:nth-child(4) {
+      -webkit-animation-delay: -0.3s;
+      animation-delay: -0.3s;
+    }
+    &:nth-child(5) {
+      -webkit-animation-delay: -0.15s;
+      animation-delay: -0.15s;
+    }
+  }
+
+  @-webkit-keyframes stretchdelay {
+    0%,
+    40%,
+    100% {
+      -webkit-transform: translateY(0);
+    }
+    20% {
+      -webkit-transform: translateY(-10px);
+    }
+  }
+
+  @keyframes stretchdelay {
+    0%,
+    40%,
+    100% {
+      transform: translateY(0);
+      -webkit-transform: translateY(0);
+    }
+    20% {
+      transform: translateY(-10px);
+      -webkit-transform: translateY(-10px);
+    }
+  }
+}
