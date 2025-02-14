@@ -1,2 +1,2 @@
-export { ConstructorPage } from './constructor/constructor'
-export { NotFoundPage } from './not-found/not-found'
+export { ConstructorPage } from '@/pages/constructor'
+export { NotFoundPage } from '@/pages/not-found/ui/not-found.tsx'

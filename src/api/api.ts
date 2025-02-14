@@ -1,6 +1,6 @@
 // TypeScript Version with Typing
 
-import { TBurgerIngredient } from '@/@types/types.ts'
+import { TBurgerIngredient } from '@/shared/types'
 
 interface ApiOptions {
   baseUrl: string
