@@ -1,16 +1,29 @@
+import { rootReducer } from '@/app/root-reducer.ts'
+import { burgerIngredientsApi } from '@/features/burger-ingredients'
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/query'
 
-export const store = configureStore({
-  reducer: {},
-})
+export type RootState = ReturnType<typeof rootReducer>
 
-// Infer the type of `store`
+export const makeStore = (preloadedState?: Partial<RootState>) => {
+  const store = configureStore({
+    reducer: rootReducer,
+
+    middleware: (getDefaultMiddleware) => {
+      return getDefaultMiddleware().concat(burgerIngredientsApi.middleware)
+    },
+    preloadedState,
+  })
+
+  setupListeners(store.dispatch)
+  return store
+}
+
+export const store = makeStore()
+
 export type AppStore = typeof store
-export type RootState = ReturnType<AppStore['getState']>
-// Infer the `AppDispatch` type from the store itself
 export type AppDispatch = AppStore['dispatch']
-// Define a reusable type describing thunk functions
 export type AppThunk<ThunkReturnType = void> = ThunkAction<
   ThunkReturnType,
   RootState,
