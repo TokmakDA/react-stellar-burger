@@ -1,4 +1,12 @@
-import { burgerIngredientsApi } from '@/features/burger-ingredients'
+import { burgerConstructorSlice } from '@/features/burger-constructor'
+import {
+  burgerIngredientsApi,
+  ingredientDetailsSlice,
+} from '@/features/burger-ingredients'
 import { combineSlices } from '@reduxjs/toolkit'
 
-export const rootReducer = combineSlices(burgerIngredientsApi)
+export const rootReducer = combineSlices(
+  burgerIngredientsApi,
+  ingredientDetailsSlice,
+  burgerConstructorSlice
+)
