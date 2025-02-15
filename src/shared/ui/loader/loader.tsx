@@ -17,7 +17,7 @@ export const Loader: FC<TLoaderProps> = ({
         {Array.from({ length: 5 })
           .map((_, i) => i)
           .map((k) => (
-            <div key={k} className={styles.loader__circle}></div>
+            <div key={k} className={styles.loader__circle} />
           ))}
       </div>
       {children}

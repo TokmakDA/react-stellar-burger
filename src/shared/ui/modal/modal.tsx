@@ -1,13 +1,5 @@
 import { HoverWrapper, CloseIcon, Overlay } from '@/shared/ui'
-import {
-  FC,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { FC, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import styles from './modal.module.scss'
 
@@ -16,7 +8,7 @@ interface ModalProps {
   onClose: () => void
   disableOverlayClose?: boolean
   title?: string | null
-  delay?: string | number // Миллисекунды ожидания перед закрытием компонента и анимации
+  delay?: number // Миллисекунды ожидания перед закрытием компонента и анимации
 }
 
 export const Modal: FC<ModalProps> = ({
@@ -29,7 +21,6 @@ export const Modal: FC<ModalProps> = ({
   const modalRoot = document.getElementById('modal-root') as HTMLElement | null
   const refModal = useRef<HTMLDivElement>(null)
 
-  const delayTime = useMemo(() => Number(delay), [delay])
   const [isVisible, setIsVisible] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -47,8 +38,8 @@ export const Modal: FC<ModalProps> = ({
     setIsVisible(false)
     timeoutRef.current = setTimeout(() => {
       onClose()
-    }, delayTime)
-  }, [onClose, delayTime])
+    }, delay)
+  }, [onClose, delay])
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -66,7 +57,7 @@ export const Modal: FC<ModalProps> = ({
           className={`${styles.modal}`}
           style={{
             opacity: isVisible ? 1 : 0,
-            transition: `opacity ${delayTime / delayTime}s`,
+            transition: `opacity ${delay / 1000}s`,
           }}
           ref={refModal}
         >

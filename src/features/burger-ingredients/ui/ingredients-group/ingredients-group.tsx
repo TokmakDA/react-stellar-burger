@@ -20,10 +20,7 @@ export const IngredientsGroup: FC<TIngredientsGroupProps> = ({
       <ul className={`${styles.group__list} gr-8 gc-6`}>
         {ingredients.map((ingredient) => (
           <li key={ingredient._id}>
-            <IngredientItem
-              ingredient={ingredient}
-              onClick={onClick}
-            ></IngredientItem>
+            <IngredientItem ingredient={ingredient} onClick={onClick} />
           </li>
         ))}
       </ul>
