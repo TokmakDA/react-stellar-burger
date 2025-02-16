@@ -1,10 +1,10 @@
-import { TBurgerIngredient } from '@/shared/types'
+import { TIngredient } from '@/shared/types'
 import { formatNumberToRu } from '@/shared/lib/utils'
 import { FC } from 'react'
 import styles from './ingredient-details.module.scss'
 
 type TIngredientDetailsProps = {
-  ingredient: TBurgerIngredient
+  ingredient: TIngredient
 }
 
 export const IngredientDetails: FC<TIngredientDetailsProps> = ({
@@ -33,7 +33,7 @@ export const IngredientDetails: FC<TIngredientDetailsProps> = ({
             <li key={key} className={styles.details__nutrientsItem}>
               <h4 className='text text_type_main-default'>{label}</h4>
               <span className='text text_type_digits-default'>
-                {formatNumberToRu(ingredient[key as keyof TBurgerIngredient])}
+                {formatNumberToRu(ingredient[key as keyof TIngredient])}
               </span>
             </li>
           ))}

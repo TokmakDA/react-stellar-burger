@@ -1,17 +1,17 @@
-import { TBurgerIngredient } from '@/shared/types'
+import { TIngredient } from '@/shared/types'
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState: TBurgerIngredient | null = null
+const initialState: TIngredient | null = null
 
 export const ingredientDetailsSlice = createSlice({
   name: 'burgerIngredient',
   initialState,
   reducers: {
-    setIngredient: (_, action) => {
+    setIngredientDetails: (_, action) => {
       const { ingredient } = action.payload
       return ingredient
     },
-    removeIngredient: () => {
+    removeIngredientDetails: () => {
       return null
     },
   },
@@ -21,6 +21,6 @@ export const ingredientDetailsSlice = createSlice({
   extraReducers: () => {},
 })
 
-export const { setIngredient, removeIngredient } =
+export const { setIngredientDetails, removeIngredientDetails } =
   ingredientDetailsSlice.actions
 export default ingredientDetailsSlice.reducer

@@ -1,20 +1,24 @@
+import { useAppDispatch } from '@/app/hooks'
+import { addIngredient } from '@/features/burger/model'
 import {
   IngredientDetails,
   IngredientsGroup,
-} from '@/features/burger-ingredients/ui'
+} from '@/features/burger/ui/ingredients'
 import { FC, useCallback, useMemo, useState } from 'react'
-import styles from './burger-ingredients.module.scss'
-import { TBurgerIngredient } from '@/shared/types'
+import styles from './ingredients.module.scss'
+import { TIngredient } from '@/shared/types'
 import { Modal, Tab } from '@/shared/ui'
 
 type TBurgerIngredientsProps = {
-  ingredients: TBurgerIngredient[]
+  ingredients: TIngredient[]
 }
 
-export const BurgerIngredients: FC<TBurgerIngredientsProps> = (props) => {
+export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
+  const dispatch = useAppDispatch()
+
   const [currentTab, setCurrentTab] = useState<string | null>(null)
   const [selectedIngredient, setSelectedIngredient] =
-    useState<TBurgerIngredient | null>(null)
+    useState<TIngredient | null>(null)
 
   const ingredientsGroup = {
     bun: 'Булки',
@@ -23,7 +27,7 @@ export const BurgerIngredients: FC<TBurgerIngredientsProps> = (props) => {
   }
 
   const ingredients = useMemo(() => {
-    const items: Record<string, TBurgerIngredient[]> = {
+    const items: Record<string, TIngredient[]> = {
       bun: [],
       sauce: [],
       main: [],
@@ -37,10 +41,11 @@ export const BurgerIngredients: FC<TBurgerIngredientsProps> = (props) => {
   }, [props.ingredients])
 
   const handleIngredientClick = useCallback(
-    (ingredient: TBurgerIngredient | null) => {
+    (ingredient: TIngredient | null) => {
       setSelectedIngredient(ingredient)
+      if (ingredient) dispatch(addIngredient({ ingredient }))
     },
-    []
+    [dispatch]
   )
 
   return (

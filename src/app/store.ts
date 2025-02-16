@@ -1,5 +1,5 @@
 import { rootReducer } from '@/app/root-reducer.ts'
-import { burgerIngredientsApi } from '@/features/burger-ingredients'
+import { ingredientsApi } from '@/features/burger'
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
@@ -11,7 +11,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
     reducer: rootReducer,
 
     middleware: (getDefaultMiddleware) => {
-      return getDefaultMiddleware().concat(burgerIngredientsApi.middleware)
+      return getDefaultMiddleware().concat(ingredientsApi.middleware)
     },
     preloadedState,
   })

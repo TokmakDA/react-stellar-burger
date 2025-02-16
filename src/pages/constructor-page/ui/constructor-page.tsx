@@ -1,8 +1,8 @@
-import { BurgerConstructor } from '@/features/burger-constructor'
 import {
-  BurgerIngredients,
+  BurgerConstructor,
+  Ingredients,
   useGetIngredientsQuery,
-} from '@/features/burger-ingredients'
+} from '@/features/burger'
 import { Loader, Overlay } from '@/shared/ui'
 import { FC } from 'react'
 import styles from './constructor-page.module.scss'
@@ -20,8 +20,8 @@ export const ConstructorPage: FC = () => {
         <div> Ошибка загрузки </div>
       ) : (
         <div className={`${styles.page} ga-10`}>
-          <BurgerIngredients ingredients={ingredientsData?.data || []} />
-          <BurgerConstructor burgerComponents={ingredientsData?.data || []} />
+          <Ingredients ingredients={ingredientsData?.data || []} />
+          <BurgerConstructor />
         </div>
       )}
     </>

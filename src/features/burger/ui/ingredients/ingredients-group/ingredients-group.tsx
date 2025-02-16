@@ -1,12 +1,12 @@
-import { TBurgerIngredient } from '@/shared/types'
-import { IngredientItem } from '@/features/burger-ingredients/ui'
+import { IngredientItem } from '@/features/burger/ui/ingredients'
+import { TIngredient } from '@/shared/types'
 import styles from './ingredients-group.module.scss'
 import { FC } from 'react'
 
 type TIngredientsGroupProps = {
   title: string
-  ingredients: TBurgerIngredient[]
-  onClick: (ingredient: TBurgerIngredient | null) => void
+  ingredients: TIngredient[]
+  onClick: (ingredient: TIngredient | null) => void
 }
 
 export const IngredientsGroup: FC<TIngredientsGroupProps> = ({

@@ -1,1 +1,1 @@
-export type { TBurgerIngredient } from './ingredient'
+export type { TIngredient } from './ingredient'

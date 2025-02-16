@@ -1,14 +1,14 @@
 import { API_BASE_URL } from '@/shared/config/config.ts'
-import { TBurgerIngredient } from '@/shared/types'
+import { TIngredient } from '@/shared/types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 interface GetIngredientsResponse {
   success: boolean
-  data: TBurgerIngredient[]
+  data: TIngredient[]
 }
 
-export const burgerIngredientsApi = createApi({
-  reducerPath: 'burgerIngredientsApi',
+export const ingredientsApi = createApi({
+  reducerPath: 'ingredientsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
   }),
@@ -20,4 +20,4 @@ export const burgerIngredientsApi = createApi({
   }),
 })
 
-export const { useGetIngredientsQuery } = burgerIngredientsApi
+export const { useGetIngredientsQuery } = ingredientsApi
