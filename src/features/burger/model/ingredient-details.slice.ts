@@ -1,26 +1,23 @@
 import { TIngredient } from '@/shared/types'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState: TIngredient | null = null
+const initialState = null as TIngredient | null
 
 export const ingredientDetailsSlice = createSlice({
   name: 'burgerIngredient',
   initialState,
-  reducers: {
-    setIngredientDetails: (_, action) => {
-      const { ingredient } = action.payload
-      return ingredient
-    },
-    removeIngredientDetails: () => {
-      return null
-    },
-  },
+  reducers: (create) => ({
+    setIngredientDetails: create.reducer(
+      (_state, action: PayloadAction<TIngredient | null>) => action.payload
+    ),
+  }),
+
   selectors: {
     getIngredient: (state) => state,
   },
-  extraReducers: () => {},
 })
 
-export const { setIngredientDetails, removeIngredientDetails } =
-  ingredientDetailsSlice.actions
+export const { setIngredientDetails } = ingredientDetailsSlice.actions
+
+export const { getIngredient } = ingredientDetailsSlice.selectors
 export default ingredientDetailsSlice.reducer

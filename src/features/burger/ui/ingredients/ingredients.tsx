@@ -1,5 +1,5 @@
-import { useAppDispatch } from '@/app/hooks'
-import { addIngredient } from '@/features/burger/model'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { getIngredient, setIngredientDetails } from '@/features/burger/model'
 import {
   IngredientDetails,
   IngredientsGroup,
@@ -16,9 +16,9 @@ type TBurgerIngredientsProps = {
 export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
   const dispatch = useAppDispatch()
 
+  const selectedIngredient = useAppSelector(getIngredient)
+
   const [currentTab, setCurrentTab] = useState<string | null>(null)
-  const [selectedIngredient, setSelectedIngredient] =
-    useState<TIngredient | null>(null)
 
   const ingredientsGroup = {
     bun: 'Булки',
@@ -42,8 +42,7 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
 
   const handleIngredientClick = useCallback(
     (ingredient: TIngredient | null) => {
-      setSelectedIngredient(ingredient)
-      if (ingredient) dispatch(addIngredient({ ingredient }))
+      dispatch(setIngredientDetails(ingredient))
     },
     [dispatch]
   )
