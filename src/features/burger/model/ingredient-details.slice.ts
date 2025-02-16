@@ -20,4 +20,3 @@ export const ingredientDetailsSlice = createSlice({
 export const { setIngredientDetails } = ingredientDetailsSlice.actions
 
 export const { getIngredient } = ingredientDetailsSlice.selectors
-export default ingredientDetailsSlice.reducer
