@@ -1,4 +1,5 @@
-import { IngredientItem } from '@/features/burger/ui/ingredients'
+import { ITEM_TYPES } from '@/features/burger/lib'
+import { DraggableItem, IngredientItem } from '@/features/burger/ui'
 import { TIngredient } from '@/shared/types'
 import styles from './ingredients-group.module.scss'
 import { FC } from 'react'
@@ -18,9 +19,14 @@ export const IngredientsGroup: FC<TIngredientsGroupProps> = ({
     <section className={`${styles.group}`}>
       <h2 className={`text text_type_main-medium mb-5`}>{title}</h2>
       <ul className={`${styles.group__list} gr-8 gc-6`}>
-        {ingredients.map((ingredient) => (
+        {ingredients.map((ingredient: TIngredient) => (
           <li key={ingredient._id}>
-            <IngredientItem ingredient={ingredient} onClick={onClick} />
+            <DraggableItem<TIngredient>
+              card={ingredient}
+              itemType={ITEM_TYPES.INGREDIENT}
+            >
+              <IngredientItem ingredient={ingredient} onClick={onClick} />
+            </DraggableItem>
           </li>
         ))}
       </ul>

@@ -1,2 +1,3 @@
-export { Ingredients } from './ingredients'
-export { BurgerConstructor } from './burger-constructor'
+export * from './ingredients'
+export * from './burger-constructor'
+export * from './dnd'

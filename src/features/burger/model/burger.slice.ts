@@ -1,7 +1,4 @@
-import {
-  TBurgerState,
-  TBurgerIngredient,
-} from '@/features/burger/model/types.ts'
+import { TBurgerState } from '@/features/burger'
 import { TIngredient } from '@/shared/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { nanoid } from '@reduxjs/toolkit'
@@ -20,14 +17,14 @@ export const burgerSlice = createSlice({
       action: PayloadAction<{ ingredient: TIngredient }>
     ) => {
       const { ingredient } = action.payload
+      const uuid = nanoid()
       if (ingredient.type === 'bun') {
         state.bun = { ...action.payload.ingredient }
       } else {
-        state.ingredients.push({ ...action.payload.ingredient, uuid: nanoid() })
+        state.ingredients.push({ ...action.payload.ingredient, uuid })
       }
     },
     removeIngredient: (state, action: PayloadAction<{ uuid: string }>) => {
-      console.log(action.payload)
       const index = state.ingredients.findIndex(
         (i) => i.uuid === action.payload.uuid
       )
@@ -35,22 +32,14 @@ export const burgerSlice = createSlice({
         state.ingredients.splice(index, 1)
       }
     },
-    setBurgerIngredients: (
+    moveIngredient: (
       state,
-      action: PayloadAction<TBurgerIngredient[]>
+      action: PayloadAction<{ from: number; after: number }>
     ) => {
-      state.ingredients = action.payload
-    },
-    sorTConstructorIngredients: (
-      state,
-      action: PayloadAction<{ from: number; to: number }>
-    ) => {
-      const { from, to } = action.payload
+      const { from, after } = action.payload
       const ingredients = [...state.ingredients]
-      // const temp = ingredients[from]
-      // ingredients[from] = ingredients[to]
-      // ingredients[to] = temp
-      ingredients.splice(to, 1, ingredients.slice(from, 1)[0])
+      const [movedItem] = ingredients.splice(from, 1)
+      ingredients.splice(after, 0, movedItem)
       state.ingredients = ingredients
     },
   },
@@ -66,6 +55,7 @@ export const burgerSlice = createSlice({
   },
 })
 
-export const { addIngredient, removeIngredient } = burgerSlice.actions
+export const { addIngredient, removeIngredient, moveIngredient } =
+  burgerSlice.actions
 
 export const { getBurgerIngredients, selectBurgerPrice } = burgerSlice.selectors

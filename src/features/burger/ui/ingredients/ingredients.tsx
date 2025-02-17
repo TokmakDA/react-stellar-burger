@@ -1,9 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { getIngredient, setIngredientDetails } from '@/features/burger/model'
-import {
-  IngredientDetails,
-  IngredientsGroup,
-} from '@/features/burger/ui/ingredients'
+import { IngredientDetails, IngredientsGroup } from '@/features/burger/ui'
 import { FC, useCallback, useMemo, useState } from 'react'
 import styles from './ingredients.module.scss'
 import { TIngredient } from '@/shared/types'
