@@ -24,6 +24,8 @@ export const IngredientsGroup: FC<TIngredientsGroupProps> = ({
             <DraggableItem<TIngredient>
               card={ingredient}
               itemType={ITEM_TYPES.INGREDIENT}
+              withPreview={true}
+              image={ingredient.image}
             >
               <IngredientItem ingredient={ingredient} onClick={onClick} />
             </DraggableItem>

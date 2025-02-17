@@ -11,13 +11,13 @@ interface DraggableBaseProps<T extends Record<string, unknown>> {
 interface DraggableWithPreview<T extends Record<string, unknown>>
   extends DraggableBaseProps<T> {
   withPreview: true
-  imageKey: keyof T
+  image: string
 }
 
 interface DraggableWithoutPreview<T extends Record<string, unknown>>
   extends DraggableBaseProps<T> {
   withPreview?: false
-  imageKey?: never
+  image?: never
 }
 
 type DraggableProps<T extends Record<string, unknown>> =
@@ -28,24 +28,25 @@ const DraggableItem = <T extends Record<string, unknown>>({
   children,
   card,
   withPreview = false,
-  imageKey,
+  image,
   extraClass = '',
   itemType,
 }: DraggableProps<T>) => {
-  const [, dragRef, previewRef] = useDrag({
+  const [{ opacity }, dragRef, previewRef] = useDrag({
     type: itemType,
     item: () => card,
+    collect: (monitor) => ({
+      opacity: monitor.isDragging() ? 0.5 : 1,
+    }),
   })
-
-  const imageUrl =
-    withPreview && imageKey ? (card[imageKey] as string | undefined) || '' : ''
 
   return (
     <>
-      {withPreview && imageUrl && (
-        <DragPreviewImage connect={previewRef} src={imageUrl} />
+      {withPreview && image && (
+        <DragPreviewImage connect={previewRef} src={image} />
       )}
-      <div ref={dragRef} className={extraClass}>
+
+      <div ref={dragRef} className={extraClass} style={{ opacity }}>
         {children}
       </div>
     </>

@@ -18,7 +18,7 @@ export const IngredientItem: FC<TIngredientProps> = ({
 
   const count = useMemo(() => {
     if (ingredient.type === 'bun') {
-      return bun?._id === ingredient._id ? 2 : 0
+      return bun?._id === ingredient._id ? 2 : null
     } else {
       return (
         ingredients.filter((item) => item._id === ingredient._id).length || null
