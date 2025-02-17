@@ -122,7 +122,6 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
       <nav>
         <ul style={{ display: 'flex' }} className='list-no-style'>
           {Object.entries(ingredientsGroup).map(([key, val]) => {
-            // key здесь string, приводим к TIngredientType
             const typeKey = key as TIngredientType
             return (
               <li key={key}>
