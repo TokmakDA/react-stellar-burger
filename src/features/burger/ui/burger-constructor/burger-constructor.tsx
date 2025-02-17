@@ -67,7 +67,11 @@ export const BurgerConstructor: FC = () => {
   return (
     <section className={styles.section}>
       <div className={`${styles.section__container} pl-4 pt-25 pb-10 ga-4`}>
-        <DropTarget onDropHandler={handleIngredientAdd} extraClass='ga-4'>
+        <DropTarget
+          itemType={ITEM_TYPES.INGREDIENT}
+          onDropHandler={handleIngredientAdd}
+          extraClass='ga-4'
+        >
           {bun ? (
             <ConstructorElement
               extraClass='ml-8'

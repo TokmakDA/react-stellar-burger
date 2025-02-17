@@ -7,15 +7,17 @@ type TDropTargetProps = {
   children: ReactNode
   onDropHandler: (item: TIngredient) => void
   extraClass?: string
+  itemType: string
 }
 
 const DropTarget: FC<TDropTargetProps> = ({
   children,
   onDropHandler,
   extraClass = '',
+  itemType,
 }) => {
   const [{ isHover, isOver }, dropRef] = useDrop({
-    accept: 'INGREDIENT',
+    accept: itemType,
 
     drop(item: TIngredient) {
       onDropHandler(item)
