@@ -42,6 +42,9 @@ export const burgerSlice = createSlice({
       ingredients.splice(after, 0, movedItem)
       state.ingredients = ingredients
     },
+    cleanBurger: () => {
+      return initialState
+    },
   },
   selectors: {
     getBurgerIngredients: (state: TBurgerState): TBurgerState => {
@@ -55,7 +58,7 @@ export const burgerSlice = createSlice({
   },
 })
 
-export const { addIngredient, removeIngredient, moveIngredient } =
+export const { addIngredient, removeIngredient, moveIngredient, cleanBurger } =
   burgerSlice.actions
 
 export const { getBurgerIngredients, selectBurgerPrice } = burgerSlice.selectors

@@ -9,12 +9,14 @@ interface ModalProps {
   disableOverlayClose?: boolean
   title?: string | null
   delay?: number // Миллисекунды ожидания перед закрытием компонента и анимации
+  disabled?: boolean // Блокировка закрытия модального окна
 }
 
 export const Modal: FC<ModalProps> = ({
   children,
   onClose,
   disableOverlayClose = false,
+  disabled = false,
   title = null,
   delay = 300,
 }) => {
@@ -64,7 +66,13 @@ export const Modal: FC<ModalProps> = ({
           <div className={styles.modal__container}>
             <header className={`${styles.modal__header}`}>
               <HoverWrapper className={styles.modal__close} isScalable={true}>
-                <CloseIcon type='primary' onClick={handleClose} />
+                <button
+                  onClick={handleClose}
+                  disabled={disabled}
+                  style={{ background: 'transparent', border: 'none' }}
+                >
+                  <CloseIcon type='primary' />
+                </button>
               </HoverWrapper>
               {title && (
                 <h2

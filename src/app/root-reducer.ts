@@ -1,3 +1,4 @@
+import { orderApi } from '@/entities/order'
 import {
   burgerSlice,
   ingredientDetailsSlice,
@@ -8,5 +9,6 @@ import { combineSlices } from '@reduxjs/toolkit'
 export const rootReducer = combineSlices(
   ingredientsApi,
   ingredientDetailsSlice,
-  burgerSlice
+  burgerSlice,
+  orderApi
 )

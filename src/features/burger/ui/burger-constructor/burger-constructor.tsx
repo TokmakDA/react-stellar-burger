@@ -1,6 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { OrderDetails, useCreateOrderMutation } from '@/entities/order'
 import {
   addIngredient,
+  cleanBurger,
   getBurgerIngredients,
   moveIngredient,
   removeIngredient,
@@ -8,11 +10,9 @@ import {
   TBurgerIngredient,
 } from '@/features/burger'
 import { ITEM_TYPES } from '@/features/burger/lib'
-import { DropTarget, EmptyElement } from '@/features/burger/ui'
-import OrderDetails from '@/features/order/ui/order-details/order-details.tsx'
+import { DropTarget, EmptyElement, SortableItem } from '@/features/burger/ui'
 import { TIngredient } from '@/shared/types'
-import { FC, useCallback, useState } from 'react'
-import SortableItem from '../dnd/sortable-item.tsx'
+import { FC, useCallback, useEffect, useState } from 'react'
 import styles from './burger-constructor.module.scss'
 import {
   Button,
@@ -28,19 +28,13 @@ export const BurgerConstructor: FC = () => {
   const { bun, ingredients } = useAppSelector(getBurgerIngredients)
   const totalPrice = useAppSelector(selectBurgerPrice)
   const dispatch = useAppDispatch()
+  const [createOrder, { data: orderData, isLoading, isSuccess, isError }] =
+    useCreateOrderMutation()
 
-  const [newOrder, setNewOrder] = useState<string | number | null>(null)
-
-  const generateOrder = () => {
-    return Math.random().toString(16).slice(8)
-  }
-
-  const handlePlaceOrder = () => {
-    setNewOrder(generateOrder())
-  }
+  const [isNewOrder, setIsNewOrder] = useState<boolean>(false)
 
   const handleClose = useCallback(() => {
-    setNewOrder(null)
+    setIsNewOrder(false)
   }, [])
 
   const handleIngredientRemove = useCallback(
@@ -63,6 +57,23 @@ export const BurgerConstructor: FC = () => {
     },
     [dispatch]
   )
+
+  const handleOrderClick = () => {
+    setIsNewOrder(true)
+    if (!ingredients.length || !bun) return
+    const ingredientsIds = ingredients.map((ing) => ing._id)
+
+    ingredientsIds.concat(bun._id).unshift(bun._id)
+    createOrder({ ingredients: ingredientsIds })
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(cleanBurger())
+    }
+  }, [isSuccess, dispatch])
+
+  const disabledNewOrder = ingredients.length === 0 || bun === null
 
   return (
     <section className={styles.section}>
@@ -140,13 +151,26 @@ export const BurgerConstructor: FC = () => {
           <span className='text text_type_digits-medium'>{totalPrice}</span>
           <CurrencyIcon type='primary' />
         </div>
-        <Button size='large' htmlType='button' onClick={handlePlaceOrder}>
+        <Button
+          size='large'
+          htmlType='button'
+          onClick={handleOrderClick}
+          disabled={disabledNewOrder}
+        >
           Оформить заказ
         </Button>
       </div>
-      {newOrder && (
-        <Modal onClose={handleClose}>
-          <OrderDetails order={newOrder} />
+      {isNewOrder && (
+        <Modal
+          onClose={handleClose}
+          disableOverlayClose={isLoading}
+          disabled={isLoading}
+        >
+          <OrderDetails
+            data={orderData}
+            isLoading={isLoading}
+            isError={isError}
+          />
         </Modal>
       )}
     </section>

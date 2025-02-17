@@ -38,6 +38,9 @@ const DraggableItem = <T extends Record<string, unknown>>({
     collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0.5 : 1,
     }),
+    previewOptions: {
+      captureDraggingState: withPreview,
+    },
   })
 
   return (
