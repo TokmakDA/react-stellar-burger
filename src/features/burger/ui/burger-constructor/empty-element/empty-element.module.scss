@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 536px;
+  min-height: 80px;
+  max-height: 80px;
+
+  padding: 16px 24px;
+  gap: 20px;
+  flex-shrink: 0;
+
+  box-sizing: border-box;
+  border-radius: var(--common-border-radius-s);
+
+  color: $text-primary-light-standart-text;
+  background-color: $interface-input;
+  background: var(--background-element);
+
+  &__type {
+    &_top {
+      border-radius: var(--top-constructor-item-border-radius);
+    }
+    &_bottom {
+      border-radius: var(--bottom-constructor-item-border-radius);
+    }
+  }
+}

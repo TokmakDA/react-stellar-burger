@@ -1,0 +1,27 @@
+.target {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 100%;
+
+  &__borger {
+    position: absolute;
+    top: 0;
+    left: 32px;
+    bottom: 0;
+    right: 16px;
+    border-radius: var(--common-border-radius);
+    background-color: transparent;
+    transition: border 0.2s;
+    opacity: 0.5;
+
+    &_hover {
+      border: 1px dashed $neon;
+    }
+
+    &_over {
+      border: 1px dashed $interface-success;
+    }
+  }
+}
