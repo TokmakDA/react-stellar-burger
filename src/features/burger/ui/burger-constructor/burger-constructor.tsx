@@ -46,7 +46,7 @@ export const BurgerConstructor: FC = () => {
 
   const handleIngredientAdd = useCallback(
     (ingredient: TIngredient) => {
-      dispatch(addIngredient({ ingredient }))
+      dispatch(addIngredient(ingredient))
     },
     [dispatch]
   )
@@ -101,7 +101,7 @@ export const BurgerConstructor: FC = () => {
             {ingredients.length ? (
               ingredients.map((ingredient, idx) => (
                 <li key={ingredient.uuid}>
-                  <SortableItem
+                  <SortableItem<TBurgerIngredient>
                     list={ingredients}
                     moveCard={moveCard}
                     itemType={ITEM_TYPES.BURGER_ITEM}

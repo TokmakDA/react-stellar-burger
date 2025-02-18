@@ -6,5 +6,5 @@ export type TBurgerIngredient = TIngredient & {
 
 export type TBurgerState = {
   ingredients: TBurgerIngredient[]
-  bun: null | TIngredient
+  bun: null | TBurgerIngredient
 }

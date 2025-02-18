@@ -1,4 +1,4 @@
-import { TBurgerState } from '@/features/burger'
+import { TBurgerIngredient, TBurgerState } from '@/features/burger'
 import { TIngredient } from '@/shared/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { nanoid } from '@reduxjs/toolkit'
@@ -12,17 +12,19 @@ export const burgerSlice = createSlice({
   name: 'burger',
   initialState,
   reducers: {
-    addIngredient: (
-      state,
-      action: PayloadAction<{ ingredient: TIngredient }>
-    ) => {
-      const { ingredient } = action.payload
-      const uuid = nanoid()
-      if (ingredient.type === 'bun') {
-        state.bun = { ...action.payload.ingredient }
-      } else {
-        state.ingredients.push({ ...action.payload.ingredient, uuid })
-      }
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TBurgerIngredient>) => {
+        const { payload } = action
+        if (payload.type === 'bun') {
+          state.bun = payload
+        } else {
+          state.ingredients.push(payload)
+        }
+      },
+      prepare: (ingredient: TIngredient) => {
+        const uuid = nanoid()
+        return { payload: { ...ingredient, uuid } }
+      },
     },
     removeIngredient: (state, action: PayloadAction<{ uuid: string }>) => {
       const index = state.ingredients.findIndex(
