@@ -1,5 +1,4 @@
-// features/order/model/order-details.api.ts
-import { API_BASE_URL } from '@/shared/config/config.ts'
+import { API_BASE_URL, API_ENDPOINTS } from '@/shared/config/api'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const orderApi = createApi({
@@ -13,7 +12,7 @@ export const orderApi = createApi({
       { ingredients: string[] } // аргумент
     >({
       query: (body) => ({
-        url: 'orders',
+        url: API_ENDPOINTS.ORDERS,
         method: 'POST',
         body,
       }),

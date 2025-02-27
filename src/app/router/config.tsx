@@ -1,4 +1,4 @@
-import type { RouteObject } from 'react-router-dom'
+import type { RouteObject } from 'react-router'
 import { MainLayout } from '@/app/layouts'
 import * as Pages from '@/pages'
 

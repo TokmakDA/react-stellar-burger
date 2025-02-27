@@ -1,5 +1,7 @@
-import { rootReducer } from '@/app/root-reducer.ts'
+import { rootReducer } from '@/app/root-reducer'
 import { orderApi } from '@/entities/order'
+import { userApi } from '@/entities/user'
+import { authApi } from '@/features/auth'
 import { ingredientsApi } from '@/features/burger'
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
@@ -14,7 +16,9 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
     middleware: (getDefaultMiddleware) => {
       return getDefaultMiddleware().concat(
         ingredientsApi.middleware,
-        orderApi.middleware
+        orderApi.middleware,
+        authApi.middleware,
+        userApi.middleware
       )
     },
     preloadedState,
