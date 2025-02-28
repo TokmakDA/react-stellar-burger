@@ -1,5 +1,5 @@
 import { cloneElement, FC, ReactElement, ReactNode } from 'react'
-import { Link, LinkProps } from 'react-router-dom'
+import { Link, LinkProps } from 'react-router'
 import styles from './link-item.module.scss'
 import { useHover } from '../../lib/hooks'
 

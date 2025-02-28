@@ -1,11 +1,11 @@
 import { HoverWrapper, CloseIcon, Overlay } from '@/shared/ui'
 import { FC, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useNavigate } from 'react-router'
 import styles from './modal.module.scss'
 
 interface ModalProps {
   children: ReactNode
-  onClose: () => void
   disableOverlayClose?: boolean
   title?: string | null
   delay?: number // Миллисекунды ожидания перед закрытием компонента и анимации
@@ -14,12 +14,13 @@ interface ModalProps {
 
 export const Modal: FC<ModalProps> = ({
   children,
-  onClose,
   disableOverlayClose = false,
   disabled = false,
   title = null,
   delay = 300,
 }) => {
+  const navigate = useNavigate()
+
   const modalRoot = document.getElementById('modal-root') as HTMLElement | null
   const refModal = useRef<HTMLDivElement>(null)
 
@@ -34,6 +35,10 @@ export const Modal: FC<ModalProps> = ({
         clearTimeout(timeoutRef.current)
       }
     }
+  }, [])
+
+  const onClose = useCallback(() => {
+    navigate(-1)
   }, [])
 
   const handleClose = useCallback(() => {

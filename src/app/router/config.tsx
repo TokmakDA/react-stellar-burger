@@ -1,8 +1,14 @@
-import type { RouteObject } from 'react-router'
+import { IngredientDetails } from '@/features/burger/ui'
+import { RouteObject } from 'react-router'
 import { MainLayout } from '@/app/layouts'
 import * as Pages from '@/pages'
 
-export const routesConfig: RouteObject[] = [
+export type TRouterConfig = RouteObject & {
+  modal?: boolean
+  children?: TRouterConfig[]
+}
+
+export const routesConfig: TRouterConfig[] = [
   {
     path: '/',
     element: <MainLayout />,
@@ -14,6 +20,11 @@ export const routesConfig: RouteObject[] = [
       {
         path: '*',
         element: <Pages.NotFoundPage />,
+      },
+      {
+        path: 'ingredients/:id',
+        element: <IngredientDetails />,
+        modal: true,
       },
     ],
   },
