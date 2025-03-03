@@ -5,8 +5,7 @@ $duration: 0.2s;
   margin: 0;
 
   &_scalable {
-    // Модификатор для активации масштабирования
-    display: inline-block;
+
     transition: all $duration;
 
     &:hover {

@@ -16,7 +16,15 @@ export const ingredientsApi = createApi({
     getIngredients: builder.query<GetIngredientsResponse, void>({
       query: () => ({ url: API_ENDPOINTS.INGREDIENTS }),
     }),
+    getIngredient: builder.query<
+      { success: boolean; data: TIngredient },
+      string
+    >({
+      query: (id: string) => ({
+        url: `${API_ENDPOINTS.INGREDIENTS}/${id}`,
+      }),
+    }),
   }),
 })
 
-export const { useGetIngredientsQuery } = ingredientsApi
+export const { useGetIngredientsQuery, useGetIngredientQuery } = ingredientsApi

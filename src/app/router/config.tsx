@@ -21,6 +21,7 @@ export const routesConfig: TRouterConfig[] = [
         path: '*',
         element: <Pages.NotFoundPage />,
       },
+
       {
         path: 'ingredients/:id',
         element: <IngredientDetails />,

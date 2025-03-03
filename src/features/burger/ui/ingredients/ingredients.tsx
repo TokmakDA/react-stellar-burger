@@ -166,12 +166,12 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
       </div>
 
       {/*{selectedIngredient && (*/}
-      {/*  <Modal*/}
+      {/*  <FullPage*/}
       {/*    onClose={() => handleIngredientClick(null)}*/}
       {/*    title='Детали ингредиента'*/}
       {/*  >*/}
       {/*    <IngredientDetails ingredient={selectedIngredient} />*/}
-      {/*  </Modal>*/}
+      {/*  </FullPage>*/}
       {/*)}*/}
     </section>
   )

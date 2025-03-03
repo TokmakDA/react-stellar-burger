@@ -16,7 +16,6 @@ export const Modal: FC<ModalProps> = ({
   children,
   disableOverlayClose = false,
   disabled = false,
-  title = null,
   delay = 300,
 }) => {
   const navigate = useNavigate()
@@ -69,24 +68,16 @@ export const Modal: FC<ModalProps> = ({
           ref={refModal}
         >
           <div className={styles.modal__container}>
-            <header className={`${styles.modal__header}`}>
-              <HoverWrapper className={styles.modal__close} isScalable={true}>
-                <button
-                  onClick={handleClose}
-                  disabled={disabled}
-                  style={{ background: 'transparent', border: 'none' }}
-                >
-                  <CloseIcon type='primary' />
-                </button>
-              </HoverWrapper>
-              {title && (
-                <h2
-                  className={`${styles.modal__title} text text_type_main-large`}
-                >
-                  {title}
-                </h2>
-              )}
-            </header>
+            <HoverWrapper className={styles.modal__close} isScalable={true}>
+              <button
+                onClick={handleClose}
+                disabled={disabled}
+                style={{ background: 'transparent', border: 'none' }}
+                className='m-0 p-0'
+              >
+                <CloseIcon type='primary' />
+              </button>
+            </HoverWrapper>
             {children}
           </div>
           {!disableOverlayClose && (

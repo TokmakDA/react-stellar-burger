@@ -33,9 +33,9 @@ export const BurgerConstructor: FC = () => {
 
   const [isNewOrder, setIsNewOrder] = useState<boolean>(false)
 
-  const handleClose = useCallback(() => {
-    setIsNewOrder(false)
-  }, [])
+  // const handleClose = useCallback(() => {
+  //   setIsNewOrder(false)
+  // }, [])
 
   const handleIngredientRemove = useCallback(
     (ingredient: TBurgerIngredient) => {
@@ -162,7 +162,6 @@ export const BurgerConstructor: FC = () => {
       </div>
       {isNewOrder && (
         <Modal
-          onClose={handleClose}
           disableOverlayClose={isLoading}
           disabled={isLoading}
         >
