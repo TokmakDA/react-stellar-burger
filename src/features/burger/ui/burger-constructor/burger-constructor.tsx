@@ -161,10 +161,7 @@ export const BurgerConstructor: FC = () => {
         </Button>
       </div>
       {isNewOrder && (
-        <Modal
-          disableOverlayClose={isLoading}
-          disabled={isLoading}
-        >
+        <Modal disableOverlayClose={isLoading} disabled={isLoading}>
           <OrderDetails
             data={orderData}
             isLoading={isLoading}
