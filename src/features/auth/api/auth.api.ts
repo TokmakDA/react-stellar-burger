@@ -1,21 +1,26 @@
-import { userApi } from '@/entities/user'
 import {
   IAuthResponse,
   IForgotPasswordRequest,
   ILoginRequest,
-  ILogoutResponse,
   IRegisterRequest,
   IResetPasswordRequest,
+  loginSuccess,
+  logout,
 } from '@/features/auth'
-import { API_BASE_URL, API_ENDPOINTS } from '@/shared/config'
+import { baseQueryWithRauth } from '@/shared/api'
+import { API_ENDPOINTS } from '@/shared/config'
+import {
+  clearTokens,
+  saveTokens,
+  unSelectForgotPassword,
+} from '@/shared/lib/utils'
+import { selectForgotPassword } from '@/shared/lib/utils/local-storage.ts'
 import { IDefaultResponse } from '@/shared/types'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: API_BASE_URL,
-  }),
+  baseQuery: baseQueryWithRauth,
   endpoints: (builder) => ({
     register: builder.mutation<IAuthResponse, IRegisterRequest>({
       query(data) {
@@ -25,6 +30,15 @@ export const authApi = createApi({
           body: data,
         }
       },
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+          saveTokens(data)
+          dispatch(loginSuccess())
+        } catch (error) {
+          console.log(error)
+        }
+      },
     }),
     login: builder.mutation<IAuthResponse, ILoginRequest>({
       query(data) {
@@ -32,25 +46,34 @@ export const authApi = createApi({
           url: API_ENDPOINTS.LOGIN,
           method: 'POST',
           body: data,
-          credentials: 'include',
         }
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled
-          await dispatch(userApi.endpoints.getUser.initiate(null))
+          const { data } = await queryFulfilled
+          saveTokens(data)
+          dispatch(loginSuccess())
         } catch (error) {
           console.log(error)
         }
       },
     }),
-    logout: builder.mutation<IDefaultResponse, ILogoutResponse>({
-      query({ token }) {
+    logout: builder.mutation<IDefaultResponse, void>({
+      query() {
+        const token = localStorage.getItem('refreshToken')
         return {
           url: API_ENDPOINTS.LOGOUT,
           method: 'POST',
           body: { token },
-          credentials: 'include',
+        }
+      },
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled
+          clearTokens()
+          dispatch(logout())
+        } catch (error) {
+          console.log(error)
         }
       },
     }),
@@ -61,6 +84,14 @@ export const authApi = createApi({
         method: 'POST',
         body: { email },
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled
+          selectForgotPassword()
+        } catch (error) {
+          console.log(error)
+        }
+      },
     }),
 
     resetPassword: builder.mutation<IDefaultResponse, IResetPasswordRequest>({
@@ -69,6 +100,14 @@ export const authApi = createApi({
         method: 'POST',
         body: { password, token },
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled
+          unSelectForgotPassword()
+        } catch (error) {
+          console.log(error)
+        }
+      },
     }),
   }),
 })

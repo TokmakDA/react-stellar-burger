@@ -1,13 +1,17 @@
 import { useAppSelector } from '@/app/hooks'
-import { FC } from 'react'
-import { Navigate, Outlet, useLocation } from 'react-router'
+import { FC, ReactNode } from 'react'
+import { Navigate, useLocation } from 'react-router'
 import { isAuthenticated } from '@/features/auth'
 
 type TProtectedProps = {
   onlyUnAuth?: boolean
+  children: ReactNode
 }
 
-export const Protected: FC<TProtectedProps> = ({ onlyUnAuth = false }) => {
+export const Protected: FC<TProtectedProps> = ({
+  onlyUnAuth = false,
+  children,
+}) => {
   const isAuth = useAppSelector(isAuthenticated)
   const location = useLocation()
 
@@ -20,5 +24,13 @@ export const Protected: FC<TProtectedProps> = ({ onlyUnAuth = false }) => {
     return <Navigate to='/login' state={{ from: location }} replace />
   }
 
-  return <Outlet />
+  return children
 }
+
+export const OnlyAuth: FC<{ children: ReactNode }> = ({ children }) => (
+  <Protected>{children}</Protected>
+)
+
+export const OnlyUnAuth: FC<{ children: ReactNode }> = ({ children }) => (
+  <Protected onlyUnAuth>{children}</Protected>
+)

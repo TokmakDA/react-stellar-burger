@@ -1,6 +1,3 @@
-export const formatNumberToRu = (value: number | string) => {
-  return value.toLocaleString('ru-RU', {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 1,
-  })
-}
+export { formatNumberToRu } from './format'
+export * from './local-storage.ts'
+export * from './token'

@@ -1,11 +1,10 @@
-import { API_BASE_URL, API_ENDPOINTS } from '@/shared/config/api'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { baseQueryWithRauth } from '@/shared/api'
+import { API_ENDPOINTS } from '@/shared/config/api'
+import { createApi } from '@reduxjs/toolkit/query/react'
 
 export const orderApi = createApi({
   reducerPath: 'orderApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: API_BASE_URL,
-  }),
+  baseQuery: baseQueryWithRauth,
   endpoints: (builder) => ({
     createOrder: builder.mutation<
       { name: string; order: { number: number }; success: boolean }, // пример ответа

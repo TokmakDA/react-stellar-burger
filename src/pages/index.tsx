@@ -1,2 +1,7 @@
 export { ConstructorPage } from './constructor-page'
 export { NotFoundPage } from './not-found'
+export { Login } from './login'
+export { Register } from './register'
+export { ForgotPassword } from './forgot-password'
+export { ResetPassword } from './reset-password'
+export { Profile } from './profile'

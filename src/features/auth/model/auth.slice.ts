@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAccessToken } from '@/entities/user/lib/token'
+import { getAccessToken } from '@/shared/lib/utils/token.ts'
 
 interface AuthState {
   isAuthenticated: boolean
 }
 
 const initialState: AuthState = {
-  isAuthenticated: !!getAccessToken(), // Загружаем токен при старте
+  isAuthenticated: Boolean(getAccessToken()),
 }
 
 export const authSlice = createSlice({
