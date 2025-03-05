@@ -8,7 +8,7 @@ export const orderApi = createApi({
   endpoints: (builder) => ({
     createOrder: builder.mutation<
       { name: string; order: { number: number }; success: boolean }, // пример ответа
-      { ingredients: string[] } // аргумент
+      { ingredients: string[] }
     >({
       query: (body) => ({
         url: API_ENDPOINTS.ORDERS,

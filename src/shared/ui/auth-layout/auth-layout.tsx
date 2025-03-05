@@ -1,3 +1,5 @@
+import { useAuthNavigation } from '@/shared/lib/hooks'
+import { Loader, Overlay } from '@/shared/ui'
 import { FC, FormEvent, ReactNode } from 'react'
 import { Link } from 'react-router'
 import styles from './auth-layout.module.scss'
@@ -13,6 +15,8 @@ interface AuthLayoutProps {
   children: ReactNode
   footerLinks?: FooterLink[]
   onSubmit: (e: FormEvent<HTMLFormElement>) => void
+  isLoading?: boolean
+  errorMessage?: string | undefined | null
 }
 
 const AuthLayout: FC<AuthLayoutProps> = ({
@@ -20,7 +24,11 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   children,
   footerLinks = [],
   onSubmit,
+  isLoading,
+  errorMessage,
 }) => {
+  const { state } = useAuthNavigation()
+
   return (
     <section className={styles.section}>
       <header className={styles.section__header}>
@@ -34,6 +42,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
         <form className={styles.section__form} onSubmit={onSubmit}>
           {children}
         </form>
+        {errorMessage && <p className='text_color_error'>{errorMessage}</p>}
       </div>
       {footerLinks && (
         <footer className={`${styles.section__footer}  pt-20`}>
@@ -45,13 +54,19 @@ const AuthLayout: FC<AuthLayoutProps> = ({
               {label && <p className='m-0 p-0'>{label}</p>}
               <Link
                 className={`${styles.section__link} text_type_main-default`}
-                to={link}
+                to={{ pathname: link }}
+                state={state}
               >
                 {title}
               </Link>
             </div>
           ))}
         </footer>
+      )}
+      {isLoading && (
+        <Loader>
+          <Overlay />
+        </Loader>
       )}
     </section>
   )

@@ -1,5 +1,6 @@
 import { IngredientDetails } from '@/features/burger/ui'
-import { OnlyAuth, OnlyUnAuth } from '@/shared/lib/router/protected.tsx'
+import { ROUTES } from '@/shared/config'
+import { OnlyAuth, OnlyUnAuth } from '@/shared/lib/router'
 import { RouteObject } from 'react-router'
 import { MainLayout } from '@/app/layouts'
 import * as Pages from '@/pages'
@@ -11,7 +12,7 @@ export type TRouterConfig = RouteObject & {
 
 export const routesConfig: TRouterConfig[] = [
   {
-    path: '/',
+    path: ROUTES.HOME,
     element: <MainLayout />,
     children: [
       {
@@ -19,18 +20,13 @@ export const routesConfig: TRouterConfig[] = [
         element: <Pages.ConstructorPage />,
       },
       {
-        path: '*',
-        element: <Pages.NotFoundPage />,
-      },
-
-      {
-        path: 'ingredients/:id',
+        path: ROUTES.INGREDIENT_DETAILS,
         element: <IngredientDetails />,
         modal: true,
       },
-
+      /* Auth */
       {
-        path: '/login',
+        path: ROUTES.LOGIN,
         element: (
           <OnlyUnAuth>
             <Pages.Login />
@@ -39,7 +35,7 @@ export const routesConfig: TRouterConfig[] = [
         modal: true,
       },
       {
-        path: '/register',
+        path: ROUTES.REGISTER,
         element: (
           <OnlyUnAuth>
             <Pages.Register />
@@ -48,7 +44,7 @@ export const routesConfig: TRouterConfig[] = [
         modal: true,
       },
       {
-        path: '/forgot-password',
+        path: ROUTES.FORGOT_PASSWORD,
         element: (
           <OnlyUnAuth>
             <Pages.ForgotPassword />
@@ -57,7 +53,7 @@ export const routesConfig: TRouterConfig[] = [
         modal: true,
       },
       {
-        path: '/reset-password',
+        path: ROUTES.RESET_PASSWORD,
         element: (
           <OnlyUnAuth>
             <Pages.ResetPassword />
@@ -65,8 +61,10 @@ export const routesConfig: TRouterConfig[] = [
         ),
         modal: true,
       },
+
+      /* Profile */
       {
-        path: '/profile',
+        path: ROUTES.PROFILE,
         element: (
           <OnlyAuth>
             <Pages.Profile />
@@ -74,16 +72,26 @@ export const routesConfig: TRouterConfig[] = [
         ),
         children: [
           {
-            path: 'orders',
-            element: <Pages.NotFoundPage />,
+            index: true,
+            element: <div>Profile</div>,
+          },
+          {
+            path: ROUTES.PROFILE_ORDERS,
+            element: <div>PROFILE_ORDERS</div>,
             children: [
               {
-                path: ':orderId',
-                element: <Pages.NotFoundPage />,
+                path: ROUTES.PROFILE_ORDER_DETAILS,
+                element: <div>PROFILE_ORDER_DETAILS</div>,
               },
             ],
           },
         ],
+      },
+
+      /* 404 */
+      {
+        path: ROUTES.NOT_FOUND,
+        element: <Pages.NotFoundPage />,
       },
     ],
   },

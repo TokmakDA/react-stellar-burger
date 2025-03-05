@@ -1,24 +1,31 @@
-import { useResetPasswordMutation } from '@/features/auth'
+import { isForgotPassword, useResetPasswordMutation } from '@/features/auth'
+import { useAuthNavigation, useForm } from '@/shared/lib/hooks'
 import { AuthLayout, Button, Input } from '@/shared/ui'
-import { FC, FormEvent, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { FC, FormEvent, useEffect, useState } from 'react'
 
 const ResetPassword: FC = () => {
-  const [token, setToken] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const { goToLogin, goToForgotPassword } = useAuthNavigation()
+  const { values, handleChange, resetForm } = useForm({
+    token: '',
+    password: '',
+  })
+  const [showPassword, setShowPassword] = useState(false)
 
-  const [resetPasswordMutation, { isLoading }] = useResetPasswordMutation()
-  const navigate = useNavigate()
+  const [resetPasswordMutation, { isLoading, isError, error }] =
+    useResetPasswordMutation()
+
+  useEffect(() => {
+    if (!isForgotPassword()) {
+      goToForgotPassword()
+    }
+  }, [goToForgotPassword])
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await resetPasswordMutation({ token, password })
-    navigate('login')
+    await resetPasswordMutation(values).unwrap()
+    resetForm()
+    goToLogin()
   }
-
-  const [showPassword, setShowPassword] = useState<boolean>(false)
-
-  const onIconClick = () => setShowPassword((prev) => !prev)
 
   return (
     <AuthLayout
@@ -27,25 +34,27 @@ const ResetPassword: FC = () => {
         { label: 'Вспомнили пароль?', link: '/login', title: 'Войти' },
       ]}
       onSubmit={handleSubmit}
+      isLoading={isLoading}
+      errorMessage={
+        isError ? error?.data?.message || 'Неизвестная ошибка' : null
+      }
     >
       <Input
         type={showPassword ? 'text' : 'password'}
         placeholder='Пароль'
         name='password'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={values.password}
+        onChange={handleChange}
         icon={showPassword ? 'HideIcon' : 'ShowIcon'}
-        onIconClick={onIconClick}
+        onIconClick={() => setShowPassword((prev) => !prev)}
       />
       <Input
         type='text'
         placeholder='Введите код из письма'
         name='token'
-        value={token}
-        onChange={(e) => setToken(e.target.value)}
-        onPointerEnterCapture={undefined}
+        value={values.token}
+        onChange={handleChange}
       />
-
       <Button type='primary' htmlType='submit' disabled={isLoading}>
         Сохранить
       </Button>

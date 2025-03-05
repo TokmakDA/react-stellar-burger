@@ -7,14 +7,15 @@ import {
   loginSuccess,
   logout,
 } from '@/features/auth'
-import { baseQueryWithRauth } from '@/shared/api'
-import { API_ENDPOINTS } from '@/shared/config'
 import {
   clearTokens,
   saveTokens,
+  selectForgotPassword,
   unSelectForgotPassword,
-} from '@/shared/lib/utils'
-import { selectForgotPassword } from '@/shared/lib/utils/local-storage.ts'
+} from '@/features/auth/lib'
+import { baseQueryWithRauth } from '@/shared/api'
+import { API_ENDPOINTS } from '@/shared/config'
+
 import { IDefaultResponse } from '@/shared/types'
 import { createApi } from '@reduxjs/toolkit/query/react'
 

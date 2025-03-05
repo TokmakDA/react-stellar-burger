@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { OrderDetails, useCreateOrderMutation } from '@/entities/order'
+import { isAuthenticated } from '@/features/auth'
 import {
   addIngredient,
   cleanBurger,
@@ -11,8 +12,10 @@ import {
 } from '@/features/burger'
 import { ITEM_TYPES } from '@/features/burger/lib'
 import { DropTarget, EmptyElement, SortableItem } from '@/features/burger/ui'
+import { ROUTES } from '@/shared/config'
 import { TIngredient } from '@/shared/types'
 import { FC, useCallback, useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 import styles from './burger-constructor.module.scss'
 import {
   Button,
@@ -22,20 +25,21 @@ import {
   Modal,
 } from '@/shared/ui'
 
-// type TBurgerConstructorProps = {}
-
 export const BurgerConstructor: FC = () => {
   const { bun, ingredients } = useAppSelector(getBurgerIngredients)
   const totalPrice = useAppSelector(selectBurgerPrice)
   const dispatch = useAppDispatch()
   const [createOrder, { data: orderData, isLoading, isSuccess, isError }] =
     useCreateOrderMutation()
-
+  const isAuth = useAppSelector(isAuthenticated)
   const [isNewOrder, setIsNewOrder] = useState<boolean>(false)
 
-  // const handleClose = useCallback(() => {
-  //   setIsNewOrder(false)
-  // }, [])
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleClose = useCallback(() => {
+    setIsNewOrder(false)
+  }, [])
 
   const handleIngredientRemove = useCallback(
     (ingredient: TBurgerIngredient) => {
@@ -59,12 +63,19 @@ export const BurgerConstructor: FC = () => {
   )
 
   const handleOrderClick = () => {
-    setIsNewOrder(true)
-    if (!ingredients.length || !bun) return
-    const ingredientsIds = ingredients.map((ing) => ing._id)
+    if (isAuth) {
+      setIsNewOrder(true)
+      if (!ingredients.length || !bun) return
+      const ingredientsIds = ingredients.map((ing) => ing._id)
 
-    ingredientsIds.concat(bun._id).unshift(bun._id)
-    createOrder({ ingredients: ingredientsIds })
+      ingredientsIds.push(bun._id)
+      ingredientsIds.unshift(bun._id)
+      createOrder({ ingredients: ingredientsIds })
+    } else {
+      navigate(ROUTES.LOGIN, {
+        state: { from: location, background: location },
+      })
+    }
   }
 
   useEffect(() => {
@@ -161,7 +172,11 @@ export const BurgerConstructor: FC = () => {
         </Button>
       </div>
       {isNewOrder && (
-        <Modal disableOverlayClose={isLoading} disabled={isLoading}>
+        <Modal
+          disableOverlayClose={isLoading}
+          disabled={isLoading}
+          onClose={handleClose}
+        >
           <OrderDetails
             data={orderData}
             isLoading={isLoading}

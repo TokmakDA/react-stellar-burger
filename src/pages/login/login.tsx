@@ -1,74 +1,69 @@
 import { useLoginMutation } from '@/features/auth'
+import { ROUTES } from '@/shared/config'
+import { useAuthNavigation, useForm } from '@/shared/lib/hooks'
 import { FC, useState, FormEvent } from 'react'
-import { Input, Button, AuthLayout, Loader, Overlay } from '@/shared/ui'
-import { useLocation, useNavigate } from 'react-router'
+import { Input, Button, AuthLayout } from '@/shared/ui'
 
 const Login: FC = () => {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const { goToHome } = useAuthNavigation()
+  const { values, handleChange, resetForm } = useForm({
+    email: '',
+    password: '',
+  })
   const [showPassword, setShowPassword] = useState<boolean>(false)
-  const [loginMutation, { isLoading }] = useLoginMutation()
-
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  const onNavigate = () => {
-    navigate(location.state?.from || '/', { replace: true })
-  }
-
-  const onIconClick = () => setShowPassword((prev) => !prev)
+  const [loginMutation, { isLoading, isError, error }] = useLoginMutation()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    await loginMutation({ email, password }).unwrap()
-    onNavigate()
+    await loginMutation(values).unwrap()
+    resetForm()
+    goToHome()
   }
 
   return (
-    <>
-      <AuthLayout
-        title='Вход'
-        footerLinks={[
-          {
-            label: 'Вы — новый пользователь?',
-            title: 'Зарегистрироваться',
-            link: '/register',
-          },
-          {
-            label: 'Забыли пароль?',
-            title: 'Восстановить пароль',
-            link: '/forgot-password',
-          },
-        ]}
-        onSubmit={handleSubmit}
-      >
-        <Input
-          type='email'
-          placeholder='E-mail'
-          name='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          type={showPassword ? 'text' : 'password'}
-          placeholder='Пароль'
-          name='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          icon={showPassword ? 'HideIcon' : 'ShowIcon'}
-          onIconClick={onIconClick}
-        />
-        <Button type='primary' htmlType='submit'>
-          Войти
-        </Button>
-      </AuthLayout>
-      {isLoading && (
-        <Loader>
-          <Overlay />
-        </Loader>
-      )}
-    </>
+    <AuthLayout
+      title='Вход'
+      footerLinks={[
+        {
+          label: 'Вы — новый пользователь?',
+          title: 'Зарегистрироваться',
+          link: ROUTES.REGISTER,
+        },
+        {
+          label: 'Забыли пароль?',
+          title: 'Восстановить пароль',
+          link: ROUTES.FORGOT_PASSWORD,
+        },
+      ]}
+      onSubmit={handleSubmit}
+      errorMessage={
+        isError
+          ? `Ошибка входа: ${error?.data?.message || 'Неизвестная ошибка'}`
+          : null
+      }
+      isLoading={isLoading}
+    >
+      <Input
+        type='email'
+        placeholder='E-mail'
+        name='email'
+        value={values.email}
+        onChange={handleChange}
+      />
+      <Input
+        type={showPassword ? 'text' : 'password'}
+        placeholder='Пароль'
+        name='password'
+        value={values.password}
+        onChange={handleChange}
+        icon={showPassword ? 'HideIcon' : 'ShowIcon'}
+        onIconClick={() => setShowPassword((prev) => !prev)}
+      />
+      <Button type='primary' htmlType='submit' disabled={isLoading}>
+        {isLoading ? 'Вход...' : 'Войти'}
+      </Button>
+    </AuthLayout>
   )
 }
 

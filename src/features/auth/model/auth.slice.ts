@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAccessToken } from '@/shared/lib/utils/token.ts'
+import { getAccessToken } from '@/features/auth/lib/token.ts'
 
 interface AuthState {
   isAuthenticated: boolean

@@ -10,6 +10,7 @@ interface ModalProps {
   title?: string | null
   delay?: number // Миллисекунды ожидания перед закрытием компонента и анимации
   disabled?: boolean // Блокировка закрытия модального окна
+  onClose?: () => void // Функция для закрытия модального окна
 }
 
 export const Modal: FC<ModalProps> = ({
@@ -17,6 +18,7 @@ export const Modal: FC<ModalProps> = ({
   disableOverlayClose = false,
   disabled = false,
   delay = 300,
+  onClose,
 }) => {
   const navigate = useNavigate()
 
@@ -36,16 +38,13 @@ export const Modal: FC<ModalProps> = ({
     }
   }, [])
 
-  const onClose = useCallback(() => {
-    navigate(-1)
-  }, [])
-
   const handleClose = useCallback(() => {
     setIsVisible(false)
     timeoutRef.current = setTimeout(() => {
-      onClose()
+      if (onClose) onClose()
+      else navigate(-1)
     }, delay)
-  }, [onClose, delay])
+  }, [navigate, onClose, delay])
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {

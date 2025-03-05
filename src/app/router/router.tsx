@@ -9,20 +9,11 @@ export function Router() {
   const background = location.state?.background
   const initialPath = location.state?.initialPath
 
-  const generateRoutes = useCallback(
-    (routes: TRouterConfig[]) => routes.map((route) => generateRoute(route)),
-    []
-  )
-
-  const generateModalsRoutes = useCallback(
-    (routes: TRouterConfig[]) =>
-      routes.map((route) => generateModalRoute(route)),
-    []
-  )
-
-  const generateRoute = useCallback(
-    (route: TRouterConfig) => {
-      const element = route?.modal ? (
+  const generateRoutes = (routes: TRouterConfig[], isModal = false) =>
+    routes.map((route) => {
+      const element = isModal ? (
+        <Modal>{route.element}</Modal>
+      ) : route.modal ? (
         <FullPage>{route.element}</FullPage>
       ) : (
         route.element
@@ -32,56 +23,45 @@ export function Router() {
         <Route key='index' index element={element} />
       ) : (
         <Route key={route.path} path={route.path} element={element}>
-          {route.children && generateRoutes(route.children)}
+          {route.children && generateRoutes(route.children, isModal)}
         </Route>
       )
-    },
-    [generateRoutes]
-  )
+    })
 
-  const generateModalRoute = useCallback(
-    (route: TRouterConfig) => {
-      return route.index ? (
-        <Route key='index' index element={<Modal>{route.element}</Modal>} />
-      ) : (
-        <Route
-          key={route.path}
-          path={route.path}
-          element={<Modal>{route.element}</Modal>}
-        >
-          {route.children && generateModalsRoutes(route.children)}
-        </Route>
-      )
-    },
-    [generateModalsRoutes]
-  )
+  const getModalRoutes = useCallback(
+    (
+      routes: TRouterConfig[],
+      parent: TRouterConfig | undefined = undefined
+    ): TRouterConfig[] =>
+      routes.reduce((acc: TRouterConfig[], route) => {
+        if (route.modal) {
+          let path = route.path
+          if (path && !path?.startsWith('/')) {
+            const parentPath = parent?.path || '/'
+            path = path?.startsWith('/')
+              ? parentPath
+              : parentPath + '/' + route.path
+          }
 
-  const getModalRoutes = (
-    routes: TRouterConfig[],
-    parent: TRouterConfig | undefined = undefined
-  ): TRouterConfig[] =>
-    routes.reduce((acc: TRouterConfig[], route) => {
-      if (route.modal) {
-        const path = parent?.path || '/'
-        const parentPath = path.at(-1) === '/' ? path : path + '/'
-
-        acc.push({
-          ...route,
-          path: parentPath + route.path,
-        })
-      }
-      if (route.children) {
-        const children = getModalRoutes(route.children, route)
-        if (children.length > 0) {
-          acc.push(...children)
+          acc.push({
+            ...route,
+            path: path,
+          })
         }
-      }
-      return acc
-    }, [])
+        if (route.children) {
+          const children = getModalRoutes(route.children, route)
+          if (children.length > 0) {
+            acc.push(...children)
+          }
+        }
+        return acc
+      }, []),
+    []
+  )
 
   const modalRoutes = useMemo(
     () => getModalRoutes(routesConfig),
-    [routesConfig]
+    [getModalRoutes]
   )
 
   return (
@@ -94,7 +74,7 @@ export function Router() {
         {generateRoutes(routesConfig)}
       </Routes>
 
-      {background && <Routes>{generateModalsRoutes(modalRoutes)}</Routes>}
+      {background && <Routes>{generateRoutes(modalRoutes, true)}</Routes>}
     </>
   )
 }

@@ -71,7 +71,7 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
         state: { background: { ...location } },
       })
     },
-    [dispatch]
+    [dispatch, navigate, location]
   )
 
   // при клике по табу проскроллим к нужному разделу
