@@ -1,5 +1,5 @@
 import { useAuthNavigation } from '@/shared/lib/hooks'
-import { Loader, Overlay } from '@/shared/ui'
+import { Loader } from '@/shared/ui'
 import { FC, FormEvent, ReactNode } from 'react'
 import { Link } from 'react-router'
 import styles from './auth-layout.module.scss'
@@ -63,11 +63,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
           ))}
         </footer>
       )}
-      {isLoading && (
-        <Loader>
-          <Overlay />
-        </Loader>
-      )}
+      {isLoading && <Loader overlay />}
     </section>
   )
 }

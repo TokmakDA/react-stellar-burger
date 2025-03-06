@@ -1,3 +1,4 @@
+import { Overlay } from '@/shared/ui'
 import { FC, ReactNode } from 'react'
 import styles from './loader.module.scss'
 
@@ -5,11 +6,13 @@ type TLoaderProps = {
   children?: ReactNode | undefined
   textClass?: string
   text?: string
+  overlay?: boolean
 }
 export const Loader: FC<TLoaderProps> = ({
   children = undefined,
   textClass = '',
   text = 'Загрузка',
+  overlay = false,
 }) => {
   return (
     <div className={styles.loader}>
@@ -23,6 +26,7 @@ export const Loader: FC<TLoaderProps> = ({
           ))}
       </div>
       {children}
+      {overlay && <Overlay />}
     </div>
   )
 }

@@ -1,7 +1,8 @@
-import { useRegisterMutation } from '@/features/auth'
+import { useRegisterMutation, AuthLayout } from '@/features/auth'
 import { useAuthNavigation, useForm } from '@/shared/lib/hooks'
-import { Input, Button, AuthLayout } from '@/shared/ui'
-import { FC, FormEvent, useState } from 'react'
+import { IFetchQueryErrorResponse } from '@/shared/types'
+import { Input, Button } from '@/shared/ui'
+import { ChangeEvent, FC, FormEvent, useState } from 'react'
 
 const Register: FC = () => {
   const { goToHome } = useAuthNavigation()
@@ -32,7 +33,7 @@ const Register: FC = () => {
       isLoading={isLoading}
       errorMessage={
         isError
-          ? `Ошибка регистрации: ${error?.data?.message || 'Неизвестная ошибка'}`
+          ? `Ошибка регистрации: ${(error as IFetchQueryErrorResponse).data?.message || 'Неизвестная ошибка'}`
           : null
       }
     >
@@ -41,7 +42,7 @@ const Register: FC = () => {
         placeholder='Имя'
         name='name'
         value={values.name}
-        onChange={handleChange}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
       />
       <Input
         type='email'

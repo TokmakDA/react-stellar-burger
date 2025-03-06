@@ -27,6 +27,6 @@ export const useAuthNavigation = () => {
     goToForgotPassword,
     goToResetPassword,
     goToHome,
-    state
+    state,
   }
 }

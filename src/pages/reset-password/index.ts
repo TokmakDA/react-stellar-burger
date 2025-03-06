@@ -1,1 +1,1 @@
-export { default as ResetPassword } from './reset-password.tsx'
+export { ResetPassword } from './ui'

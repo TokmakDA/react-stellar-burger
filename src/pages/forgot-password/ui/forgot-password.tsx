@@ -1,7 +1,8 @@
-import { useForgotPasswordMutation } from '@/features/auth'
+import { useForgotPasswordMutation, AuthLayout } from '@/features/auth'
 import { ROUTES } from '@/shared/config'
 import { useAuthNavigation, useForm } from '@/shared/lib/hooks'
-import { AuthLayout, Button, Input } from '@/shared/ui'
+import { IFetchQueryErrorResponse } from '@/shared/types'
+import { Button, Input } from '@/shared/ui'
 import { FC, FormEvent } from 'react'
 
 const ForgotPassword: FC = () => {
@@ -26,7 +27,7 @@ const ForgotPassword: FC = () => {
       isLoading={isLoading}
       errorMessage={
         isError
-          ? `Ошибка запроса кода восстановления: ${error?.data?.message || 'Неизвестная ошибка'}`
+          ? `Ошибка запроса кода восстановления: ${(error as IFetchQueryErrorResponse).data?.message || 'Неизвестная ошибка'}`
           : null
       }
     >

@@ -1,3 +1,4 @@
+import { userApi } from '@/entities/user'
 import {
   IAuthResponse,
   IForgotPasswordRequest,
@@ -73,6 +74,7 @@ export const authApi = createApi({
           await queryFulfilled
           clearTokens()
           dispatch(logout())
+          dispatch(userApi.util.resetApiState())
         } catch (error) {
           console.log(error)
         }

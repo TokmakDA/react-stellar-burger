@@ -1,1 +1,1 @@
-export { default as ForgotPassword } from './forgot-password.tsx'
+export { ForgotPassword } from './ui'

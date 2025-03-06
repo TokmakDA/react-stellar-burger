@@ -1,4 +1,5 @@
 import { IngredientDetails } from '@/features/burger/ui'
+import { ProfileInfo } from '@/features/profile'
 import { ROUTES } from '@/shared/config'
 import { OnlyAuth, OnlyUnAuth } from '@/shared/lib/router'
 import { RouteObject } from 'react-router'
@@ -73,7 +74,7 @@ export const routesConfig: TRouterConfig[] = [
         children: [
           {
             index: true,
-            element: <div>Profile</div>,
+            element: <ProfileInfo />,
           },
           {
             path: ROUTES.PROFILE_ORDERS,

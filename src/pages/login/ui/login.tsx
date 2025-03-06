@@ -1,8 +1,9 @@
-import { useLoginMutation } from '@/features/auth'
+import { AuthLayout, useLoginMutation } from '@/features/auth'
 import { ROUTES } from '@/shared/config'
 import { useAuthNavigation, useForm } from '@/shared/lib/hooks'
+import { IFetchQueryErrorResponse } from '@/shared/types'
 import { FC, useState, FormEvent } from 'react'
-import { Input, Button, AuthLayout } from '@/shared/ui'
+import { Input, Button } from '@/shared/ui'
 
 const Login: FC = () => {
   const { goToHome } = useAuthNavigation()
@@ -39,7 +40,7 @@ const Login: FC = () => {
       onSubmit={handleSubmit}
       errorMessage={
         isError
-          ? `Ошибка входа: ${error?.data?.message || 'Неизвестная ошибка'}`
+          ? `Ошибка входа: ${(error as IFetchQueryErrorResponse).data?.message || 'Неизвестная ошибка'}`
           : null
       }
       isLoading={isLoading}

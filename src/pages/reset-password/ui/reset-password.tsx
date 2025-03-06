@@ -1,6 +1,11 @@
-import { isForgotPassword, useResetPasswordMutation } from '@/features/auth'
+import {
+  isForgotPassword,
+  useResetPasswordMutation,
+  AuthLayout,
+} from '@/features/auth'
 import { useAuthNavigation, useForm } from '@/shared/lib/hooks'
-import { AuthLayout, Button, Input } from '@/shared/ui'
+import { IFetchQueryErrorResponse } from '@/shared/types'
+import { Button, Input } from '@/shared/ui'
 import { FC, FormEvent, useEffect, useState } from 'react'
 
 const ResetPassword: FC = () => {
@@ -36,7 +41,10 @@ const ResetPassword: FC = () => {
       onSubmit={handleSubmit}
       isLoading={isLoading}
       errorMessage={
-        isError ? error?.data?.message || 'Неизвестная ошибка' : null
+        isError
+          ? (error as IFetchQueryErrorResponse).data?.message ||
+            'Неизвестная ошибка'
+          : null
       }
     >
       <Input

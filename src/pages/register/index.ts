@@ -1,1 +1,1 @@
-export { default as Register } from './register.tsx'
+export { Register } from './ui'

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useCallback, useState } from 'react'
 
 export const useForm = <T extends Record<string, string>>(initialState: T) => {
   const [values, setValues] = useState<T>(initialState)
@@ -8,7 +8,12 @@ export const useForm = <T extends Record<string, string>>(initialState: T) => {
     setValues((prev) => ({ ...prev, [name]: value }))
   }
 
-  const resetForm = () => setValues(initialState)
+  const resetForm = useCallback(
+    (state?: Partial<T>) => {
+      setValues(state ? { ...initialState, ...state } : initialState)
+    },
+    [initialState]
+  )
 
   return { values, handleChange, resetForm }
 }

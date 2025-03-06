@@ -1,13 +1,13 @@
 import { IRefreshTokenResponse } from '@/features/auth'
+import { clearTokens, saveTokens } from '@/features/auth/lib'
+import { IFetchQueryErrorResponse } from '@/shared/types'
 import {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
   fetchBaseQuery,
-  BaseQueryApi,
 } from '@reduxjs/toolkit/query/react'
 import { API_BASE_URL, API_ENDPOINTS } from '@/shared/config'
-import { userApi } from '@/entities/user'
 
 // Базовый `fetchBaseQuery`
 const baseQuery = fetchBaseQuery({
@@ -22,25 +22,28 @@ const baseQuery = fetchBaseQuery({
   },
 })
 
-const handleLogout = (api: BaseQueryApi) => {
-  localStorage.removeItem('accessToken')
-  localStorage.removeItem('refreshToken')
-  api.dispatch(userApi.util.resetApiState())
+const handleLogout = () => {
+  clearTokens()
 }
 
 // Функция с обновлением токена
 export const baseQueryWithRauth: BaseQueryFn<
   string | FetchArgs,
   unknown,
-  FetchBaseQueryError
+  FetchBaseQueryError | IFetchQueryErrorResponse
 > = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions)
 
-  if (result.error && result.error.status === 401) {
+  if (
+    result.error &&
+    result.error.status === 403 &&
+    (result.error as IFetchQueryErrorResponse)?.data?.message === 'jwt expired'
+  ) {
+    console.log('jwt expired', result.error)
     const refreshToken = localStorage.getItem('refreshToken')
 
     if (!refreshToken) {
-      handleLogout(api)
+      handleLogout()
       return result
     }
 
@@ -55,15 +58,13 @@ export const baseQueryWithRauth: BaseQueryFn<
     )
 
     if (refreshResult.data) {
-      const { accessToken, refreshToken: newRefreshToken } =
+      const { accessToken, refreshToken } =
         refreshResult.data as IRefreshTokenResponse
 
-      localStorage.setItem('accessToken', accessToken)
-      localStorage.setItem('refreshToken', newRefreshToken)
-
+      saveTokens({ accessToken, refreshToken })
       result = await baseQuery(args, api, extraOptions)
     } else {
-      handleLogout(api)
+      handleLogout()
     }
   }
 
