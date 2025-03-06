@@ -1,4 +1,3 @@
-export * from './ingredients.api.ts'
-export * from './ingredient-details.slice.ts'
-export * from './burger.slice.ts'
-export type * from './types.ts'
+export * from './ingredient-details.slice'
+export * from './burger.slice'
+export type * from './types'

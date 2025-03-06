@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { getIngredient, setIngredientDetails } from '@/features/burger/model'
-import { IngredientDetails, IngredientsGroup } from '@/features/burger/ui'
+import { useAppDispatch } from '@/app/hooks'
+import { setIngredientDetails } from '@/features/burger/model'
+import { IngredientsGroup } from '@/features/burger/ui'
 import {
   FC,
   RefObject,
@@ -10,9 +10,10 @@ import {
   useRef,
   useState,
 } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 import styles from './ingredients.module.scss'
 import { TIngredient } from '@/shared/types'
-import { Modal, Tab } from '@/shared/ui'
+import { Tab } from '@/shared/ui'
 
 type TBurgerIngredientsProps = {
   ingredients: TIngredient[]
@@ -30,7 +31,11 @@ type TIngredientsGroup = Record<
 
 export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
   const dispatch = useAppDispatch()
-  const selectedIngredient = useAppSelector(getIngredient)
+
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  // const selectedIngredient = useAppSelector(getIngredient)
 
   // делаем currentTab либо TIngredientType
   const [currentTab, setCurrentTab] = useState<TIngredientType>('bun')
@@ -62,8 +67,11 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
   const handleIngredientClick = useCallback(
     (ingredient: TIngredient | null) => {
       dispatch(setIngredientDetails(ingredient))
+      navigate(`/ingredients/${ingredient?._id}`, {
+        state: { background: { ...location } },
+      })
     },
-    [dispatch]
+    [dispatch, navigate, location]
   )
 
   // при клике по табу проскроллим к нужному разделу
@@ -157,14 +165,14 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
         })}
       </div>
 
-      {selectedIngredient && (
-        <Modal
-          onClose={() => handleIngredientClick(null)}
-          title='Детали ингредиента'
-        >
-          <IngredientDetails ingredient={selectedIngredient} />
-        </Modal>
-      )}
+      {/*{selectedIngredient && (*/}
+      {/*  <FullPage*/}
+      {/*    onClose={() => handleIngredientClick(null)}*/}
+      {/*    title='Детали ингредиента'*/}
+      {/*  >*/}
+      {/*    <IngredientDetails ingredient={selectedIngredient} />*/}
+      {/*  </FullPage>*/}
+      {/*)}*/}
     </section>
   )
 }

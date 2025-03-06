@@ -1,1 +1,1 @@
-export * from './itemTypesDnD'
+export * from './item-types-dnd.ts'

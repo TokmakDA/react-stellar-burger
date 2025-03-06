@@ -1,25 +1,27 @@
 import { HoverWrapper, CloseIcon, Overlay } from '@/shared/ui'
 import { FC, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useNavigate } from 'react-router'
 import styles from './modal.module.scss'
 
 interface ModalProps {
   children: ReactNode
-  onClose: () => void
   disableOverlayClose?: boolean
   title?: string | null
   delay?: number // Миллисекунды ожидания перед закрытием компонента и анимации
   disabled?: boolean // Блокировка закрытия модального окна
+  onClose?: () => void // Функция для закрытия модального окна
 }
 
 export const Modal: FC<ModalProps> = ({
   children,
-  onClose,
   disableOverlayClose = false,
   disabled = false,
-  title = null,
   delay = 300,
+  onClose,
 }) => {
+  const navigate = useNavigate()
+
   const modalRoot = document.getElementById('modal-root') as HTMLElement | null
   const refModal = useRef<HTMLDivElement>(null)
 
@@ -39,9 +41,10 @@ export const Modal: FC<ModalProps> = ({
   const handleClose = useCallback(() => {
     setIsVisible(false)
     timeoutRef.current = setTimeout(() => {
-      onClose()
+      if (onClose) onClose()
+      else navigate(-1)
     }, delay)
-  }, [onClose, delay])
+  }, [navigate, onClose, delay])
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -64,24 +67,16 @@ export const Modal: FC<ModalProps> = ({
           ref={refModal}
         >
           <div className={styles.modal__container}>
-            <header className={`${styles.modal__header}`}>
-              <HoverWrapper className={styles.modal__close} isScalable={true}>
-                <button
-                  onClick={handleClose}
-                  disabled={disabled}
-                  style={{ background: 'transparent', border: 'none' }}
-                >
-                  <CloseIcon type='primary' />
-                </button>
-              </HoverWrapper>
-              {title && (
-                <h2
-                  className={`${styles.modal__title} text text_type_main-large`}
-                >
-                  {title}
-                </h2>
-              )}
-            </header>
+            <HoverWrapper className={styles.modal__close} isScalable={true}>
+              <button
+                onClick={handleClose}
+                disabled={disabled}
+                style={{ background: 'transparent', border: 'none' }}
+                className='m-0 p-0'
+              >
+                <CloseIcon type='primary' />
+              </button>
+            </HoverWrapper>
             {children}
           </div>
           {!disableOverlayClose && (

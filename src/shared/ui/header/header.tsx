@@ -4,18 +4,24 @@ import { Logo, BurgerIcon, ListIcon, LinkItem } from '@/shared/ui'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 export const Header: FC = () => {
+  const links = {
+    home: '/',
+    orders: '/orders',
+    profile: '/profile',
+  }
+
   return (
     <header className={`${styles.header}`}>
       <div className={`${styles.header__wrapper} py-4 ga-2 px-20`}>
         <nav className={styles.nav}>
           <ul className={styles.nav__list}>
             <li className={styles.nav__item}>
-              <LinkItem icon={<BurgerIcon type={'primary'} />} to={'#'}>
+              <LinkItem icon={<BurgerIcon type={'primary'} />} to={links.home}>
                 Конструктор
               </LinkItem>
             </li>
             <li>
-              <LinkItem icon={<ListIcon type='primary' />} to={'#'}>
+              <LinkItem icon={<ListIcon type='primary' />} to={links.orders}>
                 Лента заказов
               </LinkItem>
             </li>
@@ -24,7 +30,7 @@ export const Header: FC = () => {
         <Logo className={styles.header__logo} />
         <LinkItem
           icon={<ProfileIcon type='primary' />}
-          to={'#'}
+          to={links.profile}
           className={styles.header__actions}
         >
           Личный кабинет

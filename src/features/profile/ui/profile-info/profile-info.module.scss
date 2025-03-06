@@ -1,0 +1,18 @@
+.wrapper {
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
