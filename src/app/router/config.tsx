@@ -79,14 +79,24 @@ export const routesConfig: TRouterConfig[] = [
           {
             path: ROUTES.PROFILE_ORDERS,
             element: <div>PROFILE_ORDERS</div>,
-            children: [
-              {
-                path: ROUTES.PROFILE_ORDER_DETAILS,
-                element: <div>PROFILE_ORDER_DETAILS</div>,
-              },
-            ],
           },
         ],
+      },
+      {
+        path: ROUTES.PROFILE_ORDER_DETAILS,
+        element: <Pages.OrderInfo />,
+        modal: true,
+      },
+
+      /* OrderFeed */
+      {
+        path: ROUTES.FEED,
+        element: <Pages.OrderFeed />,
+      },
+      {
+        path: ROUTES.FEED_DETAILS,
+        element: <Pages.OrderInfo />,
+        modal: true,
       },
 
       /* 404 */

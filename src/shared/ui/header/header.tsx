@@ -1,3 +1,4 @@
+import { ROUTES } from '@/shared/config'
 import type { FC } from 'react'
 import styles from './header.module.scss'
 import { Logo, BurgerIcon, ListIcon, LinkItem } from '@/shared/ui'
@@ -5,9 +6,9 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 export const Header: FC = () => {
   const links = {
-    home: '/',
-    orders: '/orders',
-    profile: '/profile',
+    home: ROUTES.HOME,
+    orders: ROUTES.FEED,
+    profile: ROUTES.PROFILE,
   }
 
   return (

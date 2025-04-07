@@ -11,4 +11,7 @@ export const ROUTES = {
   PROFILE: '/profile',
   PROFILE_ORDERS: '/profile/orders',
   PROFILE_ORDER_DETAILS: '/profile/orders/:orderId',
+
+  FEED: '/feed',
+  FEED_DETAILS: '/feed/:feedId',
 } as const

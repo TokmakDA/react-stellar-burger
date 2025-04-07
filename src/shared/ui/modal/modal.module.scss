@@ -30,7 +30,7 @@ $width-modal: 720px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     max-width: $width-modal;
-    width: 100%;
+    width: fit-content;
   }
 
   &__close {
