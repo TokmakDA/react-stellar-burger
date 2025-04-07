@@ -1,11 +1,11 @@
 import { useRegisterMutation, AuthLayout } from '@/features/auth'
-import { useAuthNavigation, useForm } from '@/shared/lib/hooks'
+import { useBack, useForm } from '@/shared/lib/hooks'
 import { IFetchQueryErrorResponse } from '@/shared/types'
 import { Input, Button } from '@/shared/ui'
 import { ChangeEvent, FC, FormEvent, useState } from 'react'
 
 const Register: FC = () => {
-  const { goToHome } = useAuthNavigation()
+  const { goBack } = useBack()
   const { values, handleChange, resetForm } = useForm({
     name: '',
     email: '',
@@ -20,7 +20,7 @@ const Register: FC = () => {
     e.preventDefault()
     await registerMutation(values).unwrap()
     resetForm()
-    goToHome()
+    goBack()
   }
 
   return (

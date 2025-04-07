@@ -7,7 +7,7 @@ import { FC, RefObject } from 'react'
 type TIngredientsGroupProps = {
   title: string
   ingredients: TIngredient[]
-  onClick: (ingredient: TIngredient | null) => void
+  onClick: (ingredient: TIngredient) => void
   refElement: RefObject<HTMLElement>
 }
 

@@ -25,10 +25,13 @@
     background: none;
     margin: 0;
     padding: 0;
-    transition: color 0.3s ease;
+    transition:
+      color 0.3s ease,
+      opacity 0.3s ease;
 
     &:hover {
-      color: $interface-accent;
+      color: $interface-success;
+      opacity: 0.8;
     }
 
     &_active {

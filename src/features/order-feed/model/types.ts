@@ -1,10 +1,23 @@
-import { TIngredient } from '@/shared/types'
-
-export type TBurgerIngredient = TIngredient & {
-  uuid: string
+export type TOrder = {
+  createdAt: string
+  ingredients: string[]
+  name: string
+  number: number
+  status: 'done'
+  updatedAt: string
+  _id: string
 }
 
-export type TBurgerState = {
-  ingredients: TBurgerIngredient[]
-  bun: null | TBurgerIngredient
+export enum OrderStatus {
+  created = 'created',
+  pending = 'pending',
+  done = 'done',
 }
+
+export type TFeedResponse = {
+  success: boolean
+  total?: number
+  totalToday?: number
+  orders: TOrder[]
+}
+

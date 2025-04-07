@@ -1,4 +1,4 @@
-import { useAuthNavigation } from '@/shared/lib/hooks'
+import { useBackgroundLocation } from '@/shared/lib/hooks'
 import { Loader } from '@/shared/ui'
 import { FC, FormEvent, ReactNode } from 'react'
 import { Link } from 'react-router'
@@ -27,7 +27,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   isLoading,
   errorMessage,
 }) => {
-  const { state, isBackground } = useAuthNavigation()
+  const { state, isBackground } = useBackgroundLocation()
 
   return (
     <section className={styles.section}>

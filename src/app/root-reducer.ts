@@ -6,6 +6,7 @@ import {
   ingredientDetailsSlice,
   ingredientsApi,
 } from '@/features/burger'
+import { orderFeedSlice } from '@/features/order-feed'
 import { combineSlices } from '@reduxjs/toolkit'
 
 export const rootReducer = combineSlices(
@@ -15,5 +16,6 @@ export const rootReducer = combineSlices(
   orderApi,
   authApi,
   authSlice,
-  userApi
+  userApi,
+  orderFeedSlice
 )

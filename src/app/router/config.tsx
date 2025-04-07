@@ -84,7 +84,11 @@ export const routesConfig: TRouterConfig[] = [
       },
       {
         path: ROUTES.PROFILE_ORDER_DETAILS,
-        element: <Pages.OrderInfo />,
+        element: (
+          <OnlyUnAuth>
+            <Pages.OrderInfo />
+          </OnlyUnAuth>
+        ),
         modal: true,
       },
 

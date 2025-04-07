@@ -65,9 +65,10 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
 
   // клик по ингредиенту вызывает экшен
   const handleIngredientClick = useCallback(
-    (ingredient: TIngredient | null) => {
+    (ingredient: TIngredient) => {
+      console.log(ingredient)
       dispatch(setIngredientDetails(ingredient))
-      navigate(`/ingredients/${ingredient?._id}`, {
+      navigate(`/ingredients/${ingredient._id}`, {
         state: { background: { ...location } },
       })
     },
@@ -164,15 +165,6 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
           )
         })}
       </div>
-
-      {/*{selectedIngredient && (*/}
-      {/*  <FullPage*/}
-      {/*    onClose={() => handleIngredientClick(null)}*/}
-      {/*    title='Детали ингредиента'*/}
-      {/*  >*/}
-      {/*    <IngredientDetails ingredient={selectedIngredient} />*/}
-      {/*  </FullPage>*/}
-      {/*)}*/}
     </section>
   )
 }

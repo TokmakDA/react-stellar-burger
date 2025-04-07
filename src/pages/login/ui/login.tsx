@@ -1,12 +1,12 @@
 import { AuthLayout, useLoginMutation } from '@/features/auth'
 import { ROUTES } from '@/shared/config'
-import { useAuthNavigation, useForm } from '@/shared/lib/hooks'
+import { useBack, useForm } from '@/shared/lib/hooks'
 import { IFetchQueryErrorResponse } from '@/shared/types'
 import { FC, useState, FormEvent } from 'react'
 import { Input, Button } from '@/shared/ui'
 
 const Login: FC = () => {
-  const { goToHome } = useAuthNavigation()
+  const { goBack } = useBack()
   const { values, handleChange, resetForm } = useForm({
     email: '',
     password: '',
@@ -19,7 +19,7 @@ const Login: FC = () => {
 
     await loginMutation(values).unwrap()
     resetForm()
-    goToHome()
+    goBack()
   }
 
   return (

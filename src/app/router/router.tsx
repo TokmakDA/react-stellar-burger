@@ -1,13 +1,11 @@
 import { routesConfig, TRouterConfig } from '@/app/router/config.tsx'
+import { useBackgroundLocation } from '@/shared/lib/hooks'
 import { FullPage, Modal } from '@/shared/ui'
 import { useCallback, useMemo } from 'react'
-import { Route, Routes, useLocation } from 'react-router'
+import { Route, Routes } from 'react-router'
 
 export function Router() {
-  const location = useLocation()
-
-  const background = location.state?.background
-  const initialPath = location.state?.initialPath
+  const { location, background } = useBackgroundLocation()
 
   const generateRoutes = (routes: TRouterConfig[], isModal = false) =>
     routes.map((route) => {
@@ -66,11 +64,7 @@ export function Router() {
 
   return (
     <>
-      <Routes
-        location={
-          (background && { ...background, pathname: initialPath }) || location
-        }
-      >
+      <Routes location={background ? { ...background } : location}>
         {generateRoutes(routesConfig)}
       </Routes>
 

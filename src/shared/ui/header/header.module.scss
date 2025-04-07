@@ -1,6 +1,6 @@
 .header {
   background-color: $interface-modal-bg;
-  /* card-order/x-large */
+  /* order-card/x-large */
   box-shadow:
     0 24px 32px 0 rgba(0, 0, 0, 0.04),
     0 16px 24px 0 rgba(0, 0, 0, 0.04),
@@ -17,7 +17,11 @@
   }
 
   &__logo {
-    justify-self: center;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
   }
   &__actions {
     justify-self: end;

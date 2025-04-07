@@ -17,7 +17,6 @@ export const Loader: FC<TLoaderProps> = ({
   return (
     <div className={styles.loader}>
       <div className={`${styles.loader__text} ${textClass}`}>{text}</div>
-
       <div className={styles.loader__wrapper}>
         {Array.from({ length: 5 })
           .map((_, i) => i)

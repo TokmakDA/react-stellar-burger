@@ -1,9 +1,10 @@
 import { useGetIngredientsQuery } from '@/features/burger'
+import { useBackgroundLocation } from '@/shared/lib/hooks'
 import { TIngredient } from '@/shared/types'
 import { formatNumberToRu } from '@/shared/lib/utils'
 import { Loader } from '@/shared/ui'
 import { FC, useMemo } from 'react'
-import { useLocation, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import styles from './ingredient-details.module.scss'
 
 export const IngredientDetails: FC = () => {
@@ -23,8 +24,7 @@ export const IngredientDetails: FC = () => {
   const { id } = useParams()
   const { data: ingredientsData, isError, isLoading } = useGetIngredientsQuery()
 
-  const location = useLocation()
-  const backgroundLocation = Boolean(location.state?.background)
+  const { isBackground } = useBackgroundLocation()
 
   const ingredient = useMemo(() => {
     return ingredientsData?.data.find((item) => item._id === id)
@@ -78,7 +78,7 @@ export const IngredientDetails: FC = () => {
     <section className={`${styles.details} px-5 pb-5`}>
       <header
         className={styles.details__header}
-        style={backgroundLocation ? { alignSelf: 'start' } : {}}
+        style={isBackground ? { alignSelf: 'start' } : {}}
       >
         <h2 className={`text text_type_main-large`}>Детали ингредиента</h2>
       </header>
