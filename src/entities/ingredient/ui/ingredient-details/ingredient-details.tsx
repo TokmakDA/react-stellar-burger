@@ -1,4 +1,4 @@
-import { useGetIngredientsQuery } from '@/features/burger'
+import { useGetIngredientsQuery } from '@/entities/ingredient'
 import { useBackgroundLocation } from '@/shared/lib/hooks'
 import { TIngredient } from '@/shared/types'
 import { formatNumberToRu } from '@/shared/lib/utils'

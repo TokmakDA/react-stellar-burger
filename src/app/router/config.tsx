@@ -1,4 +1,4 @@
-import { IngredientDetails } from '@/features/burger/ui'
+import { IngredientDetails } from '@/entities/ingredient'
 import { ProfileInfo } from '@/features/profile'
 import { ROUTES } from '@/shared/config'
 import { OnlyAuth, OnlyUnAuth } from '@/shared/lib/router'

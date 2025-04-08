@@ -1,3 +1,4 @@
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import {
   getStatus,
   Orders,
@@ -11,12 +12,10 @@ import { Loader, Overlay } from '@/shared/ui'
 
 import { useCallback, useEffect } from 'react'
 
-import { useDispatch, useSelector } from 'react-redux'
-
 export const OrderFeed = () => {
-  const dispatch = useDispatch()
-  const status = useSelector(getStatus)
-  const error = useSelector(getError)
+  const dispatch = useAppDispatch()
+  const status = useAppSelector(getStatus)
+  const error = useAppSelector(getError)
   const isDisconnected = status !== WebsocketStatus.ONLINE
 
   const isLoading = status === WebsocketStatus.CONNECTING

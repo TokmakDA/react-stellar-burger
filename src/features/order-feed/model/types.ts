@@ -20,4 +20,3 @@ export type TFeedResponse = {
   totalToday?: number
   orders: TOrder[]
 }
-

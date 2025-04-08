@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/app/hooks'
-import { setIngredientDetails } from '@/features/burger/model'
+import { setIngredientDetails } from '@/entities/ingredient'
 import { IngredientsGroup } from '@/features/burger/ui'
 import {
   FC,

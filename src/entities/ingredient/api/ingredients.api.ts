@@ -27,4 +27,8 @@ export const ingredientsApi = createApi({
   }),
 })
 
-export const { useGetIngredientsQuery, useGetIngredientQuery } = ingredientsApi
+export const {
+  useGetIngredientsQuery,
+  useGetIngredientQuery,
+  useLazyGetIngredientsQuery,
+} = ingredientsApi

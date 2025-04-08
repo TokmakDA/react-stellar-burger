@@ -19,5 +19,5 @@ export const WS_API_BASE_URL =
 
 export const WS_ENDPOINTS = {
   ORDERS: '/orders',
-  ORDERS_ALL: '/orders/all'
+  ORDERS_ALL: '/orders/all',
 }
