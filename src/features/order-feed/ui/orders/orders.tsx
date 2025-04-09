@@ -13,7 +13,9 @@ export const Orders = () => {
 
   const handleCardClick = useCallback(
     (id: string) => {
-      navigateWithBackground(buildPath(ROUTES.ORDER_FEED_DETAILS, { orderId: id }))
+      navigateWithBackground(
+        buildPath(ROUTES.ORDER_FEED_DETAILS, { orderId: id })
+      )
     },
     [navigateWithBackground]
   )

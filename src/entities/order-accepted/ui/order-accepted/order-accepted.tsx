@@ -10,7 +10,11 @@ type TOrderDetailsProps = {
   isError: boolean
 }
 
-const OrderAccepted: FC<TOrderDetailsProps> = ({ data, isLoading, isError }) => {
+const OrderAccepted: FC<TOrderDetailsProps> = ({
+  data,
+  isLoading,
+  isError,
+}) => {
   if (isLoading) {
     return (
       <section className={`${styles.order} my-6`}>

@@ -1,8 +1,6 @@
 $spacing: 30;
 $spacer: 4px;
 
-@use "./layouts/two-column";
-
 // Генерация классов для margin, padding и gap
 @for $i from 0 through $spacing {
   // Классы для margin

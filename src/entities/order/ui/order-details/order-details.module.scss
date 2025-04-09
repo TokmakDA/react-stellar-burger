@@ -34,7 +34,7 @@
     overflow-y: auto;
     scrollbar-gutter: stable;
     max-height: 350px;
-    @extend .ga-4
+    @extend .ga-4;
   }
 
   &__footer {

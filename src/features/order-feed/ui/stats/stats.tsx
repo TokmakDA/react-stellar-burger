@@ -21,32 +21,36 @@ export const Stats = () => {
     <aside className={styles.stats} aria-label='Общая информация по заказам'>
       <div className={styles.stats__board}>
         <OrderNumbersGroup
-          title="Готовы:"
+          title='Готовы:'
           columns={doneColumns}
           isDone
           className={styles.stats__group}
         />
         <OrderNumbersGroup
-          title="В работе:"
+          title='В работе:'
           columns={inWorkColumns}
           className={styles.stats__group}
         />
       </div>
 
       <div className={styles.stats__block}>
-        <h3 className="text text_type_main-medium text_color_primary">
+        <h3 className='text text_type_main-medium text_color_primary'>
           Выполнено за все время:
         </h3>
-        <span className={`text text_type_digits-large text_color_primary ${styles.stats__value}`}>
+        <span
+          className={`text text_type_digits-large text_color_primary ${styles.stats__value}`}
+        >
           {stats.total}
         </span>
       </div>
 
       <div className={styles.stats__block}>
-        <h3 className="text text_type_main-medium text_color_primary">
+        <h3 className='text text_type_main-medium text_color_primary'>
           Выполнено за сегодня:
         </h3>
-        <span className={`text text_type_digits-large text_color_primary ${styles.stats__value}`}>
+        <span
+          className={`text text_type_digits-large text_color_primary ${styles.stats__value}`}
+        >
           {stats.totalToday}
         </span>
       </div>

@@ -16,7 +16,10 @@ export const Header: FC = () => {
               </LinkItem>
             </li>
             <li>
-              <LinkItem icon={<ListIcon type='primary' />} to={ROUTES.ORDER_FEED}>
+              <LinkItem
+                icon={<ListIcon type='primary' />}
+                to={ROUTES.ORDER_FEED}
+              >
                 Лента заказов
               </LinkItem>
             </li>
