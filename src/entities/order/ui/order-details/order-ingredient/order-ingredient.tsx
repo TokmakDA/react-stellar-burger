@@ -11,8 +11,6 @@ type OrderIngredientProps = {
 }
 
 export const OrderIngredient: FC<OrderIngredientProps> = ({ ingredient }) => {
-  console.log(ingredient)
-
   return (
     <div className={styles.ingredient}>
       <GradientCircle>

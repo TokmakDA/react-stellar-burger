@@ -14,7 +14,7 @@ export enum OrderStatus {
   done = 'done',
 }
 
-export type TFeedResponse = {
+export type TOrdersResponse = {
   success: boolean
   total?: number
   totalToday?: number

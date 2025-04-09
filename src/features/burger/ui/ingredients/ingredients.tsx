@@ -65,7 +65,6 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
   // клик по ингредиенту вызывает экшен
   const handleIngredientClick = useCallback(
     (ingredient: TIngredient) => {
-      console.log(ingredient)
       dispatch(setIngredientDetails(ingredient))
 
       navigateWithBackground(

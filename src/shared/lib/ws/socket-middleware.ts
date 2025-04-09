@@ -1,4 +1,5 @@
 import { RootState } from '@/app/store.ts'
+import { refreshAccessToken } from '@/shared/api'
 import { WS_API_BASE_URL } from '@/shared/config'
 import {
   ActionCreatorWithoutPayload,
@@ -20,8 +21,8 @@ type WsActions<R, S> = {
 export const RECONNECT_PERIOD = 6000
 
 export const socketMiddleware = <R, S>(
-  wsActions: WsActions<R, S>
-  // withTokenRefresh: boolean = false
+  wsActions: WsActions<R, S>,
+  withTokenRefresh: boolean = false
 ): Middleware<Record<string, never>, RootState> => {
   return (store) => {
     let socket: WebSocket | null = null
@@ -72,33 +73,35 @@ export const socketMiddleware = <R, S>(
             }
           }
 
-          socket.onmessage = (event) => {
+          socket.onmessage = async (event) => {
             const { data } = event
 
             try {
               const parsedData = JSON.parse(data)
 
-              // if (
-              //   withTokenRefresh &&
-              //   parsedData.message == 'Invalid or missing token'
-              // ) {
-              //   refreshToken()
-              //     .then((refreshedData) => {
-              //       const wssUrl = new URL(url)
-              //       wssUrl.searchParams.set(
-              //         'token',
-              //         refreshedData.accessToken.replace('Bearer ', '')
-              //       )
-              //       dispatch(connect(wssUrl.toString()))
-              //     })
-              //     .catch((err) => {
-              //       dispatch(onError((err as Error).message))
-              //     })
-              //
-              //   dispatch(disconnect())
-              //
-              //   return
-              // }
+              if (
+                withTokenRefresh &&
+                parsedData.message === 'Invalid or missing token'
+              ) {
+                try {
+                  const refreshedData = await refreshAccessToken()
+
+                  const wssUrl = new URL(url)
+                  wssUrl.searchParams.set(
+                    'token',
+                    refreshedData.accessToken.replace('Bearer ', '')
+                  )
+
+                  dispatch(disconnect()) // закрыть текущее соединение
+                  dispatch(connect(wssUrl.toString())) // открыть новое с новым токеном
+
+                  return
+                } catch (err) {
+                  dispatch(onError((err as Error).message))
+                  dispatch(disconnect())
+                  return
+                }
+              }
 
               dispatch(onMessage(parsedData))
             } catch (error) {

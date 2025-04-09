@@ -3,7 +3,7 @@ import {
   getStatus,
   Orders,
   Stats,
-  connect,
+  orderFeedActions,
   getError,
 } from '@/features/order-feed'
 import { WS_ENDPOINTS } from '@/shared/config'
@@ -21,7 +21,7 @@ export const OrderFeed = () => {
   const isLoading = status === WebsocketStatus.CONNECTING
 
   const connectSocket = useCallback(
-    () => dispatch(connect(WS_ENDPOINTS.ORDERS_ALL)),
+    () => dispatch(orderFeedActions.connect(WS_ENDPOINTS.ORDERS_ALL)),
     [dispatch]
   )
 

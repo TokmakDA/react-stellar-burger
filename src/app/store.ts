@@ -4,6 +4,7 @@ import { orderAcceptedApi } from '@/entities/order-accepted'
 import { userApi } from '@/entities/user'
 import { authApi } from '@/features/auth'
 import { orderFeedMiddleware } from '@/features/order-feed'
+import { profileOrdersMiddleware } from '@/features/profile'
 import type { Action, ThunkAction } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
@@ -20,7 +21,8 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
         orderAcceptedApi.middleware,
         authApi.middleware,
         userApi.middleware,
-        orderFeedMiddleware
+        orderFeedMiddleware,
+        profileOrdersMiddleware
       )
     },
     preloadedState,
