@@ -1,2 +1,2 @@
 export * from './ingredient-details.slice.ts'
-export { selectIngredientsData } from './ingredients.selectors.ts'
+export * from './ingredients.selectors.ts'

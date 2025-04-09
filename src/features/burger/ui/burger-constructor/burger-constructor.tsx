@@ -1,5 +1,10 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { OrderDetails, useCreateOrderMutation } from '@/entities/order'
+import { useModalNavigation } from '@/shared/lib/hooks'
+import { scrollSectionStyles } from '@/shared/styles/layouts'
+import {
+  OrderAccepted,
+  useCreateOrderMutation,
+} from '../../../../entities/order-accepted'
 import { isAuthenticated } from '@/features/auth'
 import {
   addIngredient,
@@ -15,7 +20,6 @@ import { DropTarget, EmptyElement, SortableItem } from '@/features/burger/ui'
 import { ROUTES } from '@/shared/config'
 import { TIngredient } from '@/shared/types'
 import { FC, useCallback, useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router'
 import styles from './burger-constructor.module.scss'
 import {
   Button,
@@ -34,8 +38,7 @@ export const BurgerConstructor: FC = () => {
   const isAuth = useAppSelector(isAuthenticated)
   const [isNewOrder, setIsNewOrder] = useState<boolean>(false)
 
-  const navigate = useNavigate()
-  const location = useLocation()
+  const { navigateWithFrom } = useModalNavigation()
 
   const handleClose = useCallback(() => {
     setIsNewOrder(false)
@@ -72,9 +75,7 @@ export const BurgerConstructor: FC = () => {
       ingredientsIds.unshift(bun._id)
       createOrder({ ingredients: ingredientsIds })
     } else {
-      navigate(ROUTES.LOGIN, {
-        state: { from: location, background: location },
-      })
+      navigateWithFrom(ROUTES.LOGIN)
     }
   }
 
@@ -87,7 +88,10 @@ export const BurgerConstructor: FC = () => {
   const disabledNewOrder = ingredients.length === 0 || bun === null
 
   return (
-    <section className={styles.section}>
+    <section
+      className={scrollSectionStyles['scroll-section']}
+      aria-label={'Бургер конструктор'}
+    >
       <div className={`${styles.section__container} pl-4 pt-25 pb-10 ga-4`}>
         <DropTarget
           itemType={ITEM_TYPES.INGREDIENT}
@@ -107,7 +111,7 @@ export const BurgerConstructor: FC = () => {
             <EmptyElement type='top' extraClass='ml-8' />
           )}
           <ul
-            className={`${styles.section__scrollWrapper} ${styles.section__list} ga-4  `}
+            className={`${scrollSectionStyles['scroll-section__scroll-wrapper']} list-no-style  ga-4`}
           >
             {ingredients.length ? (
               ingredients.map((ingredient, idx) => (
@@ -177,7 +181,7 @@ export const BurgerConstructor: FC = () => {
           disabled={isLoading}
           onClose={handleClose}
         >
-          <OrderDetails
+          <OrderAccepted
             data={orderData}
             isLoading={isLoading}
             isError={isError}

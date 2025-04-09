@@ -1,6 +1,8 @@
 $spacing: 30;
 $spacer: 4px;
 
+@use "./layouts/two-column";
+
 // Генерация классов для margin, padding и gap
 @for $i from 0 through $spacing {
   // Классы для margin
@@ -124,8 +126,6 @@ $spacer: 4px;
 
   li {
     list-style: none;
-    padding: 0;
-    margin: 0;
     // Обрабатываем ссылки на любом уровне вложенности
     a {
       text-decoration: none;

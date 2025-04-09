@@ -2,8 +2,8 @@ import { baseQueryWithRauth } from '@/shared/api'
 import { API_ENDPOINTS } from '@/shared/config/api'
 import { createApi } from '@reduxjs/toolkit/query/react'
 
-export const orderApi = createApi({
-  reducerPath: 'orderApi',
+export const orderAcceptedApi = createApi({
+  reducerPath: 'orderAccepted',
   baseQuery: baseQueryWithRauth,
   endpoints: (builder) => ({
     createOrder: builder.mutation<
@@ -19,4 +19,4 @@ export const orderApi = createApi({
   }),
 })
 
-export const { useCreateOrderMutation } = orderApi
+export const { useCreateOrderMutation } = orderAcceptedApi

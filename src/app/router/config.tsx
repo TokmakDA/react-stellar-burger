@@ -94,11 +94,11 @@ export const routesConfig: TRouterConfig[] = [
 
       /* OrderFeed */
       {
-        path: ROUTES.FEED,
+        path: ROUTES.ORDER_FEED,
         element: <Pages.OrderFeed />,
       },
       {
-        path: ROUTES.FEED_DETAILS,
+        path: ROUTES.ORDER_FEED_DETAILS,
         element: <Pages.OrderInfo />,
         modal: true,
       },

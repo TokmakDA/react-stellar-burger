@@ -12,8 +12,8 @@ export default defineConfig({
       scss: {
         api: 'modern',
         additionalData: `
-          @use '@/assets/styles/vars.scss' as *;
-          @use '@/assets/styles/mixins.scss' as *;
+          @use '@/shared/styles/vars.scss' as *;
+          @use '@/shared/styles/mixins.scss' as *;
         `,
       },
     },
@@ -21,7 +21,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      '@ui-kit': path.resolve(__dirname, 'src/ui-kit'),
     },
   },
   test: {

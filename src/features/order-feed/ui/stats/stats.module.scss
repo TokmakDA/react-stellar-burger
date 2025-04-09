@@ -1,0 +1,48 @@
+@use '@/shared/styles/global';
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  @extend .ga-15, .mb-10;
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+  }
+
+  &__value {
+    text-shadow: $text-shadow;
+  }
+
+  &__board {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    @extend .ga-10;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    @extend .ga-6;
+  }
+
+  &__columns {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr);
+    @extend .ga-3;
+  }
+
+  &__number-list {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fill, 1fr);
+    @extend .ga-2;
+  }
+}

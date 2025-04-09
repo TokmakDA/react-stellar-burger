@@ -1,6 +1,6 @@
 import { rootReducer } from '@/app/root-reducer'
 import { ingredientsApi } from '@/entities/ingredient'
-import { orderApi } from '@/entities/order'
+import { orderAcceptedApi } from '@/entities/order-accepted'
 import { userApi } from '@/entities/user'
 import { authApi } from '@/features/auth'
 import { orderFeedMiddleware } from '@/features/order-feed'
@@ -17,7 +17,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
     middleware: (getDefaultMiddleware) => {
       return getDefaultMiddleware().concat(
         ingredientsApi.middleware,
-        orderApi.middleware,
+        orderAcceptedApi.middleware,
         authApi.middleware,
         userApi.middleware,
         orderFeedMiddleware

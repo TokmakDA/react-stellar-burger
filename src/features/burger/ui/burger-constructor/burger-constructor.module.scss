@@ -1,27 +1,9 @@
 .section {
-  display: flex;
-  flex-direction: column;
-  max-width: $width-column;
-  overflow: hidden;
-
   &__container {
     display: flex;
     flex-direction: column;
     overflow: hidden;
     max-height: 100%;
-  }
-
-  &__scrollWrapper {
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-  }
-
-  &__list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    overflow-y: auto;
   }
 
   &__item {

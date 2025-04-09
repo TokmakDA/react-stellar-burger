@@ -1,2 +1,1 @@
-export * from '@/entities/order/model'
-export * from '@/entities/order/ui'
+export * from './ui'

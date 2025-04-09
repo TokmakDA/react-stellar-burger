@@ -1,0 +1,26 @@
+@use '@/shared/styles/global';
+
+.empty-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  @extend .ga-4, .pt-0, .px-5, .pb-5;
+
+  &__header {
+    display: flex;
+    min-height: 64px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @extend .ga-8;
+  }
+}

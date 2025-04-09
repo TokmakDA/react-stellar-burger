@@ -1,0 +1,18 @@
+.scroll-section {
+  display: flex;
+  flex-direction: column;
+  max-width: $width-column;
+  overflow-y: hidden;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__scroll-wrapper {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+}

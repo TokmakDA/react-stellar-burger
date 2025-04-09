@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit'
 import { TFeedResponse } from './types' // структура WS-ответа
 
-const prefix = 'order-feed'
+const prefix = 'order-accepted-feed'
 
 export const connect = createAction<string, `${typeof prefix}/connect`>(
   `${prefix}/connect`
