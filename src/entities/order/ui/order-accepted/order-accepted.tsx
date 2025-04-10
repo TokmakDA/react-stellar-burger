@@ -1,5 +1,5 @@
-import { TNewOrder } from '@/entities/order-accepted/model/types.ts'
-import { Loader } from '@/shared/ui'
+import { TNewOrder } from '@/entities/order/model/types.ts'
+import { Loader, StatePage } from '@/shared/ui'
 import { FC } from 'react'
 import styles from './order-accepted.module.scss'
 import done from '@/assets/images/done.svg'
@@ -23,21 +23,8 @@ const OrderAccepted: FC<TOrderDetailsProps> = ({
     )
   }
 
-  if (isError) {
-    return (
-      <section className={`${styles.order} ga-10`}>
-        <header className={styles.order__header}>
-          <h2 className='text text_type_main-large'>Ошибка оформления</h2>
-        </header>
-
-        <div className={styles.order__details}>
-          <p className='text text_type_main-default'>
-            Попробуйте обновить страницу или повторить позже.
-          </p>
-        </div>
-      </section>
-    )
-  }
+  if (isError)
+    return <StatePage type='error' title='Ошибка оформления заказа' />
 
   return (
     <section className={`${styles.order} py-20`}>

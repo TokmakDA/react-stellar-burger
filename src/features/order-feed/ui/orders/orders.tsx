@@ -12,10 +12,8 @@ export const Orders = () => {
   const { navigateWithBackground } = useModalNavigation()
 
   const handleCardClick = useCallback(
-    (id: string) => {
-      navigateWithBackground(
-        buildPath(ROUTES.ORDER_FEED_DETAILS, { orderId: id })
-      )
+    (orderNum: string) => {
+      navigateWithBackground(buildPath(ROUTES.ORDER_FEED_DETAILS, { orderNum }))
     },
     [navigateWithBackground]
   )

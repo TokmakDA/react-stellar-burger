@@ -8,7 +8,7 @@ import {
 } from '@/features/order-feed'
 import { WS_ENDPOINTS } from '@/shared/config'
 import { WebsocketStatus } from '@/shared/lib/ws'
-import { Loader, Overlay } from '@/shared/ui'
+import { Loader, Overlay, StatePage } from '@/shared/ui'
 import { useCallback, useEffect } from 'react'
 import styles from './order-feed.module.scss'
 
@@ -21,7 +21,7 @@ export const OrderFeed = () => {
   const isLoading = status === WebsocketStatus.CONNECTING
 
   const connectSocket = useCallback(
-    () => dispatch(orderFeedActions.connect(WS_ENDPOINTS.ORDERS_ALL)),
+    () => dispatch(orderFeedActions.connect({ url: WS_ENDPOINTS.ORDERS_ALL })),
     [dispatch]
   )
 
@@ -37,9 +37,7 @@ export const OrderFeed = () => {
           <Overlay />
         </Loader>
       ) : error ? (
-        <div className='text text_color_error text_type_main-default'>
-          {error}
-        </div>
+        <StatePage type='error' />
       ) : (
         <div className={`${styles.page} ga-10`}>
           <Orders />

@@ -1,5 +1,5 @@
-import { clearTokens } from '@/features/auth/lib'
 import { refreshAccessToken } from '@/shared/api/refresh-token.ts'
+import { clearTokens } from '@/shared/lib/utils'
 import { IFetchQueryErrorResponse } from '@/shared/types'
 import {
   BaseQueryFn,

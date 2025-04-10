@@ -1,11 +1,12 @@
 @use '@/shared/styles/global';
 
-.empty-page {
+.state-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   @extend .ga-4, .pt-0, .px-5, .pb-5;
+  text-align: center;
 
   &__header {
     display: flex;
@@ -14,6 +15,23 @@
     align-content: center;
     justify-content: center;
     flex-wrap: wrap;
+  }
+
+  &__icon {
+    @extend .my-3;
+    & > span {
+      font-size: 5rem;
+      display: block;
+      line-height: 1;
+    }
+    & > svg,
+    > img {
+      display: block;
+      max-width: 150px;
+      height: auto;
+      aspect-ratio: 1/1;
+      object-fit: contain;
+    }
   }
 
   &__wrapper {

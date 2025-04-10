@@ -4,13 +4,11 @@ import styles from './profile.module.scss'
 
 const Profile = () => {
   return (
-    <div className={styles.container}>
-      <aside className={styles.sidebar}>
+    <div className={styles.page}>
+      <aside className={styles.page__sidebar}>
         <ProfileNavigation />
       </aside>
-      <section className={styles.content}>
-        <Outlet />
-      </section>
+      <Outlet />
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { RootState } from '@/app/store.ts'
 import { refreshAccessToken } from '@/shared/api'
 import { WS_API_BASE_URL } from '@/shared/config'
+import { TConnectPayload } from '@/shared/lib/ws/types.ts'
 import {
   ActionCreatorWithoutPayload,
   ActionCreatorWithPayload,
@@ -8,7 +9,7 @@ import {
 } from '@reduxjs/toolkit'
 
 type WsActions<R, S> = {
-  connect: ActionCreatorWithPayload<string>
+  connect: ActionCreatorWithPayload<TConnectPayload>
   disconnect: ActionCreatorWithoutPayload
   onConnecting?: ActionCreatorWithoutPayload
   onOpen?: ActionCreatorWithoutPayload
@@ -39,96 +40,101 @@ export const socketMiddleware = <R, S>(
     const { dispatch } = store
     let isConnected = false
     let reconnectTimer = 0
-    let url = ''
+    let lastPayload: TConnectPayload | null = null
 
-    return (next) => {
-      return (action) => {
-        if (connect.match(action)) {
-          url = WS_API_BASE_URL + action.payload
-          socket = new WebSocket(url)
-          if (onConnecting) {
-            dispatch(onConnecting())
-          }
-          isConnected = true
+    return (next) => (action) => {
+      if (connect.match(action)) {
+        if (socket) {
+          console.debug('[WS] Already connected, ignoring connect')
+          return
+        }
+        lastPayload = action.payload
 
-          socket.onopen = () => {
-            if (onOpen) {
-              dispatch(onOpen())
-            }
-          }
+        const wssUrl = new URL(WS_API_BASE_URL + action.payload.url)
+        if (withTokenRefresh && action.payload.token) {
+          wssUrl.searchParams.set('token', action.payload.token)
+        }
 
-          socket.onerror = () => {
-            dispatch(onError('Error'))
-          }
+        socket = new WebSocket(wssUrl)
+        if (onConnecting) {
+          dispatch(onConnecting())
+        }
 
-          socket.onclose = () => {
-            if (onClose) {
-              dispatch(onClose())
-            }
+        isConnected = true
 
-            if (isConnected) {
-              reconnectTimer = window.setTimeout(() => {
-                dispatch(connect(url))
-              }, RECONNECT_PERIOD)
-            }
-          }
-
-          socket.onmessage = async (event) => {
-            const { data } = event
-
-            try {
-              const parsedData = JSON.parse(data)
-
-              if (
-                withTokenRefresh &&
-                parsedData.message === 'Invalid or missing token'
-              ) {
-                try {
-                  const refreshedData = await refreshAccessToken()
-
-                  const wssUrl = new URL(url)
-                  wssUrl.searchParams.set(
-                    'token',
-                    refreshedData.accessToken.replace('Bearer ', '')
-                  )
-
-                  dispatch(disconnect()) // закрыть текущее соединение
-                  dispatch(connect(wssUrl.toString())) // открыть новое с новым токеном
-
-                  return
-                } catch (err) {
-                  dispatch(onError((err as Error).message))
-                  dispatch(disconnect())
-                  return
-                }
-              }
-
-              dispatch(onMessage(parsedData))
-            } catch (error) {
-              dispatch(onError((error as Error).message))
-            }
+        socket.onopen = () => {
+          if (onOpen) {
+            dispatch(onOpen())
           }
         }
 
-        if (socket && sendMessage?.match(action)) {
+        socket.onerror = () => {
+          dispatch(onError('WebSocket error'))
+        }
+
+        socket.onclose = () => {
+          if (onClose) {
+            dispatch(onClose())
+          }
+
+          if (isConnected && lastPayload) {
+            reconnectTimer = window.setTimeout(() => {
+              dispatch(connect(lastPayload!))
+            }, RECONNECT_PERIOD)
+          }
+        }
+
+        socket.onmessage = async (event) => {
           try {
-            const data = JSON.stringify(action.payload)
-            socket.send(data)
+            const parsedData = JSON.parse(event.data)
+
+            if (
+              withTokenRefresh &&
+              parsedData.message === 'Invalid or missing token'
+            ) {
+              try {
+                const refreshedData = await refreshAccessToken()
+
+                const newPayload: TConnectPayload = {
+                  url: action.payload.url,
+                  token: refreshedData.accessToken.replace('Bearer ', ''),
+                }
+
+                dispatch(disconnect())
+                dispatch(connect(newPayload))
+                return
+              } catch (err) {
+                dispatch(onError((err as Error).message))
+                dispatch(disconnect())
+                return
+              }
+            }
+
+            dispatch(onMessage(parsedData))
           } catch (error) {
             dispatch(onError((error as Error).message))
           }
         }
-
-        if (socket && disconnect.match(action)) {
-          clearTimeout(reconnectTimer)
-          isConnected = false
-          reconnectTimer = 0
-          socket.close()
-          socket = null
-        }
-
-        next(action)
       }
+
+      if (socket && sendMessage?.match(action)) {
+        try {
+          const data = JSON.stringify(action.payload)
+          socket.send(data)
+        } catch (error) {
+          dispatch(onError((error as Error).message))
+        }
+      }
+
+      if (socket && disconnect.match(action)) {
+        clearTimeout(reconnectTimer)
+        isConnected = false
+        reconnectTimer = 0
+        socket.close()
+        socket = null
+      }
+
+      next(action)
     }
   }
 }

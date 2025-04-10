@@ -3,3 +3,8 @@ export enum WebsocketStatus {
   ONLINE = 'ONLINE',
   OFFLINE = 'OFFLINE',
 }
+
+export type TConnectPayload = {
+  url: string
+  token?: string
+}

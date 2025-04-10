@@ -1,9 +1,12 @@
+import { TConnectPayload } from '@/shared/lib/ws/types.ts'
 import { createAction } from '@reduxjs/toolkit'
 
 export const createWsActions = <TResponse, Prefix extends string>(
   prefix: Prefix
 ) => {
-  const connect = createAction<string, `${Prefix}/connect`>(`${prefix}/connect`)
+  const connect = createAction<TConnectPayload, `${Prefix}/connect`>(
+    `${prefix}/connect`
+  )
   const disconnect = createAction(`${prefix}/disconnect`)
 
   const onConnecting = createAction(`${prefix}/connecting`)

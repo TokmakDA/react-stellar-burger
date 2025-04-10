@@ -84,8 +84,8 @@ const ProfileInfo = () => {
     'Неизвестная ошибка'
 
   return (
-    <div className={`${styles.wrapper} ga-6`}>
-      <div className={styles.wrapper__fields}>
+    <section className={`${styles.section} ga-6`}>
+      <div className={styles.section__fields}>
         {Object.entries(fields).map(([k, v]) => (
           <Input
             key={k}
@@ -108,7 +108,7 @@ const ProfileInfo = () => {
         <p className='text_color_error'>{errorMessage}</p>
       )}
       {changedList.length > 0 && (
-        <div className={styles.wrapper__actions}>
+        <div className={styles.section__actions}>
           <Button
             htmlType='button'
             type='secondary'
@@ -128,7 +128,7 @@ const ProfileInfo = () => {
         </div>
       )}
       {(isGetLoading || isUpdateLoading) && <Loader overlay />}
-    </div>
+    </section>
   )
 }
 

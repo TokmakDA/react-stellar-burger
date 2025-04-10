@@ -1,7 +1,7 @@
 import { useAppSelector } from '@/app/hooks'
 import { selectIngredientsData } from '@/entities/ingredient'
 import { BurgerConstructor, Ingredients } from '@/features/burger'
-import { Loader, Overlay } from '@/shared/ui'
+import { Loader, Overlay, StatePage } from '@/shared/ui'
 import { FC } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -18,7 +18,7 @@ export const ConstructorPage: FC = () => {
           <Overlay />
         </Loader>
       ) : isError ? (
-        <div> Ошибка загрузки </div>
+        <StatePage type='error' />
       ) : (
         <DndProvider backend={HTML5Backend}>
           <div className={`${styles.page} ga-10`}>

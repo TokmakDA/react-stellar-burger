@@ -2,10 +2,9 @@ import { useAppSelector } from '@/app/hooks'
 import { selectIngredientsMap } from '@/entities/ingredient'
 import { ORDER_STATUS } from '@/entities/order/lib'
 import { OrderIngredient } from '@/entities/order/ui/order-details/order-ingredient'
-import { TOrder } from '@/features/order-feed'
 import { useBackgroundLocation } from '@/shared/lib/hooks'
 import { getFormattedDate } from '@/shared/lib/utils'
-import { TIngredient } from '@/shared/types'
+import { TIngredient, TOrder } from '@/shared/types'
 import { CurrencyIcon } from '@/shared/ui'
 import { FC, useMemo } from 'react'
 import styles from './order-details.module.scss'
@@ -19,13 +18,26 @@ export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
   const { isBackground } = useBackgroundLocation()
 
   const orderIngredients = useMemo(() => {
-    return order.ingredients
-      .map((id) => ingredientsMap.get(id))
-      .filter((i): i is TIngredient => Boolean(i))
+    const countMap = new Map<string, number>()
+
+    order.ingredients.forEach((id) => {
+      countMap.set(id, (countMap.get(id) || 0) + 1)
+    })
+
+    const uniqueIngredients: (TIngredient & { count: number })[] = []
+
+    for (const [id, count] of countMap.entries()) {
+      const ingredient = ingredientsMap.get(id)
+      if (ingredient) {
+        uniqueIngredients.push({ ...ingredient, count })
+      }
+    }
+
+    return uniqueIngredients
   }, [order.ingredients, ingredientsMap])
 
   const price = useMemo(() => {
-    return orderIngredients.reduce((acc, cur) => acc + cur.price, 0)
+    return orderIngredients.reduce((acc, cur) => acc + cur.price * cur.count, 0)
   }, [orderIngredients])
 
   return (
@@ -61,7 +73,7 @@ export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
           {orderIngredients.map((ingredient) => {
             return (
               <li key={ingredient._id}>
-                <OrderIngredient ingredient={{ ...ingredient, count: 1 }} />
+                <OrderIngredient ingredient={ingredient} />
               </li>
             )
           })}

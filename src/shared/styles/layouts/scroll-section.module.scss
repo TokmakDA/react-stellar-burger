@@ -1,7 +1,6 @@
 .scroll-section {
   display: flex;
   flex-direction: column;
-  max-width: $width-column;
   overflow-y: hidden;
 
   &__container {

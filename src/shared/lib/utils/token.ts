@@ -1,7 +1,13 @@
-import { getLocalData, removeLocalData, setLocalData } from '@/shared/lib/utils'
-
-const ACCESS_TOKEN_KEY = 'accessToken'
-const REFRESH_TOKEN_KEY = 'refreshToken'
+import {
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  TOKEN_PREFIX,
+} from '@/shared/lib/constants'
+import {
+  getLocalData,
+  removeLocalData,
+  setLocalData,
+} from '@/shared/lib/utils/index.ts'
 
 interface Tokens {
   accessToken: string
@@ -22,6 +28,12 @@ export const getAccessToken = (): string | null => {
   return typeof token === 'string' ? token : null
 }
 
+export const getPureAccessToken = (): string | undefined => {
+  const token = getAccessToken()
+  return token?.startsWith(TOKEN_PREFIX)
+    ? token.replace(TOKEN_PREFIX, '')
+    : token || undefined
+}
 export const getRefreshToken = (): string | null => {
   const token = getLocalData(REFRESH_TOKEN_KEY)
   return typeof token === 'string' ? token : null

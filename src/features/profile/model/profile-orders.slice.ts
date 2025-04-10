@@ -22,9 +22,9 @@ export const profileOrdersSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    getStatus: (state) => state.status,
+    getProfileOrderStatus: (state) => state.status,
     getOrders: (state) => state.orders,
-    getError: (state) => state.error,
+    getProfileOrderError: (state) => state.error,
   },
   extraReducers: (builder) => {
     builder
@@ -52,4 +52,5 @@ export const profileOrdersSlice = createSlice({
 //
 // export const {} = profileOrdersSlice.actions
 //
-export const { getStatus, getOrders, getError } = profileOrdersSlice.selectors
+export const { getProfileOrderStatus, getOrders, getProfileOrderError } =
+  profileOrdersSlice.selectors

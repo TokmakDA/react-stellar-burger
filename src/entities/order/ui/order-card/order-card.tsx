@@ -1,9 +1,8 @@
 import { useAppSelector } from '@/app/hooks'
 import { selectIngredientsMap } from '@/entities/ingredient'
 import { ORDER_STATUS } from '@/entities/order/lib'
-import { TOrder } from '@/features/order-feed'
 import { getFormattedDate } from '@/shared/lib/utils'
-import { TIngredient } from '@/shared/types'
+import { TIngredient, TOrder } from '@/shared/types'
 import { CurrencyIcon } from '@/shared/ui'
 import { GradientCircle } from '@/shared/ui/gradient-circle/gradient-circle.tsx'
 import { CSSProperties, FC, useMemo } from 'react'
@@ -37,7 +36,7 @@ export const OrderCard: FC<OrderCardProps> = ({
   const hiddenCount = orderIngredients.length - maxVisible
 
   const handleCLick = () => {
-    onClick(order._id)
+    onClick(order.number.toString())
   }
   return (
     <article className={styles['order-card']} onClick={handleCLick}>

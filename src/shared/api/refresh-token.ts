@@ -1,6 +1,6 @@
 import { IRefreshTokenResponse } from '@/features/auth'
 import { API_BASE_URL, API_ENDPOINTS } from '@/shared/config'
-import { clearTokens, getRefreshToken, saveTokens } from '@/features/auth/lib'
+import { clearTokens, getRefreshToken, saveTokens } from '@/shared/lib/utils'
 
 export const refreshAccessToken = async (): Promise<IRefreshTokenResponse> => {
   const refreshToken = getRefreshToken()

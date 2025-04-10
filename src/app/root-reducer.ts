@@ -1,5 +1,5 @@
 import { ingredientDetailsSlice, ingredientsApi } from '@/entities/ingredient'
-import { orderAcceptedApi } from '@/entities/order-accepted'
+import { orderApi } from '@/entities/order'
 import { userApi } from '@/entities/user'
 import { authApi, authSlice } from '@/features/auth'
 import { burgerSlice } from '@/features/burger'
@@ -11,7 +11,7 @@ export const rootReducer = combineSlices(
   ingredientsApi,
   ingredientDetailsSlice,
   burgerSlice,
-  orderAcceptedApi,
+  orderApi,
   authApi,
   authSlice,
   userApi,

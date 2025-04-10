@@ -1,5 +1,5 @@
 import { IngredientDetails } from '@/entities/ingredient'
-import { ProfileInfo } from '@/features/profile'
+import { ProfileInfo, ProfileOrders } from '@/features/profile'
 import { ROUTES } from '@/shared/config'
 import { OnlyAuth, OnlyUnAuth } from '@/shared/lib/router'
 import { RouteObject } from 'react-router'
@@ -78,16 +78,16 @@ export const routesConfig: TRouterConfig[] = [
           },
           {
             path: ROUTES.PROFILE_ORDERS,
-            element: <div>PROFILE_ORDERS</div>,
+            element: <ProfileOrders />,
           },
         ],
       },
       {
         path: ROUTES.PROFILE_ORDER_DETAILS,
         element: (
-          <OnlyUnAuth>
+          <OnlyAuth>
             <Pages.OrderInfo />
-          </OnlyUnAuth>
+          </OnlyAuth>
         ),
         modal: true,
       },

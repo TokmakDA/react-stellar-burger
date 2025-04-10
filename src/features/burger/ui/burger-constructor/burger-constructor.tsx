@@ -1,10 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { useModalNavigation } from '@/shared/lib/hooks'
 import { scrollSectionStyles } from '@/shared/styles/layouts'
-import {
-  OrderAccepted,
-  useCreateOrderMutation,
-} from '../../../../entities/order-accepted'
+import { OrderAccepted, useCreateOrderMutation } from '@/entities/order'
 import { isAuthenticated } from '@/features/auth'
 import {
   addIngredient,

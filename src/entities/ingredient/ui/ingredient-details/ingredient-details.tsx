@@ -2,7 +2,7 @@ import { useGetIngredientsQuery } from '@/entities/ingredient'
 import { useBackgroundLocation } from '@/shared/lib/hooks'
 import { TIngredient } from '@/shared/types'
 import { formatNumberToRu } from '@/shared/lib/utils'
-import { Loader } from '@/shared/ui'
+import { Loader, StatePage } from '@/shared/ui'
 import { FC, useMemo } from 'react'
 import { useParams } from 'react-router'
 import styles from './ingredient-details.module.scss'
@@ -30,9 +30,7 @@ export const IngredientDetails: FC = () => {
     return ingredientsData?.data.find((item) => item._id === id)
   }, [ingredientsData, id])
 
-  if (!id) {
-    return <p className='text text_type_main-medium'>Ингредиент не найден</p>
-  }
+  if (!id) return <StatePage type='empty' />
 
   if (isLoading) {
     return (
@@ -42,37 +40,9 @@ export const IngredientDetails: FC = () => {
     )
   }
 
-  if (isError) {
-    return (
-      <section className={styles.details}>
-        <header className={styles.details__header}>
-          <h2 className={`text text_type_main-large`}>
-            Ошибка загрузки данных
-          </h2>
-        </header>
-        <div className={styles.details__wrapper}>
-          <p className='text text_type_main-default'>
-            Попробуйте обновить страницу или повторить позже.
-          </p>
-        </div>
-      </section>
-    )
-  }
+  if (isError) return <StatePage type='error' />
 
-  if (!ingredient) {
-    return (
-      <section className={styles.details}>
-        <header className={styles.details__header}>
-          <h2 className={`text text_type_main-large`}>Данные отсутствуют </h2>
-        </header>
-        <div className={styles.details__wrapper}>
-          <p className='text text_type_main-default'>
-            Попробуйте обновить страницу или повторить позже.
-          </p>
-        </div>
-      </section>
-    )
-  }
+  if (!ingredient) return <StatePage type='notfound' />
 
   return (
     <section className={`${styles.details} px-5 pb-5`}>

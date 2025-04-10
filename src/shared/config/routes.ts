@@ -10,8 +10,8 @@ export const ROUTES = {
 
   PROFILE: '/profile',
   PROFILE_ORDERS: '/profile/orders',
-  PROFILE_ORDER_DETAILS: '/profile/orders/:orderId',
+  PROFILE_ORDER_DETAILS: '/profile/orders/:orderNum',
 
   ORDER_FEED: '/feed',
-  ORDER_FEED_DETAILS: '/feed/:orderId',
+  ORDER_FEED_DETAILS: '/feed/:orderNum',
 } as const

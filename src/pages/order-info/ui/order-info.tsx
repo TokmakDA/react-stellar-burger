@@ -1,28 +1,34 @@
 import { useAppSelector } from '@/app/hooks'
-import { OrderDetails } from '@/entities/order'
-import { getOrderFeed, TOrder } from '@/features/order-feed'
-import { EmptyPage } from '@/shared/ui'
+import { OrderDetails, useLazyGetOrderQuery } from '@/entities/order'
+
+import { Loader, StatePage } from '@/shared/ui'
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
 
 export const OrderInfo = () => {
-  const orderFeed = useAppSelector(getOrderFeed)
+  const [getOrder, { data, isLoading, error }] = useLazyGetOrderQuery()
 
-  const { orderId } = useParams()
-  const order = orderFeed[0] as TOrder
+  const orderNum = Number(useParams()?.orderNum)
+
+  const order = useAppSelector((state) => {
+    const byNumber = (o: { number: number }) => o.number === orderNum
+
+    const feedOrder = state.orderFeed.orders.find(byNumber)
+    const profileOrder = state.profileOrders.orders.find(byNumber)
+
+    return feedOrder || profileOrder || data
+  })
 
   useEffect(() => {
-    // if (orderId) {
-    //   const feed = orderFeed.find((o) => o._id === orderId)
-    //   if (feed) order = feed
-    //   else order = orderFeed[0]
-    // }
-    console.log(orderFeed)
-  }, [])
+    if (!order && orderNum) {
+      getOrder(orderNum)
+    }
+  }, [getOrder, order, orderNum])
 
-  if (!orderId || !order) {
-    return <EmptyPage />
-  }
+  if (!orderNum || Number.isNaN(orderNum)) return <StatePage type='notfound' />
+  if (isLoading) return <Loader />
+  if (error) return <StatePage type='error' />
+  if (!order) return <StatePage type='empty' />
 
   return <OrderDetails order={order} />
 }

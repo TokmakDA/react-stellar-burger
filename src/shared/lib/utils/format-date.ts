@@ -16,6 +16,15 @@ function dayTitle(number: number) {
   if ([5, 6, 7, 8, 9, 0].includes(last_num)) return 'дней'
   return 'дней'
 }
+
+/**
+ * Склеить день и время
+ * @param day
+ * @param time
+ */
+const joinDayAndTime = (day: string, time: Date): string => {
+  return [day, formatTime(time)].filter(Boolean).join(', ')
+}
 // получить форматированную дату
 export const getFormattedDate: (time: string) => string = (time) => {
   const currentTime = new Date()
@@ -33,7 +42,7 @@ export const getFormattedDate: (time: string) => string = (time) => {
   // проверяем в период
   if (!periods.days && !periods.weekday && !periods.months && !periods.years) {
     // // Сегодня
-    return `Сегодня, ${formatTime(lastTime)}`
+    return joinDayAndTime('Сегодня', lastTime)
   }
 
   if (
@@ -53,25 +62,31 @@ export const getFormattedDate: (time: string) => string = (time) => {
         prefix = `${periods.days} ${dayTitle(periods.days)} назад`
         break
     }
-    return [prefix, formatTime(lastTime)].filter(Boolean).join(', ')
+    return joinDayAndTime(prefix, lastTime)
   }
 
   // В этом году
   if (periods.weekday !== periods.days && !periods.years) {
     // Вернуть дату (день и месяц)
-    return formatDate(lastTime, {
-      day: 'numeric',
-      month: 'short',
-    })
+    return joinDayAndTime(
+      formatDate(lastTime, {
+        day: 'numeric',
+        month: 'long',
+      }),
+      lastTime
+    )
   }
 
   if (periods.years) {
     // Вернуть дату (день, месяц, год)
-    return formatDate(lastTime, {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    })
+    return joinDayAndTime(
+      formatDate(lastTime, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }),
+      lastTime
+    )
   }
 
   // Вернуть полностью, если не нашли ни чего
