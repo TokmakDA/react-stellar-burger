@@ -13,3 +13,11 @@ export const API_ENDPOINTS = {
   INGREDIENTS: '/ingredients',
   ORDERS: '/orders',
 }
+
+export const WS_API_BASE_URL =
+  import.meta.env.REACT_WS_API_BASE_URL || 'wss://norma.nomoreparties.space'
+
+export const WS_ENDPOINTS = {
+  ORDERS: '/orders',
+  ORDERS_ALL: '/orders/all',
+}

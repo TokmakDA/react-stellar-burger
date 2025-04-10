@@ -1,6 +1,10 @@
 import { useAppDispatch } from '@/app/hooks'
-import { setIngredientDetails } from '@/features/burger/model'
+import { setIngredientDetails } from '@/entities/ingredient'
 import { IngredientsGroup } from '@/features/burger/ui'
+import { ROUTES } from '@/shared/config'
+import { useModalNavigation } from '@/shared/lib/hooks'
+import { buildPath } from '@/shared/lib/utils'
+import { scrollSectionStyles } from '@/shared/styles/layouts'
 import {
   FC,
   RefObject,
@@ -10,8 +14,6 @@ import {
   useRef,
   useState,
 } from 'react'
-import { useLocation, useNavigate } from 'react-router'
-import styles from './ingredients.module.scss'
 import { TIngredient } from '@/shared/types'
 import { Tab } from '@/shared/ui'
 
@@ -32,10 +34,7 @@ type TIngredientsGroup = Record<
 export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
   const dispatch = useAppDispatch()
 
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  // const selectedIngredient = useAppSelector(getIngredient)
+  const { navigateWithBackground } = useModalNavigation()
 
   // делаем currentTab либо TIngredientType
   const [currentTab, setCurrentTab] = useState<TIngredientType>('bun')
@@ -65,13 +64,14 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
 
   // клик по ингредиенту вызывает экшен
   const handleIngredientClick = useCallback(
-    (ingredient: TIngredient | null) => {
+    (ingredient: TIngredient) => {
       dispatch(setIngredientDetails(ingredient))
-      navigate(`/ingredients/${ingredient?._id}`, {
-        state: { background: { ...location } },
-      })
+
+      navigateWithBackground(
+        buildPath(ROUTES.INGREDIENT_DETAILS, { id: ingredient._id })
+      )
     },
-    [dispatch, navigate, location]
+    [dispatch, navigateWithBackground]
   )
 
   // при клике по табу проскроллим к нужному разделу
@@ -123,7 +123,7 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
   }, [])
 
   return (
-    <section className={styles.section}>
+    <section className={scrollSectionStyles['scroll-section']}>
       <h1 className='text text_type_main-large pt-10 pb-5'>Собери бургер</h1>
 
       {/* Табы */}
@@ -149,7 +149,7 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
       {/* Контейнер для скролла */}
       <div
         ref={scrollContainerRef}
-        className={`${styles.section__scrollWrapper} mt-10 ga-10`}
+        className={`${scrollSectionStyles['scroll-section__scroll-wrapper']} mt-10 ga-10`}
       >
         {Object.entries(ingredientsGroup).map(([key, val]) => {
           const typeKey = key as TIngredientType
@@ -164,15 +164,6 @@ export const Ingredients: FC<TBurgerIngredientsProps> = (props) => {
           )
         })}
       </div>
-
-      {/*{selectedIngredient && (*/}
-      {/*  <FullPage*/}
-      {/*    onClose={() => handleIngredientClick(null)}*/}
-      {/*    title='Детали ингредиента'*/}
-      {/*  >*/}
-      {/*    <IngredientDetails ingredient={selectedIngredient} />*/}
-      {/*  </FullPage>*/}
-      {/*)}*/}
     </section>
   )
 }

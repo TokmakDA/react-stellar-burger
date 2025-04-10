@@ -1,46 +1,55 @@
+@use '@/shared/styles/global';
+
 .order {
-  inset: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 60px;
 
   &__header {
     display: flex;
-    flex-direction: column;
+    min-height: 64px;
     align-items: center;
-    gap: 32px;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    @extend .mb-5;
   }
 
-  &__number {
-    text-shadow: $text-shadow;
-    white-space: normal;
-    word-break: break-word;
-  }
-
-  &__title {
-    white-space: normal;
-    word-break: break-word;
-  }
-
-  &__icon {
-    width: 100%;
-    max-height: 120px;
-    aspect-ratio: 1;
-    object-fit: contain;
-  }
-
-  &__details {
+  &__info {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    justify-content: center;
+    align-items: start;
+    @extend .ga-2, .mb-15;
   }
 
-  &__status,
-  &__note {
-    white-space: normal;
-    text-align: center;
+  &__ingredients {
+    display: flex;
+    flex-direction: column;
+    @extend .ga-6, .mb-10;
+  }
+
+  &__scroll-area {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    max-height: 350px;
+    @extend .ga-4;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    @extend .ga-2;
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    @extend .ga-2;
   }
 }

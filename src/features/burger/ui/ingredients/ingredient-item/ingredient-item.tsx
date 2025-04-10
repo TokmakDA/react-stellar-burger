@@ -7,7 +7,7 @@ import { Counter, CurrencyIcon } from '@/shared/ui'
 
 type TIngredientProps = {
   ingredient: TIngredient
-  onClick: (ingredient: TIngredient | null) => void
+  onClick: (ingredient: TIngredient) => void
 }
 
 export const IngredientItem: FC<TIngredientProps> = ({

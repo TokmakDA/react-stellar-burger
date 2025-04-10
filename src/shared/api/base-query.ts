@@ -1,5 +1,5 @@
-import { IRefreshTokenResponse } from '@/features/auth'
-import { clearTokens, saveTokens } from '@/features/auth/lib'
+import { refreshAccessToken } from '@/shared/api/refresh-token.ts'
+import { clearTokens } from '@/shared/lib/utils'
 import { IFetchQueryErrorResponse } from '@/shared/types'
 import {
   BaseQueryFn,
@@ -7,7 +7,7 @@ import {
   FetchBaseQueryError,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react'
-import { API_BASE_URL, API_ENDPOINTS } from '@/shared/config'
+import { API_BASE_URL } from '@/shared/config'
 
 // Базовый `fetchBaseQuery`
 const baseQuery = fetchBaseQuery({
@@ -21,10 +21,6 @@ const baseQuery = fetchBaseQuery({
     return headers
   },
 })
-
-const handleLogout = () => {
-  clearTokens()
-}
 
 // Функция с обновлением токена
 export const baseQueryWithRauth: BaseQueryFn<
@@ -40,31 +36,13 @@ export const baseQueryWithRauth: BaseQueryFn<
     (result.error as IFetchQueryErrorResponse)?.data?.message === 'jwt expired'
   ) {
     console.log('jwt expired', result.error)
-    const refreshToken = localStorage.getItem('refreshToken')
 
-    if (!refreshToken) {
-      handleLogout()
-      return result
-    }
-
-    const refreshResult = await baseQuery(
-      {
-        url: API_ENDPOINTS.REFRESH_TOKEN,
-        method: 'POST',
-        body: { token: refreshToken },
-      },
-      api,
-      extraOptions
-    )
-
-    if (refreshResult.data) {
-      const { accessToken, refreshToken } =
-        refreshResult.data as IRefreshTokenResponse
-
-      saveTokens({ accessToken, refreshToken })
+    try {
+      await refreshAccessToken()
       result = await baseQuery(args, api, extraOptions)
-    } else {
-      handleLogout()
+    } catch (e) {
+      console.error(e)
+      clearTokens()
     }
   }
 

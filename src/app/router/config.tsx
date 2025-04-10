@@ -1,5 +1,5 @@
-import { IngredientDetails } from '@/features/burger/ui'
-import { ProfileInfo } from '@/features/profile'
+import { IngredientDetails } from '@/entities/ingredient'
+import { ProfileInfo, ProfileOrders } from '@/features/profile'
 import { ROUTES } from '@/shared/config'
 import { OnlyAuth, OnlyUnAuth } from '@/shared/lib/router'
 import { RouteObject } from 'react-router'
@@ -78,15 +78,29 @@ export const routesConfig: TRouterConfig[] = [
           },
           {
             path: ROUTES.PROFILE_ORDERS,
-            element: <div>PROFILE_ORDERS</div>,
-            children: [
-              {
-                path: ROUTES.PROFILE_ORDER_DETAILS,
-                element: <div>PROFILE_ORDER_DETAILS</div>,
-              },
-            ],
+            element: <ProfileOrders />,
           },
         ],
+      },
+      {
+        path: ROUTES.PROFILE_ORDER_DETAILS,
+        element: (
+          <OnlyAuth>
+            <Pages.OrderInfo />
+          </OnlyAuth>
+        ),
+        modal: true,
+      },
+
+      /* OrderFeed */
+      {
+        path: ROUTES.ORDER_FEED,
+        element: <Pages.OrderFeed />,
+      },
+      {
+        path: ROUTES.ORDER_FEED_DETAILS,
+        element: <Pages.OrderInfo />,
+        modal: true,
       },
 
       /* 404 */

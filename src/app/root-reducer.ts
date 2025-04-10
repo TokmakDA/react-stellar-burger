@@ -1,11 +1,10 @@
+import { ingredientDetailsSlice, ingredientsApi } from '@/entities/ingredient'
 import { orderApi } from '@/entities/order'
 import { userApi } from '@/entities/user'
 import { authApi, authSlice } from '@/features/auth'
-import {
-  burgerSlice,
-  ingredientDetailsSlice,
-  ingredientsApi,
-} from '@/features/burger'
+import { burgerSlice } from '@/features/burger'
+import { orderFeedSlice } from '@/features/order-feed'
+import { profileOrdersSlice } from '@/features/profile'
 import { combineSlices } from '@reduxjs/toolkit'
 
 export const rootReducer = combineSlices(
@@ -15,5 +14,7 @@ export const rootReducer = combineSlices(
   orderApi,
   authApi,
   authSlice,
-  userApi
+  userApi,
+  orderFeedSlice,
+  profileOrdersSlice
 )

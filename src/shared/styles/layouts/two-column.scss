@@ -1,0 +1,18 @@
+@use '@/shared/styles/vars' as *;
+
+.two-column-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(auto, $width-column));
+  justify-content: center;
+  overflow-y: hidden;
+  overflow-x: auto;
+
+  &--flex {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &--fluid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

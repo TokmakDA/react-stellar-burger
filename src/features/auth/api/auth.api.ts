@@ -9,13 +9,12 @@ import {
   logout,
 } from '@/features/auth'
 import {
-  clearTokens,
-  saveTokens,
   selectForgotPassword,
   unSelectForgotPassword,
 } from '@/features/auth/lib'
 import { baseQueryWithRauth } from '@/shared/api'
 import { API_ENDPOINTS } from '@/shared/config'
+import { clearTokens, saveTokens } from '@/shared/lib/utils'
 
 import { IDefaultResponse } from '@/shared/types'
 import { createApi } from '@reduxjs/toolkit/query/react'

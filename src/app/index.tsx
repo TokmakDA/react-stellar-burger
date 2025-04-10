@@ -1,10 +1,10 @@
+import { App } from '@/app/app.tsx'
 import { store } from '@/app/store'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router'
-import { Router } from './router'
-import '@/assets/styles/index.scss'
+import '@/shared/styles/index.scss'
 
 const container = document.getElementById('root')
 
@@ -14,7 +14,7 @@ if (container) {
     <React.StrictMode>
       <Provider store={store}>
         <BrowserRouter>
-          <Router />
+          <App />
         </BrowserRouter>
       </Provider>
     </React.StrictMode>

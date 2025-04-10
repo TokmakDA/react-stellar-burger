@@ -1,0 +1,6 @@
+@use '@/shared/styles/layouts/two-column';
+
+.page {
+  @extend .two-column-layout;
+  justify-content: space-between;
+}

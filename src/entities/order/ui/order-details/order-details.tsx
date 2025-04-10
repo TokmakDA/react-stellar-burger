@@ -1,67 +1,95 @@
-import { TNewOrder } from '@/entities/order/model/types.ts'
-import { Loader } from '@/shared/ui'
-import { FC } from 'react'
+import { useAppSelector } from '@/app/hooks'
+import { selectIngredientsMap } from '@/entities/ingredient'
+import { ORDER_STATUS } from '@/entities/order/lib'
+import { OrderIngredient } from '@/entities/order/ui/order-details/order-ingredient'
+import { useBackgroundLocation } from '@/shared/lib/hooks'
+import { getFormattedDate } from '@/shared/lib/utils'
+import { TIngredient, TOrder } from '@/shared/types'
+import { CurrencyIcon } from '@/shared/ui'
+import { FC, useMemo } from 'react'
 import styles from './order-details.module.scss'
-import done from '@/assets/images/done.svg'
 
-type TOrderDetailsProps = {
-  data?: TNewOrder
-  isLoading: boolean
-  isError: boolean
+type OrderDetailsProps = {
+  order: TOrder
 }
 
-const OrderDetails: FC<TOrderDetailsProps> = ({ data, isLoading, isError }) => {
-  if (isLoading) {
-    return (
-      <section className={`${styles.order} my-6`}>
-        <Loader text='Заказ оформляется' />
-      </section>
-    )
-  }
+export const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
+  const ingredientsMap = useAppSelector(selectIngredientsMap)
+  const { isBackground } = useBackgroundLocation()
 
-  if (isError) {
-    return (
-      <section className={`${styles.order} ga-10`}>
-        <header className={styles.order__header}>
-          <h2 className='text text_type_main-large'>Ошибка оформления</h2>
-        </header>
+  const orderIngredients = useMemo(() => {
+    const countMap = new Map<string, number>()
 
-        <div className={styles.order__details}>
-          <p className='text text_type_main-default'>
-            Попробуйте обновить страницу или повторить позже.
-          </p>
-        </div>
-      </section>
-    )
-  }
+    order.ingredients.forEach((id) => {
+      countMap.set(id, (countMap.get(id) || 0) + 1)
+    })
+
+    const uniqueIngredients: (TIngredient & { count: number })[] = []
+
+    for (const [id, count] of countMap.entries()) {
+      const ingredient = ingredientsMap.get(id)
+      if (ingredient) {
+        uniqueIngredients.push({ ...ingredient, count })
+      }
+    }
+
+    return uniqueIngredients
+  }, [order.ingredients, ingredientsMap])
+
+  const price = useMemo(() => {
+    return orderIngredients.reduce((acc, cur) => acc + cur.price * cur.count, 0)
+  }, [orderIngredients])
 
   return (
-    <section className={`${styles.order} py-20`}>
-      <header className={styles.order__header}>
-        <p className={`${styles.order__number} text text_type_digits-large`}>
-          {data?.order.number}
-        </p>
-        <h2 className={styles.order__title}>идентификатор заказа</h2>
+    <section className={styles.order}>
+      <header
+        className={styles.order__header}
+        style={isBackground ? { alignSelf: 'start' } : {}}
+      >
+        <h2 className={`text text_type_digits-default text_color_primary`}>
+          #{order.number}
+        </h2>
       </header>
-      <div>
-        <img
-          className={styles.order__icon}
-          src={done}
-          alt='Статус выполнения'
-        />
-      </div>
-      <div className={styles.order__details}>
-        <p className={`${styles.order__status} text text_type_main-default`}>
-          Ваш заказ начали готовить
-        </p>
-        <p
-          className={`${styles.order__note} text text_type_main-default text_color_inactive`}
+
+      <div className={styles.order__info}>
+        <h3 className='text text_type_main-medium text_color_primary'>
+          {order.name}
+        </h3>
+        <span
+          className={`text text_type_main-default ${
+            order.status === 'done'
+              ? 'text_color_success'
+              : 'text_color_primary'
+          }`}
         >
-          Дождитесь готовности на орбитальной станции
-        </p>
+          {ORDER_STATUS[order.status] || 'Неизвестен'}
+        </span>
+      </div>
+      <div className={styles.order__ingredients}>
+        <h3 className='text text_type_main-medium text_color_primary'>
+          Состав:
+        </h3>
+        <ul className={`list-no-style ${styles['order__scroll-area']}`}>
+          {orderIngredients.map((ingredient) => {
+            return (
+              <li key={ingredient._id}>
+                <OrderIngredient ingredient={ingredient} />
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+
+      <div className={styles.order__footer}>
+        <time className='text text_type_main-default text_color_inactive'>
+          {getFormattedDate(order.createdAt)}
+        </time>
+
+        <div className={styles.order__price}>
+          <span className='text text_type_digits-default'>{price}</span>
+          <CurrencyIcon type='primary' />
+        </div>
       </div>
     </section>
   )
 }
-
-export default OrderDetails

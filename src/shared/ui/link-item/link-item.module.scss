@@ -3,12 +3,20 @@
   border-radius: var(--common-border-radius-s);
   color: $text-dark-grey-secondary-text;
   text-decoration: none;
+  transition:
+    color 0.3s ease,
+    opacity 0.3s ease;
 
   &:hover {
-    color: $text-primary-light-standart-text;
+    color: $interface-success;
+    opacity: 0.8;
   }
 
   &__icon {
     flex-shrink: 0;
+  }
+
+  &_is-active {
+    color: $text-primary-light-standart-text;
   }
 }

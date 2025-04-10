@@ -1,35 +1,50 @@
-import { cloneElement, FC, ReactElement, ReactNode } from 'react'
-import { Link, LinkProps } from 'react-router'
+import { cloneElement, FC, ReactElement } from 'react'
+import { NavLinkProps, NavLink } from 'react-router'
 import styles from './link-item.module.scss'
 import { useHover } from '../../lib/hooks'
 
-interface ILinkItem extends LinkProps {
+interface ILinkItem extends NavLinkProps {
   icon?: ReactElement
-  children?: ReactNode
-  className?: string
+  extraClass?: string
 }
 
 export const LinkItem: FC<ILinkItem> = ({
   icon,
   children,
-  className,
+  extraClass = '',
+  to,
   ...props
 }) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHover()
 
   return (
-    <Link
-      className={`${className} ${styles.link} text text_type_main-default ga-2 px-5 py-4`}
+    <NavLink
+      className={({ isActive }) => {
+        const classList = [
+          styles.link,
+          'text text_type_main-default',
+          'ga-2 px-5 py-4',
+          extraClass,
+          isActive ? styles['link_is-active'] : '',
+        ]
+
+        return classList.filter(Boolean).join(' ')
+      }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      to={to}
       {...props}
     >
-      {icon &&
-        cloneElement(icon, {
-          type: isHovered ? 'primary' : 'secondary',
-          className: styles.link__icon,
-        })}
-      {children}
-    </Link>
+      {({ isActive }) => (
+        <>
+          {icon &&
+            cloneElement(icon, {
+              type: isHovered ? 'success' : isActive ? 'primary' : 'secondary',
+              className: styles.link__icon,
+            })}
+          {children}
+        </>
+      )}
+    </NavLink>
   )
 }
