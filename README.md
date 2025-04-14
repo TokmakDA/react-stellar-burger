@@ -13,15 +13,15 @@
 <details>
   <summary>Click to expand</summary>
   <div align="center">
-     <img src="/screenshots/constructor-dnd.png" alt="Burger Constructor" height="480" />
-     <img src="/screenshots/burger-dnd.png" alt="Burger Constructor DnD" height="480" />
-     <img src="/screenshots/ingredient.png" alt="ingredient" height="480" />
-     <img src="/screenshots/order-loader.png" alt="order-loader" height="480" />
-     <img src="/screenshots/profile.png" alt="profile" height="480" />
-     <img src="/screenshots/profile-orders.png" alt="profile-orders" height="480" />
-     <img src="/screenshots/profile-order-detail.png" alt="profile order" height="480" />
-     <img src="/screenshots/orders-feed.png" alt="orders-feed" height="480" />
-     <img src="/screenshots/order-feed-detail.png" alt="order-info" height="480" />
+     <img src="./screenshots/constructor-dnd.png" alt="Burger Constructor" height="480" />
+     <img src="./screenshots/burger-dnd.png" alt="Burger Constructor DnD" height="480" />
+     <img src="./screenshots/ingredient.png" alt="ingredient" height="480" />
+     <img src="./screenshots/order-loader.png" alt="order-loader" height="480" />
+     <img src="./screenshots/profile.png" alt="profile" height="480" />
+     <img src="./screenshots/profile-orders.png" alt="profile-orders" height="480" />
+     <img src="./screenshots/profile-order-detail.png" alt="profile order" height="480" />
+     <img src="./screenshots/orders-feed.png" alt="orders-feed" height="480" />
+     <img src="./screenshots/order-feed-detail.png" alt="order-info" height="480" />
 
   </div>
 </details>
