@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-self: start;
+  max-width: fit-content;
 
   &__fields {
     display: flex;
