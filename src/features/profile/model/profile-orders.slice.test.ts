@@ -21,11 +21,19 @@ describe('profileOrdersSlice', () => {
   it('should handle onConnecting', () => {
     const state = reducer(initialState, profileOrderActions.onConnecting())
     expect(state.status).toBe(WebsocketStatus.CONNECTING)
+    expect(state).toEqual({
+      ...initialState,
+      status: WebsocketStatus.CONNECTING,
+    })
   })
 
   it('should handle onOpen', () => {
     const state = reducer(initialState, profileOrderActions.onOpen())
     expect(state.status).toBe(WebsocketStatus.ONLINE)
+    expect(state).toEqual({
+      ...initialState,
+      status: WebsocketStatus.ONLINE,
+    })
   })
 
   it('should handle onClose', () => {
@@ -34,12 +42,17 @@ describe('profileOrdersSlice', () => {
       profileOrderActions.onClose()
     )
     expect(state.status).toBe(WebsocketStatus.OFFLINE)
+    expect(state).toEqual(initialState)
   })
 
   it('should handle onError', () => {
     const error = 'WebSocket error'
     const state = reducer(initialState, profileOrderActions.onError(error))
     expect(state.error).toBe(error)
+    expect(state).toEqual({
+      ...initialState,
+      error: error,
+    })
   })
 
   it('should handle onMessage and update orders', () => {

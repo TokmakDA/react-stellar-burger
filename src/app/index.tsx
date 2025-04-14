@@ -3,7 +3,7 @@ import { store } from '@/app/store'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router'
+import {  HashRouter } from 'react-router'
 import '@/shared/styles/index.scss'
 
 const container = document.getElementById('root')
@@ -13,9 +13,9 @@ if (container) {
   root.render(
     <React.StrictMode>
       <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter>
           <App />
-        </BrowserRouter>
+        </HashRouter>
       </Provider>
     </React.StrictMode>
   )

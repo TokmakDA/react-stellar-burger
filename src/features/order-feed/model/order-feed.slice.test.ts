@@ -21,11 +21,19 @@ describe('orderFeedSlice', () => {
   it('should handle onConnecting', () => {
     const state = reducer(initialState, orderFeedActions.onConnecting())
     expect(state.status).toBe(WebsocketStatus.CONNECTING)
+    expect(state).toEqual({
+      ...initialState,
+      status: WebsocketStatus.CONNECTING,
+    })
   })
 
   it('should handle onOpen', () => {
     const state = reducer(initialState, orderFeedActions.onOpen())
     expect(state.status).toBe(WebsocketStatus.ONLINE)
+    expect(state).toEqual({
+      ...initialState,
+      status: WebsocketStatus.ONLINE,
+    })
   })
 
   it('should handle onClose', () => {
@@ -34,12 +42,17 @@ describe('orderFeedSlice', () => {
       orderFeedActions.onClose()
     )
     expect(state.status).toBe(WebsocketStatus.OFFLINE)
+    expect(state).toEqual(initialState)
   })
 
   it('should handle onError', () => {
     const errorMessage = 'Connection error'
     const state = reducer(initialState, orderFeedActions.onError(errorMessage))
     expect(state.error).toBe(errorMessage)
+    expect(state).toEqual({
+      ...initialState,
+      error: errorMessage,
+    })
   })
 
   it('should handle onMessage and update state', () => {
