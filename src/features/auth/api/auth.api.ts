@@ -19,6 +19,34 @@ import { clearTokens, saveTokens } from '@/shared/lib/utils'
 import { IDefaultResponse } from '@/shared/types'
 import { createApi } from '@reduxjs/toolkit/query/react'
 
+interface MutationLifecycleArgs<T> {
+  dispatch: (action: unknown) => void
+  queryFulfilled: Promise<{ data: T }>
+}
+
+export const handleAuthSuccess = async (
+  _: IRegisterRequest | ILoginRequest,
+  { dispatch, queryFulfilled }: MutationLifecycleArgs<IAuthResponse>
+) => {
+  const { data } = await queryFulfilled
+  saveTokens(data)
+  dispatch(loginSuccess())
+}
+
+export const handleLogoutSuccess = async (
+  _: void,
+  { dispatch, queryFulfilled }: MutationLifecycleArgs<IDefaultResponse>
+) => {
+  try {
+    await queryFulfilled
+    clearTokens()
+    dispatch(logout())
+    dispatch(userApi.util.resetApiState())
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: baseQueryWithRauth,
@@ -31,15 +59,7 @@ export const authApi = createApi({
           body: data,
         }
       },
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled
-          saveTokens(data)
-          dispatch(loginSuccess())
-        } catch (error) {
-          console.log(error)
-        }
-      },
+      onQueryStarted: handleAuthSuccess,
     }),
     login: builder.mutation<IAuthResponse, ILoginRequest>({
       query(data) {
@@ -49,15 +69,7 @@ export const authApi = createApi({
           body: data,
         }
       },
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled
-          saveTokens(data)
-          dispatch(loginSuccess())
-        } catch (error) {
-          console.log(error)
-        }
-      },
+      onQueryStarted: handleAuthSuccess,
     }),
     logout: builder.mutation<IDefaultResponse, void>({
       query() {
@@ -68,16 +80,7 @@ export const authApi = createApi({
           body: { token },
         }
       },
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled
-          clearTokens()
-          dispatch(logout())
-          dispatch(userApi.util.resetApiState())
-        } catch (error) {
-          console.log(error)
-        }
-      },
+      onQueryStarted: handleLogoutSuccess,
     }),
 
     forgotPassword: builder.mutation<IDefaultResponse, IForgotPasswordRequest>({

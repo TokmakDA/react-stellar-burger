@@ -16,19 +16,19 @@ describe('Burger Constructor', () => {
     cy.wait('@getIngredients')
   })
 
-  it('добавляет ингредиенты в конструктор через drag and drop', () => {
-    // Добавляем булку
+  it('adds ingredients to constructor via drag and drop', () => {
+    // Add bun
     cy.testId(BurgerTestId.Ingredient)
       .contains('булка')
       .first()
       .trigger('dragstart')
     cy.testId(BurgerTestId.DropArea).trigger('drop')
 
-    // Проверяем булки
+    // Verify bun added
     cy.testId(BurgerTestId.TopBun).should('exist').and('be.visible')
     cy.testId(BurgerTestId.BottomBun).should('exist').and('be.visible')
 
-    // Добавляем 2 случайные начинки
+    // Add 2 random fillings
     cy.testId(BurgerTestId.Ingredient)
       .not(':contains("булка")')
       .then(($list) => {
@@ -40,13 +40,13 @@ describe('Burger Constructor', () => {
         cy.testId(BurgerTestId.DropArea).trigger('drop')
       })
 
-    // Проверяем, что в списке 2 начинки
+    // Check that at least 2 fillings are present
     cy.testId(BurgerTestId.BurgerIngredient)
       .should('have.length.at.least', 2)
       .and('be.visible')
   })
 
-  it('открытие и закрытие модального окна с описанием ингредиента', () => {
+  it('opens and closes ingredient modal window', () => {
     cy.testId(BurgerTestId.Ingredient).first().click()
     cy.waitForModal()
     cy.testId(ModalTestId.Modal).should('be.visible')
@@ -64,7 +64,7 @@ describe('Burger Constructor', () => {
     cy.testId(ModalTestId.Modal).should('not.exist')
   })
 
-  it('открытие и закрытие модального окна по оверлей', () => {
+  it('opens and closes modal via overlay click', () => {
     cy.testId(BurgerTestId.Ingredient).first().click()
     cy.waitForModal()
     cy.testId(ModalTestId.Modal).should('be.visible')
@@ -75,8 +75,8 @@ describe('Burger Constructor', () => {
     cy.testId(ModalTestId.Modal).should('not.exist')
   })
 
-  it('Оформление заказа', async () => {
-    // Добавляем булку
+  it('places order', () => {
+    // Add bun
     cy.testId(BurgerTestId.Ingredient)
       .contains('булка')
       .then(($list) => {
@@ -85,7 +85,7 @@ describe('Burger Constructor', () => {
         cy.testId(BurgerTestId.DropArea).trigger('drop')
       })
 
-    // Добавляем начинку
+    // Add filling
     cy.testId(BurgerTestId.Ingredient)
       .not(':contains("булка")')
       .then(($list) => {
@@ -94,10 +94,11 @@ describe('Burger Constructor', () => {
         cy.testId(BurgerTestId.DropArea).trigger('drop')
       })
 
+    // Click "Place Order"
     cy.testId(BurgerTestId.OrderButton).click()
     cy.waitForModal()
 
-    // Авторизация
+    // Simulate login
     cy.testId(ModalTestId.Modal).should('exist')
     cy.testId(ProfileTestId.LoginForm).should('be.visible')
     cy.testId(ProfileTestId.Email).type('testEmail@expemple.com')
@@ -111,9 +112,11 @@ describe('Burger Constructor', () => {
     cy.waitForModal()
     cy.testId(ModalTestId.Modal).should('not.exist')
 
-    // Оформляем заказ
+    // Confirm order placement
     cy.testId(BurgerTestId.OrderButton).click()
-    cy.intercept('POST', 'orders', { fixture: 'orders-accept.json' })
+    cy.intercept('POST', 'orders', { fixture: 'orders-accept.json' }).as(
+      'order'
+    )
     cy.wait('@order')
     cy.waitForModal()
 

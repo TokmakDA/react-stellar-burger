@@ -3,7 +3,7 @@ import { TIngredient } from '@/shared/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { nanoid } from '@reduxjs/toolkit'
 
-const initialState: TBurgerState = {
+export const initialState: TBurgerState = {
   ingredients: [],
   bun: null,
 }
