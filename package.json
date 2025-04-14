@@ -1,5 +1,4 @@
 {
-  "homepage": "https://tokmakda.github.io/react-stellar-burger/",
   "name": "react-stallar-burger",
   "description": "Training project from Yandex.Practicum: 'Stellar Burger' – a space-themed web application for ordering burgers",
   "author": "Dmitry Tokmak",
@@ -20,9 +19,7 @@
     "fix": "eslint --fix . && prettier --write .",
     "type-check": "tsc --noEmit",
     "prepare": "husky",
-    "check": "./.husky/pre-commit",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "check": "./.husky/pre-commit"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
@@ -57,7 +54,6 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.18",
-    "gh-pages": "^6.3.0",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
     "jsdom": "^26.0.0",
