@@ -1,5 +1,6 @@
 import { useAppSelector } from '@/app/hooks'
 import { getBurgerIngredients } from '@/features/burger/model'
+import { BurgerTestId } from '@/shared/const/test-ids'
 import { FC, useMemo } from 'react'
 import { TIngredient } from '@/shared/types'
 import styles from './ingredient-item.module.scss'
@@ -27,7 +28,11 @@ export const IngredientItem: FC<TIngredientProps> = ({
   }, [bun, ingredients, ingredient])
 
   return (
-    <div className={styles.ingredientItem} onClick={() => onClick(ingredient)}>
+    <div
+      className={styles.ingredientItem}
+      onClick={() => onClick(ingredient)}
+      data-testid={BurgerTestId.Ingredient}
+    >
       {count ? (
         <Counter
           count={count}

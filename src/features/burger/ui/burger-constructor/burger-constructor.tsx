@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { BurgerTestId } from '@/shared/const/test-ids'
 import { useModalNavigation } from '@/shared/lib/hooks'
 import { scrollSectionStyles } from '@/shared/styles/layouts'
 import { OrderAccepted, useCreateOrderMutation } from '@/entities/order'
@@ -87,7 +88,7 @@ export const BurgerConstructor: FC = () => {
   return (
     <section
       className={scrollSectionStyles['scroll-section']}
-      aria-label={'Бургер конструктор'}
+      aria-label='Бургер конструктор'
     >
       <div className={`${styles.section__container} pl-4 pt-25 pb-10 ga-4`}>
         <DropTarget
@@ -96,14 +97,16 @@ export const BurgerConstructor: FC = () => {
           extraClass='ga-4'
         >
           {bun ? (
-            <ConstructorElement
-              extraClass='ml-8'
-              type='top'
-              isLocked
-              text={bun.name + ' (верх)'}
-              price={bun.price}
-              thumbnail={bun.image}
-            />
+            <div data-testid={BurgerTestId.TopBun}>
+              <ConstructorElement
+                extraClass='ml-8'
+                type='top'
+                isLocked
+                text={bun.name + ' (верх)'}
+                price={bun.price}
+                thumbnail={bun.image}
+              />
+            </div>
           ) : (
             <EmptyElement type='top' extraClass='ml-8' />
           )}
@@ -122,7 +125,10 @@ export const BurgerConstructor: FC = () => {
                       index: idx,
                     }}
                   >
-                    <div className={styles.section__item}>
+                    <div
+                      className={styles.section__item}
+                      data-testid={BurgerTestId.BurgerIngredient}
+                    >
                       <DragIcon type='primary' />
                       <ConstructorElement
                         isLocked={false}
@@ -143,14 +149,16 @@ export const BurgerConstructor: FC = () => {
             )}
           </ul>
           {bun ? (
-            <ConstructorElement
-              extraClass='ml-8'
-              type='bottom'
-              isLocked
-              text={bun.name + ' (низ)'}
-              price={bun.price}
-              thumbnail={bun.image}
-            />
+            <div data-testid={BurgerTestId.BottomBun}>
+              <ConstructorElement
+                extraClass='ml-8'
+                type='bottom'
+                isLocked
+                text={bun.name + ' (низ)'}
+                price={bun.price}
+                thumbnail={bun.image}
+              />
+            </div>
           ) : (
             <EmptyElement type='bottom' extraClass='ml-8' />
           )}
@@ -168,6 +176,7 @@ export const BurgerConstructor: FC = () => {
           htmlType='button'
           onClick={handleOrderClick}
           disabled={disabledNewOrder}
+          data-testid={BurgerTestId.OrderButton}
         >
           Оформить заказ
         </Button>

@@ -1,4 +1,5 @@
 import { useGetIngredientsQuery } from '@/entities/ingredient'
+import { IngredientTestId } from '@/shared/const/test-ids'
 import { useBackgroundLocation } from '@/shared/lib/hooks'
 import { TIngredient } from '@/shared/types'
 import { formatNumberToRu } from '@/shared/lib/utils'
@@ -45,7 +46,10 @@ export const IngredientDetails: FC = () => {
   if (!ingredient) return <StatePage type='notfound' />
 
   return (
-    <section className={`${styles.details} px-5 pb-5`}>
+    <section
+      className={`${styles.details} px-5 pb-5`}
+      data-testid={IngredientTestId.Details}
+    >
       <header
         className={styles.details__header}
         style={isBackground ? { alignSelf: 'start' } : {}}
@@ -59,10 +63,16 @@ export const IngredientDetails: FC = () => {
         className={`${styles.details__image} px-5`}
       />
       <div className={styles.details__wrapper}>
-        <h3 className={`${styles.details__name} text text_type_main-medium`}>
+        <h3
+          className={`${styles.details__name} text text_type_main-medium`}
+          data-testid={IngredientTestId.Name}
+        >
           {ingredient.name}
         </h3>
-        <ul className={`${styles.details__nutrients} list-no-style`}>
+        <ul
+          className={`${styles.details__nutrients} list-no-style`}
+          data-testid={IngredientTestId.Nutrients}
+        >
           {nutrients.map(({ key, label }) => (
             <li key={key} className={styles.details__nutrientsItem}>
               <h4 className='text text_type_main-default'>{label}</h4>

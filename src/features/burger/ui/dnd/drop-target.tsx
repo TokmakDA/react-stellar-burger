@@ -1,3 +1,4 @@
+import { BurgerTestId } from '@/shared/const/test-ids'
 import { TIngredient } from '@/shared/types'
 import { FC, ReactNode } from 'react'
 import styles from './drop-target.module.scss'
@@ -37,7 +38,11 @@ const DropTarget: FC<TDropTargetProps> = ({
     .filter(Boolean)
     .join(' ')
   return (
-    <div ref={dropRef} className={`${styles.target} ${extraClass}`}>
+    <div
+      ref={dropRef}
+      className={`${styles.target} ${extraClass}`}
+      data-testid={BurgerTestId.DropArea}
+    >
       {children}
       {(isHover || isOver) && <div className={className}></div>}
     </div>

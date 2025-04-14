@@ -1,3 +1,4 @@
+import { ModalTestId } from '@/shared/const/test-ids'
 import { HoverWrapper, CloseIcon, Overlay } from '@/shared/ui'
 import { FC, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -65,14 +66,21 @@ export const Modal: FC<ModalProps> = ({
             transition: `opacity ${delay / 1000}s`,
           }}
           ref={refModal}
+          data-testid={ModalTestId.Modal}
+          role='dialog'
+          aria-modal='true'
         >
-          <div className={styles.modal__container}>
+          <div
+            className={styles.modal__container}
+            data-testid={ModalTestId.Container}
+          >
             <HoverWrapper className={styles.modal__close} isScalable={true}>
               <button
                 onClick={handleClose}
                 disabled={disabled}
                 style={{ background: 'transparent', border: 'none' }}
                 className='m-0 p-0'
+                data-testid={ModalTestId.Close}
               >
                 <CloseIcon type='primary' />
               </button>

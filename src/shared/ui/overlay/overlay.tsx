@@ -1,3 +1,4 @@
+import { ModalTestId } from '@/shared/const/test-ids'
 import { FC } from 'react'
 import styles from './overlay.module.scss'
 import { MouseEvent } from 'react'
@@ -22,5 +23,12 @@ export const Overlay: FC<OverlayProps> = ({ onClick, persistent = false }) => {
     }
   }
 
-  return <div className={styles.overlay} onClick={handleClick} />
+  return (
+    <div
+      data-testid={ModalTestId.Overlay}
+      role='presentation'
+      className={styles.overlay}
+      onClick={handleClick}
+    />
+  )
 }
