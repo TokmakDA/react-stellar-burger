@@ -5,7 +5,7 @@ interface AuthState {
   isAuthenticated: boolean
 }
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   isAuthenticated: Boolean(getAccessToken()),
 }
 

@@ -1,22 +1,25 @@
 {
-  "name": "react-stallar-burger",
+  "name": "react-stellar-burger",
   "description": "Training project from Yandex.Practicum: 'Stellar Burger' – a space-themed web application for ordering burgers",
   "author": "Dmitry Tokmak",
   "license": "MIT",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest run",
+    "test:ui": "vitest --ui",
+    "cypress": "cypress open",
     "format": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "fix": "eslint --fix . && prettier --write .",
     "type-check": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check": "./.husky/pre-commit"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
@@ -45,6 +48,8 @@
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react": "^4.3.4",
+    "cypress": "^14.3.0",
+    "dotenv": "^16.5.0",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-react-hooks": "^5.1.0",
@@ -57,7 +62,7 @@
     "typescript": "~5.7.3",
     "typescript-eslint": "^8.23.0",
     "vite": "^6.0.11",
-    "vitest": "^3.0.5"
+    "vitest": "^3.1.1"
   },
   "engines": {
     "node": ">= 20.0.0",

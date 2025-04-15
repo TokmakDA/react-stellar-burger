@@ -1,0 +1,5 @@
+export { ModalTestId } from './modal'
+export { BurgerTestId } from './burger'
+export { OrderTestId } from './order'
+export { ProfileTestId } from './profile'
+export { IngredientTestId } from './ingredient.ts'

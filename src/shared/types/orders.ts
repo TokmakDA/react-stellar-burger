@@ -1,17 +1,16 @@
+export enum OrderStatus {
+  created = 'created',
+  pending = 'pending',
+  done = 'done',
+}
 export type TOrder = {
   createdAt: string
   ingredients: string[]
   name: string
   number: number
-  status: 'done'
+  status: keyof typeof OrderStatus
   updatedAt: string
   _id: string
-}
-
-export enum OrderStatus {
-  created = 'created',
-  pending = 'pending',
-  done = 'done',
 }
 
 export type TOrdersResponse = {

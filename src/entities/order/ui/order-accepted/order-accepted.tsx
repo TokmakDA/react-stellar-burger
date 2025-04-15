@@ -1,4 +1,5 @@
 import { TNewOrder } from '@/entities/order/model/types.ts'
+import { OrderTestId } from '@/shared/const/test-ids'
 import { Loader, StatePage } from '@/shared/ui'
 import { FC } from 'react'
 import styles from './order-accepted.module.scss'
@@ -27,9 +28,15 @@ const OrderAccepted: FC<TOrderDetailsProps> = ({
     return <StatePage type='error' title='Ошибка оформления заказа' />
 
   return (
-    <section className={`${styles.order} py-20`}>
+    <section
+      className={`${styles.order} py-20`}
+      data-testid={OrderTestId.OrderAccepted}
+    >
       <header className={styles.order__header}>
-        <p className={`${styles.order__number} text text_type_digits-large`}>
+        <p
+          className={`${styles.order__number} text text_type_digits-large`}
+          data-testid={OrderTestId.OrderNumber}
+        >
           {data?.order.number}
         </p>
         <h2 className={styles.order__title}>идентификатор заказа</h2>

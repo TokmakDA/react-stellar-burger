@@ -1,5 +1,6 @@
 import { AuthLayout, useLoginMutation } from '@/features/auth'
 import { ROUTES } from '@/shared/config'
+import { ProfileTestId } from '@/shared/const/test-ids'
 import { useBack, useForm } from '@/shared/lib/hooks'
 import { IFetchQueryErrorResponse } from '@/shared/types'
 import { FC, useState, FormEvent } from 'react'
@@ -44,6 +45,7 @@ const Login: FC = () => {
           : null
       }
       isLoading={isLoading}
+      testId={ProfileTestId.LoginForm}
     >
       <Input
         type='email'
@@ -51,6 +53,7 @@ const Login: FC = () => {
         name='email'
         value={values.email}
         onChange={handleChange}
+        data-testid={ProfileTestId.Email}
       />
       <Input
         type={showPassword ? 'text' : 'password'}
@@ -60,8 +63,14 @@ const Login: FC = () => {
         onChange={handleChange}
         icon={showPassword ? 'HideIcon' : 'ShowIcon'}
         onIconClick={() => setShowPassword((prev) => !prev)}
+        data-testid={ProfileTestId.Password}
       />
-      <Button type='primary' htmlType='submit' disabled={isLoading}>
+      <Button
+        type='primary'
+        htmlType='submit'
+        disabled={isLoading}
+        data-testid={ProfileTestId.SubmitButton}
+      >
         {isLoading ? 'Вход...' : 'Войти'}
       </Button>
     </AuthLayout>

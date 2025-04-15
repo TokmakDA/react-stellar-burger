@@ -17,6 +17,7 @@ interface AuthLayoutProps {
   onSubmit: (e: FormEvent<HTMLFormElement>) => void
   isLoading?: boolean
   errorMessage?: string | undefined | null
+  testId?: string
 }
 
 const AuthLayout: FC<AuthLayoutProps> = ({
@@ -26,11 +27,12 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   onSubmit,
   isLoading,
   errorMessage,
+  testId,
 }) => {
   const { state, isBackground } = useBackgroundLocation()
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} data-testid={testId}>
       <header
         className={`${styles.section__header} ${isBackground ? 'pr-15 ' + styles.section__header_modal : ''}`}
       >

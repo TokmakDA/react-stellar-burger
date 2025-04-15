@@ -1,7 +1,7 @@
 import { TIngredient } from '@/shared/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState = null as TIngredient | null
+export const initialState = null as TIngredient | null
 
 export const ingredientDetailsSlice = createSlice({
   name: 'burgerIngredient',
